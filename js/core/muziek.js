@@ -344,6 +344,100 @@ export const LIEDJES = {
     ],
   },
 
+  // de boeren landweg
+  landweg: {
+    bpm: 120,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.11,
+        noten: `
+          G4:2 B4:2 D5:4 B4:2 D5:2 G5:4  E5:2 D5:2 C5:2 B4:2 A4:8  A4:2 C5:2 E5:4 C5:2 E5:2 A5:4  G5:2 F#5:2 E5:2 D5:2 G4:8
+          G4:2 B4:2 D5:4 E5:2 D5:2 B4:4  C5:2 E5:2 G5:4 E5:2 C5:2 A4:4  D5:4 F#5:4 A5:4 F#5:4  G5:8 -:4 D5:2 B4:2`,
+      },
+      { golf: 'puls12', volume: 0.05, legato: 1, noten: 'B3:16 C4:16 C4:16 A3:16 B3:16 C4:16 A3:16 B3:16' },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.6,
+        noten: `
+          G2:4 D3:4 G2:4 D3:4  C3:4 G2:4 C3:4 G2:4  A2:4 E3:4 A2:4 E3:4  D3:4 A2:4 D3:4 A2:4
+          G2:4 D3:4 G2:4 D3:4  C3:4 G2:4 C3:4 G2:4  D3:4 A2:4 D3:4 F#2:4  G2:4 D3:4 G2:8`,
+      },
+      { golf: 'ruis', volume: 0.1, noten: maat('K:4 S:4 K:4 S:4', 8) },
+    ],
+  },
+
+  // schlager uit het radiootje van de Duitsers op verlof
+  schlager: {
+    bpm: 124,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.12, vibrato: true,
+        noten: `
+          A4:4 C5:4 F5:6 E5:2  D5:4 C5:4 A4:8  Bb4:4 D5:4 G5:6 F5:2  E5:4 D5:4 C5:8
+          A4:4 C5:4 F5:4 A5:4  G5:4 F5:4 D5:8  C5:4 E5:4 G5:4 Bb5:4  A5:12 -:4`,
+      },
+      {
+        golf: 'puls12', volume: 0.05, legato: 0.5,
+        noten: `
+          ${maat('-:2 A4:2', 4)} ${maat('-:2 F4:2', 4)} ${maat('-:2 Bb4:2', 4)} ${maat('-:2 G4:2', 4)}
+          ${maat('-:2 A4:2', 4)} ${maat('-:2 D4:2', 4)} ${maat('-:2 Bb4:2', 4)} ${maat('-:2 A4:2', 4)}`,
+      },
+      {
+        golf: 'driehoek', volume: 0.32, legato: 0.6,
+        noten: `
+          ${maat('F2:2 F3:2', 4)} ${maat('D2:2 D3:2', 4)} ${maat('G2:2 G3:2', 4)} ${maat('C2:2 C3:2', 4)}
+          ${maat('F2:2 F3:2', 4)} ${maat('Bb1:2 Bb2:2', 4)} ${maat('C2:2 C3:2', 4)} ${maat('F2:2 F3:2', 4)}`,
+      },
+      { golf: 'ruis', volume: 0.13, noten: maat('K:2 H:2 S:2 H:2 K:2 H:2 S:2 H:2', 8) },
+    ],
+  },
+
+  // het recreatiestrandje
+  strand: {
+    bpm: 104,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.11,
+        noten: `
+          E5:2 G5:2 -:2 E5:2 C5:4 D5:4  E5:2 D5:2 C5:2 A4:2 G4:8  F5:2 A5:2 -:2 F5:2 D5:4 E5:4  F5:2 E5:2 D5:2 B4:2 G4:8
+          E5:2 G5:2 -:2 E5:2 C6:4 B5:4  A5:2 G5:2 F5:2 E5:2 D5:8  F5:2 E5:2 D5:2 E5:2 G5:4 B4:4  C5:12 -:4`,
+      },
+      { golf: 'puls12', volume: 0.05, legato: 1, noten: 'G4:16 E4:16 F4:16 D4:16 G4:16 A4:16 F4:16 E4:16' },
+      {
+        golf: 'driehoek', volume: 0.32, legato: 0.6,
+        noten: `
+          C3:3 C3:3 C3:2 G2:4 C3:4  A2:3 A2:3 A2:2 E2:4 A2:4  D3:3 D3:3 D3:2 A2:4 D3:4  G2:3 G2:3 G2:2 D2:4 G2:4
+          C3:3 C3:3 C3:2 G2:4 C3:4  F2:3 F2:3 F2:2 C3:4 F2:4  D3:3 D3:3 D3:2 G2:4 G2:4  C3:3 C3:3 C3:2 G2:4 C3:4`,
+      },
+      { golf: 'ruis', volume: 0.1, noten: maat('K:3 H:3 S:2 K:2 H:2 S:4', 8) },
+    ],
+  },
+
+  // De Beren: gezellig restaurantmuziekje (een beetje lounge, met brushes)
+  beren: {
+    bpm: 108,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.16, vibrato: true,
+        noten: `
+          F4:2 A4:2 C5:4 A4:2 C5:2 D5:4  C5:4 A4:2 F4:2 G4:8  E4:2 G4:2 Bb4:4 G4:2 Bb4:2 C5:4  Bb4:4 A4:2 G4:2 F4:8
+          A4:2 C5:2 F5:4 E5:2 D5:2 C5:4  D5:4 C5:2 A4:2 Bb4:8  G4:2 Bb4:2 D5:4 C5:2 Bb4:2 A4:2 G4:2  F4:6 A4:2 C5:4 -:4`,
+      },
+      {
+        golf: 'puls50', volume: 0.06,
+        noten: `
+          -:2 A3:2 -:2 C4:2 -:2 A3:2 -:2 C4:2  -:2 G3:2 -:2 E4:2 -:2 G3:2 -:2 E4:2  -:2 Bb3:2 -:2 E4:2 -:2 Bb3:2 -:2 E4:2  -:2 A3:2 -:2 C4:2 -:2 A3:2 -:2 C4:2
+          -:2 A3:2 -:2 C4:2 -:2 A3:2 -:2 C4:2  -:2 D4:2 -:2 F4:2 -:2 D4:2 -:2 F4:2  -:2 Bb3:2 -:2 D4:2 -:2 Bb3:2 -:2 E4:2  -:2 A3:2 -:2 C4:2 -:2 A3:2 -:2 C4:2`,
+      },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.7,
+        noten: `
+          F2:4 A2:4 C3:4 A2:4  C2:4 E2:4 G2:4 E2:4  C2:4 E2:4 G2:4 Bb2:4  F2:4 C3:4 A2:4 C3:4
+          F2:4 A2:4 C3:4 A2:4  Bb1:4 D2:4 F2:4 D2:4  G2:4 Bb2:4 C3:4 E2:4  F2:4 C2:4 F2:8`,
+      },
+      { golf: 'ruis', volume: 0.07, noten: maat('K:4 H:2 H:2 S:4 H:2 H:2', 8) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   onderduiker: {
     bpm: 120,
@@ -397,6 +491,16 @@ export const LIEDJES = {
       { golf: 'puls50', volume: 0.18, noten: 'C5:1 E5:1 G5:1 C6:3 G5:1 C6:5' },
       { golf: 'puls25', volume: 0.08, noten: 'E4:1 G4:1 C5:1 E5:3 C5:1 E5:5' },
       { golf: 'driehoek', volume: 0.3, noten: 'C3:6 G2:6' },
+    ],
+  },
+  smikkel: {
+    bpm: 140,
+    herhaal: false,
+    kanalen: [
+      { golf: 'puls50', volume: 0.18, noten: 'C5:2 E5:2 G5:2 E5:2 F5:2 A5:2 C6:4 -:2 G5:2 C6:8' },
+      { golf: 'puls25', volume: 0.09, noten: 'E4:2 G4:2 C5:2 G4:2 A4:2 C5:2 F5:4 -:2 E5:2 E5:8' },
+      { golf: 'driehoek', volume: 0.3, noten: 'C3:4 C3:4 F3:4 F2:4 -:2 G2:2 C3:8' },
+      { golf: 'ruis', volume: 0.12, noten: 'K:4 H:4 K:4 S:4 -:2 S:2 K:8' },
     ],
   },
   herstel: {

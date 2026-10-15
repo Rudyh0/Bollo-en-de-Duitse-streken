@@ -25,6 +25,8 @@ import art_bos  # noqa: E402
 import art_dorp  # noqa: E402
 import art_n34  # noqa: E402
 import art_wezup  # noqa: E402
+import art_natuur  # noqa: E402
+import art_beren  # noqa: E402
 
 
 def pad(*delen):
@@ -65,7 +67,7 @@ def main():
     for naam, frames in art_mensen.alle().items():
         vel(frames, 3).save(pad('sprites', f'mens_{naam}.png'))
     # buitenterrein
-    vel(art_buiten.tegelset() + art_bos.tegelset_extra() + art_dorp.tegelset_extra() + art_n34.tegelset_extra() + art_wezup.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
+    vel(art_buiten.tegelset() + art_bos.tegelset_extra() + art_dorp.tegelset_extra() + art_n34.tegelset_extra() + art_wezup.tegelset_extra() + art_natuur.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
     for naam, img in art_buiten.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     # bos
@@ -75,7 +77,7 @@ def main():
     for naam, img in art_bos.iconen().items():
         img.save(pad('ui' if naam.startswith('icoon') else 'sprites', naam + '.png'))
     # Orvelte
-    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra() + art_wezup.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
+    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra() + art_wezup.binnen_extra() + art_beren.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
     for naam, img in art_dorp.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     for naam, frames in art_dorp.animaties().items():
@@ -99,6 +101,22 @@ def main():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     art_wezup.effect_snert().save(pad('sprites', 'effect_snert.png'))
     art_wezup.effect_spetter().save(pad('sprites', 'effect_spetter.png'))
+    # het natuurgebied
+    for naam, img in art_natuur.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    for naam, img in art_natuur.voertuigen().items():
+        img.save(pad('sprites', naam + '.png'))
+    for naam, img in art_natuur.iconen().items():
+        img.save(pad('ui', naam + '.png'))
+    vel(art_natuur.koe(), 4).save(pad('sprites', 'koe.png'))
+    art_natuur.dobber().save(pad('sprites', 'dobber.png'))
+    art_natuur.strandduitser().save(pad('sprites', 'gevecht_strandduitser_kurt.png'))
+    art_natuur.gevecht_strand().save(pad('bg', 'gevecht_strand.png'))
+    # De Beren-restaurant
+    for naam, img in art_beren.objecten().items():
+        img.save(pad('sprites', ('obj_' if not naam.startswith('bord_') else '') + naam + '.png'))
+    for naam, img in art_beren.iconen().items():
+        img.save(pad('ui', naam + '.png'))
     # gevechten
     for naam, img in art_gevecht.alles().items():
         img.save(pad('sprites', naam + '.png'))

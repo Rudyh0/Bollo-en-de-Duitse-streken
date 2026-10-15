@@ -122,6 +122,28 @@ const OBJECT_TYPES = {
   bedje: { textuur: () => 'obj_bedje', b: 2, h: 1 },
   bureautje: { textuur: () => 'obj_bureautje', b: 2, h: 1 },
   smokkelwaar: { textuur: () => 'obj_smokkelwaar', b: 1, h: 1 },
+  // het natuurgebied
+  hooibaal: { textuur: () => 'obj_hooibaal', b: 2, h: 1, dx: 4 },
+  melkbussen: { textuur: () => 'obj_melkbussen', b: 1, h: 1 },
+  parasol: { textuur: (o) => (o.kleur === 'blauw' ? 'obj_parasol_blauw' : 'obj_parasol'), b: 1, h: 1, dx: -8 },
+  bbq: { textuur: () => 'obj_bbq', b: 1, h: 1 },
+  koelbox: { textuur: () => 'obj_koelbox', b: 1, h: 1 },
+  flamingo: { textuur: () => 'obj_flamingo', b: 1, h: 1, dx: -4, dy: 2 },
+  visbord: { textuur: () => 'obj_visbord', b: 1, h: 1 },
+  strandstoel: { textuur: (o) => (o.kleur === 'groen' ? 'obj_strandstoel_groen' : 'obj_strandstoel'), b: 1, h: 1 },
+  handdoek: { textuur: (o) => (o.kleur === 'blauw' ? 'obj_handdoek_blauw' : 'obj_handdoek'), b: 1, h: 1, dy: 4, diepte: () => -5 },
+  reddingstoren: { textuur: () => 'obj_reddingstoren', b: 2, h: 1 },
+  ijscokar: { textuur: () => 'obj_ijscokar', b: 2, h: 1 },
+  zandkuil: { textuur: () => 'obj_zandkuil', b: 1, h: 1, diepte: () => -5 },
+  zandkasteel: { textuur: () => 'obj_zandkasteel', b: 1, h: 1, dx: -4 },
+  schep: { textuur: () => 'obj_schep', b: 1, h: 1 },
+  bord_natuur: { textuur: () => 'obj_bord_natuur', b: 3, h: 1 },
+  // De Beren-restaurant (in elk dorp)
+  restaurant_beren: { textuur: () => 'obj_restaurant_beren', b: 5, h: 2 },
+  beren_balie: { textuur: () => 'obj_beren_balie', b: 4, h: 1 },
+  beren_tafel: { textuur: (o) => (o.kleur === 'groen' ? 'obj_beren_tafel_groen' : 'obj_beren_tafel'), b: 2, h: 1, dx: -4 },
+  houten_beer: { textuur: () => 'obj_houten_beer', b: 1, h: 1, dx: -3 },
+  beren_plant: { textuur: () => 'obj_beren_plant', b: 1, h: 1 },
 };
 
 // Meldingen als een middel is uitgewerkt.

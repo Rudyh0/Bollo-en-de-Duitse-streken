@@ -19,6 +19,10 @@ import { wezup, kruidenier, bakkerij, slagerij, achterkamer } from './wezup.js';
 import {
   wezupScripts, kruidenierScripts, bakkerijScripts, slagerijScripts, achterkamerScripts,
 } from './wezup-scripts.js';
+import { landweg, lagune, strand } from './natuur.js';
+import { landwegScripts, laguneScripts, strandScripts } from './natuur-scripts.js';
+import { berenOrvelte, berenWezup } from './beren.js';
+import { berenOrvelteScripts, berenWezupScripts } from './beren-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -40,6 +44,11 @@ export const KAARTEN = {
   bakkerij,
   slagerij,
   achterkamer,
+  landweg,
+  lagune,
+  strand,
+  beren_orvelte: berenOrvelte,
+  beren_wezup: berenWezup,
 };
 
 export const SCRIPTS = {
@@ -62,4 +71,9 @@ export const SCRIPTS = {
   bakkerij: bakkerijScripts,
   slagerij: slagerijScripts,
   achterkamer: achterkamerScripts,
+  landweg: landwegScripts,
+  lagune: laguneScripts,
+  strand: strandScripts,
+  beren_orvelte: berenOrvelteScripts,
+  beren_wezup: berenWezupScripts,
 };

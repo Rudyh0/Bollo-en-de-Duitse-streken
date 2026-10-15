@@ -59,7 +59,6 @@ boven[13][41] = '+';
 boom(2, 3);
 boom(12, 3);
 boom(20, 4);
-boom(34, 10);
 boom(36, 20);
 boom(38, 23);
 boom(12, 23);
@@ -100,6 +99,8 @@ export default {
     { type: 'plaggenhut', x: 23, y: 10, script: 'hutMuur' },
     { id: 'molen', type: 'molen', x: 29, y: 6, script: 'molen', interacties: [{ dx: 1, dy: 1, script: 'molenDeur' }] },
     { type: 'meelzakken', x: 32, y: 7, script: 'meelzakken' },
+    // De Beren
+    { type: 'restaurant_beren', x: 33, y: 11, script: 'berenGevel' },
     // de brink
     { type: 'eik', x: 4, y: 18, script: 'eik' },
     { type: 'eik', x: 9, y: 22, script: 'eik' },
@@ -141,6 +142,7 @@ export default {
     { x: 24, y: 11, naar: 'hut1', nx: 4, ny: 5, richting: 'omhoog' },
     { x: 15, y: 21, naar: 'hut2', nx: 4, ny: 5, richting: 'omhoog' },
     { x: 20, y: 21, naar: 'hut3', nx: 4, ny: 5, richting: 'omhoog' },
+    { x: 35, y: 12, naar: 'beren_orvelte', nx: 5, ny: 8, richting: 'omhoog' },
     // de uitgang achter de slagboom
     { x: 39, y: 0, script: 'uitgang' },
     { x: 40, y: 0, script: 'uitgang' },

@@ -75,6 +75,29 @@ export const AANVALLEN = {
     raakTekst: '{BEER} zit onder de diesel. Dat gaat er nooit meer uit.',
     misTekst: 'De straal diesel gaat over {BEER} heen. Recht op een geparkeerde Golf.',
   },
+  schep: {
+    naam: 'SCHEP',
+    kracht: 8,
+    nauwkeurigheid: 85,
+    animatie: 'mes',
+    misTekst: 'KLONG! De schep slaat in het zand. Er komt een kokkel boven.',
+  },
+  zandstraal: {
+    naam: 'ZANDSTRAAL',
+    kracht: 6,
+    nauwkeurigheid: 95,
+    animatie: 'vape',
+    tint: 0xe8d090,
+    raakTekst: '{BEER} krijgt een lading zand in zijn ogen. Het knarst tussen je tanden.',
+    misTekst: 'Het zand waait terug. Recht in zijn eigen zwembroek.',
+  },
+  handdoekslag: {
+    naam: 'HANDDOEKSLAG',
+    kracht: 5,
+    nauwkeurigheid: 100,
+    animatie: 'mes',
+    misTekst: 'De handdoek klapt in de lucht. Zelfs dat klinkt Duits.',
+  },
   wapenstok: {
     naam: 'WAPENSTOK',
     kracht: 7,
@@ -85,6 +108,20 @@ export const AANVALLEN = {
 };
 
 export const VIJANDEN = {
+  // het strandje
+  kurt: {
+    naam: 'STRANDDUITSER KURT',
+    sprite: 'gevecht_strandduitser_kurt',
+    intro: 'STRANDDUITSER KURT klopt het zand van zijn zwembroek!',
+    niveau: 14,
+    maxGz: 44,
+    aanval: 11,
+    verdediging: 10,
+    snelheid: 10,
+    xp: 150,
+    geld: 30,
+    aanvallen: [['schep', 40], ['zandstraal', 35], ['handdoekslag', 25]],
+  },
   // de N34
   bernd: {
     naam: 'UNTEROFFIZIER BERND',

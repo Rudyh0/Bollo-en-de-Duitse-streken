@@ -485,6 +485,10 @@ class Audio {
       case 'ijs':
         [0, 0.05, 0.11, 0.18].forEach((d, i) => this.toon(uit, 0.125, 2400 + i * 400, t + d, 0.05, 0.12, { verval: 1 }));
         break;
+      case 'boe':
+        this.toon(uit, 0.5, 130, t, 0.25, 0.28, { naarFreq: 150, verval: 0.4 });
+        this.toon(uit, 0.5, 150, t + 0.25, 0.55, 0.28, { naarFreq: 105, verval: 1 });
+        break;
       case 'blaf':
         [0, 0.22].forEach((d) => {
           this.toon(uit, 0.25, 320, t + d, 0.09, 0.32, { naarFreq: 170, verval: 1 });

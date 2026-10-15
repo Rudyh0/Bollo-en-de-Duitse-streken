@@ -140,4 +140,17 @@ Klaar (hoofdstuk 5, Wezup):
 - wie het stadje wil verlaten, wordt tegengehouden door Leutnant Friedrich: zoek Anne Fries, de dochter van de kruidenier, die gezocht wordt voor de verkoop van Friese droge worst en suikerbrood
 - ze zit achter de boekenkast van kruidenier Hendrik, in een geheime kamer. Heb je haar dagboek bij je, dan geef je het terug. Ze loopt met je mee; bij de Leutnant kies je of je haar inlevert. Pas daarna kun je verder
 
-Nog te doen: Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.
+Klaar (hoofdstuk 6, het Drentse land):
+
+- deel 1, de landweg: trekkers, hooikarren en legervoertuigen in plaats van auto's, koeien in de wei en boer Lubbert (in het Drents), die je een voedselbon geeft
+- deel 2, de Drentse Blue Lagoon: Duitsers op verlof (verbrand, sokken in sandalen, barbecue en schlagermuziek) vallen je niet aan. Heinz geeft je zijn hengel: vang drie vissen (baars, snoek en karper) bij drie verschillende steigers. Vissen is een minispel: wacht tot de dobber echt onder gaat en druk dan op A. Te vroeg of te laat, dan is de vis weg. Pas als je de hengel en de vissen terugbrengt, kun je verder
+- deel 3, het recreatiestrandje: vlak voor de uitgang komt Strandduitser Kurt uit het zand, vertelt waarom Duitsers altijd kuilen graven en valt je aan (met een schep, een zandstraal en een handdoekslag)
+
+De Beren (in elk dorp, ook in Aalden straks):
+
+- een restaurant in Orvelte (naast de molen) en in Wezup (aan de noordkant), met eigen muziekje
+- AANSCHUIVEN bij de gastvrouw is voor beren gratis: de kok zet de borden op de balie, je eet alles op en je gezondheid en PP zijn weer helemaal vol, net als in een Pokémon Center
+- AFHALEN voor onderweg: BROODPLANKJE (€5, herstelt 15), KIPSATE (€10, herstelt 30) en SPARERIBS (€18, herstelt 60), ook te gebruiken in gevechten
+- bij De Beren wordt niet gevochten, ook niet door de Duitsers die er zitten te eten
+
+Nog te doen: Aalden (het laatste stadje, met een eigen De Beren), meer vijanden per gebied, quests en het einde bij het vakantiepark.

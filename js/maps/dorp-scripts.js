@@ -1,6 +1,7 @@
 // Orvelte: dorpelingen, de jongens met de fatbikes, de onderduikers en Obergefreiter Wolfgang.
 import { vindOnderduiker } from './volgers.js';
 import { knapOp } from '../core/staat.js';
+import { berenGevel } from './beren-scripts.js';
 
 /** Hoeveel onderduikers lopen er achter je aan? */
 const aantalVolgers = (staat) => (staat.volgers || []).length;
@@ -27,6 +28,8 @@ async function wegScheuren({ wereld, ui, audio }) {
 }
 
 export default {
+  berenGevel,
+
   async binnenkomst({ ui, staat }) {
     if (staat.vlaggen.dorpGezien) return;
     staat.vlaggen.dorpGezien = true;

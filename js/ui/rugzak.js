@@ -157,6 +157,11 @@ async function gebruik(ui, id, scherm, inGevecht = false) {
     return false;
   }
 
+  if (item.bekijk) {
+    await ui.zeg(item.bekijk);
+    return false;
+  }
+
   if (id === 'soeplepel') {
     await ui.zeg(staat.vlaggen.rookAlarm ? [
       'Een stevige metalen soeplepel. Er zit nog een beetje roet op.',

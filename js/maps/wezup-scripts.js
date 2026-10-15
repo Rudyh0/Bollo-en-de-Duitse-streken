@@ -1,10 +1,13 @@
 // Wezup: de inwoners (die het "die verdomde tjibbes uit Friesland" vinden), het kistje met snert,
 // Leutnant Friedrich bij de uitgang en Anne Fries achter de boekenkast van kruidenier Hendrik.
 import { aantal, neemItem, leerAanval } from '../core/staat.js';
+import { berenGevel } from './beren-scripts.js';
 
 // ================================================================== buiten
 
 export const wezupScripts = {
+  berenGevel,
+
   async binnenkomst({ ui, staat }) {
     if (staat.vlaggen.wezupGezien) return;
     staat.vlaggen.wezupGezien = true;
@@ -233,17 +236,20 @@ export const wezupScripts = {
     ]);
   },
 
-  async uitgang({ ui, staat }) {
+  async uitgang({ ui, wereld, staat }, { warp }) {
     if (!staat.vlaggen.wezupKlaar) {
       await ui.zeg('FRIEDRICH: Halt! Zonder Anne Fries kom jij hier niet langs.');
       return;
     }
-    await ui.zeg([
-      'Je laat Wezup achter je. Het fietspad slingert verder, richting Aalden.',
-      'Achter je klinkt nog steeds geklap. Je loopt een beetje sneller.',
-      'EINDE VAN HOOFDSTUK 5. Wordt vervolgd!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+    if (!staat.vlaggen.wezupVerlaten) {
+      staat.vlaggen.wezupVerlaten = true;
+      await ui.zeg([
+        'Je laat Wezup achter je. Het fietspad gaat over in een landweggetje, tussen de weilanden.',
+        'Achter je klinkt nog steeds geklap. Je loopt een beetje sneller.',
+      ]);
+      await ui.hoofdstuk('HOOFDSTUK 6', 'HET DRENTSE LAND');
+    }
+    wereld.gaNaar('landweg', 1, warp.x === 20 ? 6 : 7, 'rechts');
   },
 };
 

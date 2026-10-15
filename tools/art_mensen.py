@@ -495,8 +495,32 @@ PERSONEN = {
     'klompenmaker': ('pet', 'normaal', kleuren(
         h='#d8d8d8', H='#b0b0b0', g='#6a4a2a', G='#4a3420', l='#8a6a4a',
         t='#4a6a8a', T='#3a5068', p='#5a4a3a', P='#44382c', f='#f0e0b0', b='#4a6a8a')),
+    # het natuurgebied
+    'heinz': ('kort', 'normaal', kleuren(
+        h='#c8a868', H='#a08048', t='#f08848', T='#3aa8a0', p='#e8d8b0', P='#c8b890', f='#f4f4f4', b='#e8d8b0',
+        s='#f0a080', S='#cc7a5a')),
+    'rudiger': ('kaal', 'normaal', kleuren(
+        h='#e8c8a0', H='#c8a880', t='#f4f4f4', T='#d8d8d8', p='#3a6ac8', P='#2a4a8a', f='#8a5a34', b='#3a6ac8',
+        s='#f08070', S='#c85a4a')),
+    'karl': ('pet', 'normaal', kleuren(
+        h='#8a8a8a', H='#6a6a6a', g='#f4f4f0', G='#3a8a3a', l='#ffffff',
+        t='#8ac8e8', T='#5a9ac8', p='#5a6a3a', P='#44502c', f='#f4f4f4', b='#5a6a3a',
+        s='#f0b090', S='#d08a6a')),
+    'kurt': ('kort', 'normaal', kleuren(
+        h='#e8d090', H='#c0a868', t='#f0a080', T='#cc7a5a', p='#3a6ac8', P='#2a4a8a', f='#f4f4f4', b='#3a6ac8',
+        s='#f0a080', S='#cc7a5a')),
+    'ijsman': ('pet', 'normaal', kleuren(
+        h='#5a3a2a', H='#3a2418', g='#f088b0', G='#c86a90', l='#f8b0d0',
+        t='#f4f4f0', T='#d0d0c8', p='#3a3a42', P='#26262c', f='#2a2a2a', b='#f088b0')),
     'dichter': ('lang', 'normaal', kleuren(
         h='#2a2a30', H='#18181c', t='#4a3a5a', T='#342842', p='#2a2a34', P='#1c1c24', f='#1a1a1a', b='#4a3a5a')),
+    # De Beren: gastvrouw in het zwart met een rood schort, en de kok
+    'gastvrouw': ('lang', 'normaal', kleuren(
+        h='#7a4a2a', H='#5a341c', t='#2a2a30', T='#1a1a1e', p='#b8322a', P='#86221c', f='#1a1a1a', b='#b8322a')),
+    'kok': ('muts', 'normaal', kleuren(
+        h='#3a2a20', H='#24180e', g='#f8f8f4', G='#d8d8d0', l='#ffffff',
+        t='#f4f4f0', T='#d0d0c8', p='#2a2a30', P='#1a1a1e', f='#1a1a1a', b='#b8322a',
+        s='#c08860', S='#9c6a48')),
 }
 
 

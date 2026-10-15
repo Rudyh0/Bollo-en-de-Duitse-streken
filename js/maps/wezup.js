@@ -84,10 +84,10 @@ export const wezup = {
     { type: 'winkel', soort: 'kruidenier', x: 9, y: 7, script: 'kruidenierGevel' },
     { type: 'huis', kleur: 'wit', x: 14, y: 7, script: 'huis' },
     { type: 'poster_gezocht', x: 18, y: 6, script: 'poster' },
-    { type: 'huis', kleur: 'geel', x: 24, y: 7, script: 'huis' },
-    { type: 'huis', kleur: 'rood', x: 28, y: 7, script: 'huis' },
-    { type: 'huis', kleur: 'donker', x: 32, y: 7, script: 'huis' },
-    { type: 'huis', kleur: 'wit', x: 36, y: 7, script: 'huis' },
+    { type: 'restaurant_beren', x: 24, y: 7, script: 'berenGevel' },
+    { type: 'huis', kleur: 'rood', x: 30, y: 7, script: 'huis' },
+    { type: 'huis', kleur: 'donker', x: 34, y: 7, script: 'huis' },
+    { type: 'huis', kleur: 'wit', x: 38, y: 7, script: 'huis' },
     // de haven
     { type: 'netten', x: 6, y: 12, script: 'netten' },
     { type: 'tonnen', x: 15, y: 12, script: 'tonnen' },
@@ -134,6 +134,7 @@ export const wezup = {
     { x: 11, y: 8, naar: 'kruidenier', nx: 4, ny: 5, richting: 'omhoog' },
     { x: 5, y: 23, naar: 'bakkerij', nx: 4, ny: 5, richting: 'omhoog' },
     { x: 26, y: 23, naar: 'slagerij', nx: 4, ny: 5, richting: 'omhoog' },
+    { x: 26, y: 8, naar: 'beren_wezup', nx: 5, ny: 8, richting: 'omhoog' },
     // de uitgang in het noorden
     { x: 20, y: 0, script: 'uitgang' },
     { x: 21, y: 0, script: 'uitgang' },
