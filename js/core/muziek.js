@@ -143,7 +143,66 @@ export const LIEDJES = {
     ],
   },
 
+  bos: {
+    bpm: 88,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.13, vibrato: true,
+        noten: `
+          E4:6 G4:2 B4:4 A4:4  G4:4 F#4:4 E4:8  D4:6 E4:2 F#4:4 A4:4  G4:4 F#4:4 D4:8
+          E4:4 G4:4 B4:4 E5:4  D5:6 C5:2 B4:4 A4:4  C5:4 B4:4 A4:4 F#4:4  E4:12 -:4`,
+      },
+      { golf: 'puls12', volume: 0.05, legato: 1, noten: 'G3:16 G3:16 F#3:16 F#3:16 G3:16 B3:16 C4:16 B3:16' },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.7,
+        noten: `
+          E2:4 B2:4 E3:4 B2:4  E2:4 B2:4 E3:4 B2:4  D2:4 A2:4 D3:4 A2:4  D2:4 A2:4 D3:4 F#2:4
+          E2:4 B2:4 E3:4 B2:4  G2:4 D3:4 G3:4 D3:4  A2:4 E3:4 A2:4 B2:4  E2:4 B2:4 E2:8`,
+      },
+      { golf: 'ruis', volume: 0.08, noten: maat('K:4 H:4 H:4 H:4', 8) },
+    ],
+  },
+
+  kikker: {
+    bpm: 112,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.12,
+        noten: `
+          C5:2 -:2 A4:2 C5:2 -:2 A4:2 G4:4  F4:2 G4:2 A4:2 C5:4 A4:2 -:4
+          Bb4:2 -:2 G4:2 Bb4:2 -:2 G4:2 F4:4  E4:2 F4:2 G4:2 C5:6 -:4
+          C5:2 -:2 A4:2 C5:2 D5:2 C5:2 A4:4  F5:4 E5:2 D5:2 C5:4 A4:4
+          Bb4:2 A4:2 G4:2 Bb4:2 A4:2 G4:2 E4:4  F4:8 -:4 C4:2 C4:2`,
+      },
+      {
+        golf: 'puls12', volume: 0.05, legato: 0.5,
+        noten: `
+          ${maat('-:2 A4:2', 4)} ${maat('-:2 A4:2', 4)} ${maat('-:2 Bb4:2', 4)} ${maat('-:2 G4:2', 4)}
+          ${maat('-:2 A4:2', 4)} ${maat('-:2 F4:2', 4)} ${maat('-:2 Bb4:2', 2)} ${maat('-:2 G4:2', 2)} ${maat('-:2 A4:2', 4)}`,
+      },
+      {
+        golf: 'driehoek', volume: 0.32, legato: 0.5,
+        noten: `
+          F2:2 -:2 F3:2 -:2 C3:2 -:2 F3:2 E3:2  F2:2 -:2 F3:2 -:2 C3:2 -:2 F3:2 E3:2
+          G2:2 -:2 G3:2 -:2 D3:2 -:2 G3:2 F3:2  C3:2 -:2 C3:2 -:2 G2:2 -:2 Bb2:2 B2:2
+          F2:2 -:2 F3:2 -:2 C3:2 -:2 F3:2 E3:2  D3:2 -:2 D3:2 -:2 A2:2 -:2 D3:2 C3:2
+          G2:2 -:2 D3:2 -:2 C3:2 -:2 G2:2 -:2  F2:2 -:2 C3:2 -:2 F2:4 C3:2 E3:2`,
+      },
+      { golf: 'ruis', volume: 0.12, noten: maat('K:4 S:2 H:2 K:2 K:2 S:4', 8) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
+  aanval: {
+    bpm: 150,
+    herhaal: false,
+    kanalen: [
+      { golf: 'puls50', volume: 0.2, noten: 'G4:2 C5:2 E5:2 G5:4 E5:2 G5:8' },
+      { golf: 'puls25', volume: 0.1, noten: 'E4:2 G4:2 C5:2 E5:4 C5:2 E5:8' },
+      { golf: 'driehoek', volume: 0.3, noten: 'C3:4 G2:4 C3:12' },
+      { golf: 'ruis', volume: 0.15, noten: 'K:4 S:4 K:4 S:4 K:4' },
+    ],
+  },
   item: {
     bpm: 150,
     herhaal: false,

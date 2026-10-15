@@ -50,7 +50,13 @@ class RugzakScherm {
   }
 }
 
-async function gebruik(ui, id, scherm) {
+const EFFECT_TEKSTEN = {
+  ritalin: ['{BEER} neemt een RITALIN.', 'Je hart gaat tekeer. Je benen willen maar één ding: rennen!'],
+  xtc: ['{BEER} neemt een XTC.', 'Alles om je heen begint te glinsteren. Wat een mooie bomen. Wat een mooie wereld.'],
+  '3mmc': ['{BEER} neemt wat 3MMC.', 'Alles is mooi. Alles is snel. Héél snel.'],
+};
+
+async function gebruik(ui, id, scherm, inGevecht = false) {
   const item = ITEMS[id];
   const opties = item.soort === 'sleutel' ? ['BEKIJKEN', 'TERUG'] : ['GEBRUIKEN', 'TERUG'];
   const keuze = await ui.kies(opties, { rechts: 238, onder: 106, annuleer: 1, diepte: 720 });
@@ -74,6 +80,21 @@ async function gebruik(ui, id, scherm) {
       `${beer()} ruilde een VOEDSELBON in voor ${maaltijd}.`,
       `${beer()} kreeg ${hersteld} punten gezondheid terug!`,
     ]);
+    return true;
+  }
+
+  if (item.effect) {
+    if (inGevecht) {
+      await ui.zeg('Dit is niet het moment om dat te gebruiken.');
+      return false;
+    }
+    neemItem(id);
+    staat.effecten = staat.effecten || {};
+    Object.entries(item.effect).forEach(([soort, ms]) => {
+      staat.effecten[soort] = Math.max(staat.effecten[soort] || 0, ms);
+    });
+    audio.sfx('menu');
+    await ui.zeg(EFFECT_TEKSTEN[id] || [`{BEER} gebruikt ${item.naam}.`]);
     return true;
   }
 
@@ -112,8 +133,9 @@ export async function openRugzak(ui, { inGevecht = false } = {}) {
       });
       if (keuze >= ids.length) return false;
       start = keuze;
-      const gebruikt = await gebruik(ui, ids[keuze], scherm);
+      const gebruikt = await gebruik(ui, ids[keuze], scherm, inGevecht);
       if (gebruikt && inGevecht) return true;
+      if (gebruikt && ITEMS[ids[keuze]].effect) return true;
       if (aantal(ids[keuze]) === 0) start = Math.max(0, keuze - 1);
     }
   } finally {

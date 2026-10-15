@@ -5,7 +5,7 @@
 import { zetCamera, BREEDTE, HOOGTE } from '../core/constanten.js';
 import { Dialoog } from '../ui/dialoog.js';
 import { Lijst } from '../ui/lijst.js';
-import { kader, tekst, meet } from '../ui/tekst.js';
+import { kader, tekst, meet, centreerX } from '../ui/tekst.js';
 import { audio } from '../core/audio.js';
 import { geefItem } from '../core/staat.js';
 import { itemNaam } from '../core/items.js';
@@ -126,7 +126,30 @@ export class UIScene extends Phaser.Scene {
     await this.zeg(`${beer()} stopte ${n === 1 ? 'de' : 'de'} ${naam} in de RUGZAK.`);
   }
 
+  /** Tekst met een melodietje eronder (nieuwe aanval geleerd, enzovoort). */
+  async zegMetJingle(teksten, jingleId) {
+    const jingle = audio.jingle(jingleId);
+    this.sluitGevraagd = false;
+    await this.dialoog.toon(teksten, { wachtAanEinde: false });
+    await jingle;
+    await this.dialoog.wachtOpKnop();
+    this.sluitGevraagd = true;
+  }
+
   // ------------------------------------------------------------ overgangen
+
+  /** Titelkaart voor een nieuw hoofdstuk, op een zwart scherm. Het scherm blijft daarna zwart. */
+  async hoofdstuk(boven, titel) {
+    this.sluitDialoog();
+    await this.naarZwart(500);
+    const a = tekst(this, centreerX(this, boven, 'grijs'), 58, boven, 'grijs').setDepth(5001).setAlpha(0);
+    const b = tekst(this, centreerX(this, titel, 'titel'), 74, titel, 'titel').setDepth(5001).setAlpha(0);
+    await new Promise((klaar) => this.tweens.add({ targets: [a, b], alpha: 1, duration: 500, onComplete: klaar }));
+    await this.wachtMs(1800);
+    await new Promise((klaar) => this.tweens.add({ targets: [a, b], alpha: 0, duration: 400, onComplete: klaar }));
+    a.destroy();
+    b.destroy();
+  }
 
   gordijnNaar(alpha, ms, kleur = 0x000000) {
     this.gordijn.setFillStyle(kleur, 1);
@@ -194,6 +217,34 @@ export class UIScene extends Phaser.Scene {
     this.tweens.add({
       targets: delen, y: '-=34', duration: 300, delay: 2400, ease: 'Sine.easeIn',
       onComplete: () => delen.forEach((o) => o.destroy()),
+    });
+  }
+
+  /** Pushmelding van de telefoon bovenin beeld. Geeft een functie terug die hem weer weghaalt. */
+  toonMelding(afzender, bericht) {
+    const x = 16;
+    const b = BREEDTE - 32;
+    const h = 32;
+    const g = this.add.graphics();
+    g.fillStyle(0x000000, 0.35).fillRoundedRect(x + 1, 2, b, h, 6);
+    g.fillStyle(0xf4f6fa).fillRoundedRect(x, 0, b, h, 6);
+    g.lineStyle(1, 0xc8ccd6).strokeRoundedRect(x + 0.5, 0.5, b - 1, h - 1, 6);
+    // app-icoontje: een spraakwolkje
+    g.fillStyle(0x2f6f8f).fillRoundedRect(x + 5, 6, 20, 20, 5);
+    g.fillStyle(0xffffff).fillRoundedRect(x + 9, 10, 12, 9, 3);
+    g.fillTriangle(x + 11, 18, x + 15, 18, x + 10, 22);
+    const delen = [
+      g,
+      tekst(this, x + 30, 3, 'KWEBBEL - nu', 'grijs'),
+      tekst(this, x + 30, 15, `${afzender}: ${bericht}`, 'donker'),
+    ];
+    const melding = this.add.container(0, -40, delen).setDepth(880);
+    this.tweens.add({ targets: melding, y: 4, duration: 260, ease: 'Back.easeOut' });
+    return () => new Promise((klaar) => {
+      this.tweens.add({
+        targets: melding, y: -40, duration: 200, ease: 'Sine.easeIn',
+        onComplete: () => { melding.destroy(); klaar(); },
+      });
     });
   }
 

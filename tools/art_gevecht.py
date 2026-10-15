@@ -13,9 +13,19 @@ def nieuw(w, h):
 
 # ------------------------------------------------------------------ wachter (vijand, van voren)
 
+VARIANTEN = {
+    'klaus': {'hoofd': 'helm'},
+    'dieter': {'hoofd': 'pet', 'snor': True},
+    'horst': {'hoofd': 'helm', 'takjes': True, 'uni': ('#6a7448', '#4c5434', '#86906a')},
+    'jurgen': {'hoofd': 'veldmuts', 'bril': True, 'uni': ('#727c5c', '#525a42', '#8e987a')},
+    'uwe': {'hoofd': 'pet', 'snor': True, 'epauletten': True, 'uni': ('#5c6250', '#40463a', '#787e6a')},
+}
+
+
 def wachter(variant='klaus'):
+    cfg = VARIANTEN[variant]
     d = Doek(48, 56)
-    uni, uniS, uniL = '#7a8068', '#585e4a', '#969c84'
+    uni, uniS, uniL = cfg.get('uni', ('#7a8068', '#585e4a', '#969c84'))
     broek, broekS = '#5c6250', '#444a3a'
     huid, huidS, wang = '#f0c49a', '#cc9a72', '#e49478'
     laars, laarsL = '#1e1e22', '#3e3e46'
@@ -67,15 +77,31 @@ def wachter(variant='klaus'):
     d.rect(20, 13, 2, 2, '#202028')
     d.rect(27, 13, 2, 2, '#202028')
     d.rect(23, 15, 2, 3, huidS)
-    if variant == 'dieter':
-        # dikke snor en pet
+    if cfg.get('epauletten'):
+        d.rect(12, 23, 7, 2, '#c8b060')
+        d.rect(30, 23, 7, 2, '#c8b060')
+    if cfg.get('bril'):
+        for ox in (19, 26):
+            d.rect(ox, 12, 4, 4, '#2a2a30')
+            d.rect(ox + 1, 13, 2, 2, '#c8e4f0')
+        d.rect(23, 13, 3, 1, '#2a2a30')
+    if cfg.get('snor'):
         d.ellips(24, 19, 6, 1.6, '#4a3424')
         d.rect(21, 21, 6, 1, '#7a3a30')
+    elif cfg['hoofd'] != 'helm':
+        d.rect(21, 19, 6, 1, '#7a3a30')
+    if cfg['hoofd'] == 'pet':
         d.ellips(24, 6, 11, 4.5, helm, alleen=lambda x, y: y <= 8)
         d.rect(13, 6, 22, 3, helmS)
         d.rect(14, 8, 20, 2, '#1e1e22')
         d.ellips(24, 9.5, 10, 1.6, '#1e1e22')
         d.rect(21, 3, 6, 2, helmL)
+    elif cfg['hoofd'] == 'veldmuts':
+        # schuitje: plat mutsje schuin op het hoofd
+        for i in range(5):
+            d.rect(16 + i, 3 + i, 18 - i, 1, helm if i < 4 else helmS)
+        d.rect(16, 7, 18, 2, helmS)
+        d.rect(18, 4, 6, 1, helmL)
     else:
         d.rect(21, 19, 6, 1, '#7a3a30')
         # stalen helm met brede rand
@@ -86,6 +112,10 @@ def wachter(variant='klaus'):
             b = 12 + (y - 9)
             d.rect(24 - b, y, 2 * b, 1, helm if y < 12 else helmS)
         d.rect(16, 13, 16, 1, helmS)
+        if cfg.get('takjes'):
+            for (x, y) in ((15, 6), (19, 3), (24, 2), (29, 4), (33, 8), (13, 10), (21, 7), (28, 9)):
+                d.rect(x, y, 2, 2, '#3e7a3a')
+                d.p(x + 1, y - 1, '#5aa852')
     return omlijn(d.img, OMLIJNING)
 
 
@@ -266,6 +296,62 @@ def achtergrond():
     return img
 
 
+def achtergrond_bos():
+    """Gevechtsachtergrond in het bos: dichte dennen, een open plek met mos en dennennaalden."""
+    random.seed(12)
+    w, h = 240, 112
+    img = Image.new('RGBA', (w, h), K('#000000'))
+    d = Doek(w, h)
+    d.img = img
+    d.px = img.load()
+    # lucht die tussen de bomen door piept
+    banden = ['#8cc0dc', '#9ccae0', '#acd4e4', '#bcdce8']
+    for i, c in enumerate(banden):
+        d.rect(0, i * 6, w, 6, c)
+    # achterste bomenrij (donker, blauwig)
+    for x in range(-6, w + 6, 9):
+        top = 2 + random.randint(0, 8)
+        for y in range(top, 46):
+            b = (y - top) // 2 + 1
+            d.rect(x - b, y, 2 * b, 1, '#2a4a40' if (x // 9) % 2 else '#24423a')
+    # voorste bomenrij (groener), met stammen
+    for x in range(-4, w + 4, 14):
+        top = 10 + random.randint(0, 10)
+        for y in range(top, 50):
+            b = (y - top) // 2 + 2
+            kleur = '#2e6a3a' if (x // 14) % 2 else '#3a7a44'
+            d.rect(x - b, y, 2 * b, 1, kleur)
+            if (y - top) % 6 == 5:
+                d.rect(x - b, y, 2 * b, 1, '#245a30')
+        d.rect(x - 2, 50, 4, 6, '#5a3a24')
+    d.rect(0, 50, w, 4, '#24502e')
+    # bosgrond
+    grondkleuren = ['#4e7a3e', '#56843f', '#5e8c44', '#669448']
+    for i, c in enumerate(grondkleuren):
+        d.rect(0, 54 + i * 15, w, 15, c)
+    for _ in range(420):
+        x, y = random.randrange(w), random.randrange(54, h)
+        d.p(x, y, random.choice(['#46703a', '#74a052', '#7a5a34', '#3e6a34']))
+    for _ in range(40):  # dennennaalden
+        x, y = random.randrange(w - 3), random.randrange(56, h)
+        d.rect(x, y, 3, 1, '#8a6a3c')
+    # paddenstoeltjes en varens aan de rand
+    for (x, y) in ((8, 64), (226, 70), (120, 58)):
+        d.rect(x, y, 1, 3, '#f0e8d8')
+        d.ellips(x + 0.5, y, 2.5, 1.5, '#d83a30')
+    for (x, y) in ((24, 60), (210, 59), (96, 62)):
+        for dx in (-4, -2, 0, 2, 4):
+            d.lijn(x, y + 6, x + dx, y, '#3e8a3e')
+    # podia (mos)
+    d.ellips(176, 80, 46, 11, '#3e6a32')
+    d.ellips(176, 78, 44, 10, '#78a858')
+    d.ellips(170, 77, 30, 5, '#88b866')
+    d.ellips(62, 112, 60, 14, '#3e6a32')
+    d.ellips(62, 110, 58, 13, '#78a858')
+    d.ellips(56, 108, 38, 6, '#88b866')
+    return img
+
+
 # ------------------------------------------------------------------ effecten
 
 def noot():
@@ -333,6 +419,9 @@ def alles():
     return {
         'gevecht_wachter_klaus': wachter('klaus'),
         'gevecht_wachter_dieter': wachter('dieter'),
+        'gevecht_soldaat_horst': wachter('horst'),
+        'gevecht_soldaat_jurgen': wachter('jurgen'),
+        'gevecht_feldwebel_uwe': wachter('uwe'),
         'gevecht_beer_rug': beer_rug(),
         'effect_noot': noot(),
         'effect_uitroep': uitroep(),

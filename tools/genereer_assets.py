@@ -21,6 +21,7 @@ import art_achtergronden  # noqa: E402
 import art_mensen  # noqa: E402
 import art_buiten  # noqa: E402
 import art_gevecht  # noqa: E402
+import art_bos  # noqa: E402
 
 
 def pad(*delen):
@@ -61,14 +62,21 @@ def main():
     for naam, frames in art_mensen.alle().items():
         vel(frames, 3).save(pad('sprites', f'mens_{naam}.png'))
     # buitenterrein
-    vel(art_buiten.tegelset(), 6).save(pad('tiles', 'buiten.png'))
+    vel(art_buiten.tegelset() + art_bos.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
     for naam, img in art_buiten.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
+    # bos
+    for naam, img in art_bos.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    vel(art_bos.kikker(), 4).save(pad('sprites', 'kikker.png'))
+    for naam, img in art_bos.iconen().items():
+        img.save(pad('ui' if naam.startswith('icoon') else 'sprites', naam + '.png'))
     # gevechten
     for naam, img in art_gevecht.alles().items():
         img.save(pad('sprites', naam + '.png'))
     vel([art_gevecht.volkszanger(False), art_gevecht.volkszanger(True)], 2).save(pad('sprites', 'gevecht_volkszanger.png'))
     art_gevecht.achtergrond().save(pad('bg', 'gevecht.png'))
+    art_gevecht.achtergrond_bos().save(pad('bg', 'gevecht_bos.png'))
     # achtergronden
     art_achtergronden.titel_achtergrond().save(pad('bg', 'titel.png'))
     art_achtergronden.intro_achtergrond().save(pad('bg', 'intro.png'))

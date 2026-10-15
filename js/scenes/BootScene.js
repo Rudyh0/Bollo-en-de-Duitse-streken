@@ -28,6 +28,9 @@ export class BootScene extends Phaser.Scene {
       icoon_voedselbon: 'ui/icoon_voedselbon.png',
       icoon_soeplepel: 'ui/icoon_soeplepel.png',
       icoon_rugzak: 'ui/icoon_rugzak.png',
+      icoon_ritalin: 'ui/icoon_ritalin.png',
+      icoon_xtc: 'ui/icoon_xtc.png',
+      icoon_3mmc: 'ui/icoon_3mmc.png',
       obj_stapelbed: 'sprites/obj_stapelbed.png',
       obj_stapelbed_rood: 'sprites/obj_stapelbed_rood.png',
       obj_kist: 'sprites/obj_kist.png',
@@ -39,8 +42,12 @@ export class BootScene extends Phaser.Scene {
       binnen: 'tiles/binnen.png',
       buiten: 'tiles/buiten.png',
       bg_gevecht: 'bg/gevecht.png',
+      bg_gevecht_bos: 'bg/gevecht_bos.png',
       gevecht_wachter_klaus: 'sprites/gevecht_wachter_klaus.png',
       gevecht_wachter_dieter: 'sprites/gevecht_wachter_dieter.png',
+      gevecht_soldaat_horst: 'sprites/gevecht_soldaat_horst.png',
+      gevecht_soldaat_jurgen: 'sprites/gevecht_soldaat_jurgen.png',
+      gevecht_feldwebel_uwe: 'sprites/gevecht_feldwebel_uwe.png',
       gevecht_beer_rug: 'sprites/gevecht_beer_rug.png',
       effect_noot: 'sprites/effect_noot.png',
       effect_uitroep: 'sprites/effect_uitroep.png',
@@ -49,9 +56,11 @@ export class BootScene extends Phaser.Scene {
       effect_inslag: 'sprites/effect_inslag.png',
       effect_snee: 'sprites/effect_snee.png',
       effect_lepel: 'sprites/effect_lepel.png',
+      effect_frikandel: 'sprites/effect_frikandel.png',
     };
     ['barak', 'barak_5', 'barak_6', 'barak_7', 'barak_7_open', 'keuken', 'wachttoren', 'poort', 'poort_open',
-      'wachthuisje', 'den', 'waterpomp', 'lantaarn', 'bankje', 'kisten', 'bord'].forEach((naam) => {
+      'wachthuisje', 'den', 'waterpomp', 'lantaarn', 'bankje', 'kisten', 'bord',
+      'schatkist', 'schatkist_open', 'bron', 'boomstronk'].forEach((naam) => {
       afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
     });
     Object.entries(afbeeldingen).forEach(([k, pad]) => this.load.image(k, pad + v));
@@ -61,9 +70,10 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('fenna', `sprites/fenna.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('directeur', `sprites/directeur.png${v}`, { frameWidth: 48, frameHeight: 64 });
     this.load.spritesheet('beer_groot', `sprites/beer_groot.png${v}`, { frameWidth: 48, frameHeight: 56 });
+    this.load.spritesheet('kikker', `sprites/kikker.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('gevecht_volkszanger', `sprites/gevecht_volkszanger.png${v}`, { frameWidth: 48, frameHeight: 56 });
     ['wachter', 'wachter_pet', 'gevangene_a', 'gevangene_b', 'gevangene_c', 'gevangene_d',
-      'oma', 'sporter', 'boer', 'kokkin', 'dichter'].forEach((naam) => {
+      'oma', 'sporter', 'boer', 'kokkin', 'dichter', 'soldaat_bos', 'soldaat_muts', 'feldwebel'].forEach((naam) => {
       this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
     });
 

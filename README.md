@@ -81,7 +81,7 @@ lib/phaser.min.js         Phaser 3.90
 js/main.js                start van het spel
 js/spel-config.js         vaste namen (leeg = speler kiest)
 js/core/                  invoer, geluid (chiptune-synth), muziek, opslaan, instellingen, namen, voorwerpen
-js/ui/                    tekstvak, keuzelijsten, naamscherm, pauzemenu, rugzak, instellingen
+js/ui/                    tekstvak, keuzelijsten, naamscherm, pauzemenu, rugzak, winkel, telefoon, instellingen
 js/scenes/                Boot, Start, Setup (namen), Titel, Intro (directeur), Wereld, UI
 js/maps/                  kaarten (tegels, objecten, personen) en hun scripts
 server/opslagdienst.py    opslag voor spelers en saves (Python + SQLite)
@@ -107,6 +107,14 @@ Klaar (hoofdstuk 1, Kamp Westerbork):
 - het kampplein: rondlopende gevangenen, stoeten geketende gevangenen met een wachter voorop, de keuken, een waterpomp die je opknapt
 - de uitgang: twee wachters die je zien aankomen en die je moet verslaan om de poort open te krijgen
 - gevechten: SOEPLEPELSLAG en de VOLKSZANGER (Sepp Schunkelhuber brengt de vijand in de war, waardoor die vaker mist) tegen een Walther P38 en een mesje; rugzak tijdens het gevecht, ervaring en niveaus; wie verliest, begint opgeknapt opnieuw aan het begin van de scène
-- pauzemenu met rugzak, status, opslaan en instellingen
+- pauzemenu met rugzak, status, telefoon (zodra je die hebt), opslaan en instellingen
+
+Klaar (hoofdstuk 2, het bos):
+
+- deel 1, het dennenbos: een kist met de tweede aanval, de BEVROREN FRIKANDEL (harder dan de soeplepel, maar je mist vaker)
+- deel 2, diep in het bos: een patrouille van drie Duitsers (Horst, Jürgen en Feldwebel Uwe) die je niet kunt ontlopen, en een bosbron die je weer opknapt
+- deel 3, de kikkerpoel: Kikker verkoopt RITALIN (sneller lopen), XTC (alles wordt een tijdje heel mooi) en 3MMC (allebei). Het geld daarvoor vind je bij de verslagen Duitsers. De 3MMC krijg je op de pof: "tientje nu, tientje later"
+- als alles verkocht is, springt Kikker de poel in. Daarna trilt je telefoon: in de chat-app KWEBBEL eist Kikker zijn tientje en noemt hij je een oplichter. Pas na CONTACT BLOKKEREN kun je verder. Het gesprek blijft terug te lezen via START, TELEFOON
+- de middelen werken ongeveer anderhalve minuut en alleen buiten gevechten
 
 Nog te doen: de route langs Orvelte, Wezup en Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.

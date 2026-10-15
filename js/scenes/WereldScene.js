@@ -11,6 +11,9 @@ import { KAARTEN, SCRIPTS } from '../maps/index.js';
 
 const LOOP_MS = 240;
 const REN_MS = 120;
+// met een snel-effect (ritalin, 3MMC)
+const SNEL_LOOP_MS = 120;
+const SNEL_REN_MS = 72;
 const DRAAI_MS = 90;
 const NPC_LOOP_MS = 300;
 
@@ -47,6 +50,16 @@ const OBJECT_TYPES = {
   bankje: { textuur: () => 'obj_bankje', b: 2, h: 1, dy: -1 },
   kisten: { textuur: () => 'obj_kisten', b: 1, h: 1 },
   bord: { textuur: () => 'obj_bord', b: 1, h: 1, dx: -4 },
+  // bos
+  schatkist: { textuur: (o) => (staat.vlaggen[o.vlag] ? 'obj_schatkist_open' : 'obj_schatkist'), b: 1, h: 1 },
+  bron: { textuur: () => 'obj_bron', b: 2, h: 1, dy: 3, diepte: () => -5 },
+  boomstronk: { textuur: () => 'obj_boomstronk', b: 1, h: 1 },
+};
+
+// Meldingen als een middel is uitgewerkt.
+const EFFECT_EINDE = {
+  snel: 'Je benen zijn weer normaal.',
+  trip: 'De kleuren zijn weer gewoon. Jammer.',
 };
 
 const sleutel = (x, y) => `${x},${y}`;
@@ -76,6 +89,7 @@ export class WereldScene extends Phaser.Scene {
     this.botsTijd = 0;
     this.bezigMetMenu = false;
     this.overgang = false;
+    this.trip = null;
     this.bouwKaart();
     this.bouwObjecten();
     this.bouwPersonen();
@@ -104,7 +118,10 @@ export class WereldScene extends Phaser.Scene {
     cam.setBackgroundColor('#000000');
 
     audio.speelMuziek(this.kaart.muziek);
-    this.events.once('shutdown', () => invoer.reset());
+    this.events.once('shutdown', () => {
+      invoer.reset();
+      this.stopTrip();
+    });
     if (this.scripts.opbouw) this.scripts.opbouw(this.context());
     this.binnenkomst();
   }
@@ -442,7 +459,7 @@ export class WereldScene extends Phaser.Scene {
     audio.speelMuziek('gevecht');
     await this.ui.gevechtsOvergang();
     const resultaat = await new Promise((klaar) => {
-      this.scene.launch('Gevecht', { vijand: vijandId, klaar });
+      this.scene.launch('Gevecht', { vijand: vijandId, klaar, achtergrond: this.kaart.gevechtAchtergrond });
       this.scene.pause();
     });
     this.scene.resume();
@@ -476,6 +493,7 @@ export class WereldScene extends Phaser.Scene {
     this.updatePersonen(delta);
     this.tekenKettingen();
     if (this.overgang) return;
+    this.updateEffecten(delta);
     const s = this.speler;
 
     if (s.beweegt) {
@@ -557,7 +575,13 @@ export class WereldScene extends Phaser.Scene {
       s.beweegt = true;
       s.voortgang = 0;
       s.voet = 1 - s.voet;
-      s.duur = instellingen.altijdRennen || invoer.ingedrukt('b') ? REN_MS : LOOP_MS;
+      const rent = instellingen.altijdRennen || invoer.ingedrukt('b');
+      if (this.heeftEffect('snel')) {
+        s.duur = rent ? SNEL_REN_MS : SNEL_LOOP_MS;
+        this.stofwolkje();
+      } else {
+        s.duur = rent ? REN_MS : LOOP_MS;
+      }
       this.plaatsSpeler();
     } else {
       s.liep = false;
@@ -573,6 +597,8 @@ export class WereldScene extends Phaser.Scene {
   /** Na elke stap: ziet een wachter je? Geeft true als er een script start. */
   naStap() {
     const s = this.speler;
+    // kaartscripts die na een stap iets willen laten gebeuren (bijv. een berichtje op je telefoon)
+    if (this.scripts.naStap && this.scripts.naStap(this.context())) return true;
     for (const p of Object.values(this.personen)) {
       if (!p.zicht || p.gescript || p.beweegt) continue;
       if (p.zichtVlag && staat.vlaggen[p.zichtVlag]) continue;
@@ -696,6 +722,101 @@ export class WereldScene extends Phaser.Scene {
     // ketting tussen de mensen in, maar boven de grond
     const dieptes = this.stoeten.flatMap((st) => st.leden.map((l) => l.sprite.depth));
     g.setDepth(dieptes.length ? Math.min(...dieptes) - 0.1 : 0);
+  }
+
+  // ------------------------------------------------------------ middelen (ritalin, XTC, 3MMC)
+
+  heeftEffect(soort) {
+    return ((staat.effecten || {})[soort] || 0) > 0;
+  }
+
+  updateEffecten(delta) {
+    const e = staat.effecten || (staat.effecten = {});
+    const voorbij = [];
+    Object.keys(e).forEach((soort) => {
+      e[soort] -= delta;
+      if (e[soort] <= 0) {
+        delete e[soort];
+        if (EFFECT_EINDE[soort]) voorbij.push(soort);
+      }
+    });
+    if (voorbij.length > 1) this.ui.toonLocatie('Je bent weer nuchter. Jammer.');
+    else if (voorbij.length) this.ui.toonLocatie(EFFECT_EINDE[voorbij[0]]);
+    if (this.heeftEffect('trip') && !this.trip) this.startTrip();
+    else if (!this.heeftEffect('trip') && this.trip) this.stopTrip();
+    if (this.trip) this.updateTrip(delta);
+  }
+
+  /** Stofwolkjes achter de beer als hij supersnel loopt. */
+  stofwolkje() {
+    const s = this.speler;
+    const r = RICHTINGEN[s.richting];
+    for (let i = 0; i < 2; i++) {
+      const w = this.add.circle(
+        s.sprite.x - r.dx * 6 + Phaser.Math.Between(-3, 3),
+        s.sprite.y - 2 - r.dy * 4,
+        2, 0xe8e0c8, 0.8,
+      ).setDepth(s.sprite.depth - 0.3);
+      this.tweens.add({
+        targets: w, alpha: 0, scale: 2, x: w.x - r.dx * 6, y: w.y - 3 - r.dy * 4,
+        duration: 320 + i * 80, onComplete: () => w.destroy(),
+      });
+    }
+  }
+
+  startTrip() {
+    const cam = this.cameras.main;
+    this.trip = { tijd: 0, vonk: 0, spoor: 0 };
+    if (cam.postFX) {
+      try {
+        this.trip.kleur = cam.postFX.addColorMatrix();
+        this.trip.bol = cam.postFX.addBarrel(1);
+      } catch (e) {
+        this.trip.kleur = null;
+        this.trip.bol = null;
+      }
+    }
+  }
+
+  stopTrip() {
+    if (!this.trip) return;
+    const cam = this.cameras.main;
+    if (cam && cam.postFX) {
+      if (this.trip.kleur) cam.postFX.remove(this.trip.kleur);
+      if (this.trip.bol) cam.postFX.remove(this.trip.bol);
+    }
+    this.trip = null;
+  }
+
+  updateTrip(delta) {
+    const t = this.trip;
+    t.tijd += delta;
+    if (t.kleur) {
+      t.kleur.hue((t.tijd * 0.06) % 360);
+      t.kleur.saturate(0.5, true);
+    }
+    if (t.bol) t.bol.amount = 1 + Math.sin(t.tijd / 450) * 0.06;
+    // glinsteringen in de lucht
+    t.vonk -= delta;
+    if (t.vonk <= 0) {
+      t.vonk = 110;
+      const v = this.cameras.main.worldView;
+      const kleur = Phaser.Display.Color.HSVToRGB(Math.random(), 0.6, 1).color;
+      const ster = this.add.star(v.x + Math.random() * v.width, v.y + Math.random() * v.height, 4, 1, 3, kleur)
+        .setDepth(9000).setAlpha(0);
+      this.tweens.add({ targets: ster, alpha: 1, duration: 250, yoyo: true, hold: 200, onComplete: () => ster.destroy() });
+      this.tweens.add({ targets: ster, angle: 90, y: ster.y - 6, duration: 700 });
+    }
+    // regenboogspoor achter de beer
+    t.spoor -= delta;
+    const s = this.speler;
+    if (s.beweegt && t.spoor <= 0) {
+      t.spoor = 60;
+      const kleur = Phaser.Display.Color.HSVToRGB((t.tijd / 900) % 1, 0.7, 1).color;
+      const geest = this.add.image(s.sprite.x, s.sprite.y, 'beer', s.sprite.frame.name)
+        .setOrigin(0.5, 1).setTint(kleur).setAlpha(0.55).setDepth(s.sprite.depth - 0.2);
+      this.tweens.add({ targets: geest, alpha: 0, duration: 450, onComplete: () => geest.destroy() });
+    }
   }
 
   async openMenu() {

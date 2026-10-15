@@ -378,6 +378,16 @@ PERSONEN = {
     'kokkin': ('hoofddoek', 'normaal', kleuren(
         g='#f4f4f4', G='#c8c8d0', l='#ffffff', t='#f0f0f0', T='#c8c8d0', p='#6a7a8a', P='#4c5a68',
         f='#3a2a2a', b='#e0e0e0')),
+    # Duitse soldaten in het bos
+    'soldaat_bos': ('helm', 'normaal', kleuren(
+        h='#c8a868', H='#a08048', g='#5a6a40', G='#3e4a2c', l='#7c8c5a',
+        t='#6a7448', T='#4c5434', p='#545c40', P='#3c4230', f='#1e1e22', b='#2a2a2c')),
+    'soldaat_muts': ('pet', 'normaal', kleuren(
+        h='#7a5a3a', H='#5a4028', g='#727c5c', G='#525a42', l='#8e987a',
+        t='#727c5c', T='#525a42', p='#545c40', P='#3c4230', f='#1e1e22', b='#2a2a2c')),
+    'feldwebel': ('pet', 'normaal', kleuren(
+        h='#4a3424', H='#2e2018', g='#5c6250', G='#2c3028', l='#787e6a',
+        t='#5c6250', T='#40463a', p='#4a5040', P='#34382e', f='#1e1e22', b='#c8b060')),
     'dichter': ('lang', 'normaal', kleuren(
         h='#2a2a30', H='#18181c', t='#4a3a5a', T='#342842', p='#2a2a34', P='#1c1c24', f='#1a1a1a', b='#4a3a5a')),
 }

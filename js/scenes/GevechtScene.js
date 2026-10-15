@@ -27,6 +27,7 @@ export class GevechtScene extends Phaser.Scene {
   init(data) {
     this.vijandId = data.vijand;
     this.klaar = data.klaar;
+    this.achtergrond = data.achtergrond || 'bg_gevecht';
   }
 
   create() {
@@ -35,7 +36,7 @@ export class GevechtScene extends Phaser.Scene {
     const def = VIJANDEN[this.vijandId];
     this.v = { ...def, gz: def.maxGz, verward: 0 };
 
-    this.add.image(0, 0, 'bg_gevecht').setOrigin(0, 0);
+    this.add.image(0, 0, this.achtergrond).setOrigin(0, 0);
     this.add.rectangle(0, 112, 240, 48, 0x202028).setOrigin(0, 0);
     this.vijand = this.add.image(-60, VIJAND_Y, def.sprite).setOrigin(0.5, 1);
     this.speler = this.add.image(300, SPELER_Y, 'gevecht_beer_rug').setOrigin(0.5, 1);
@@ -247,11 +248,11 @@ export class GevechtScene extends Phaser.Scene {
     await this.tekstZonderWachten(`${beer()} gebruikt ${a.naam}!`);
     await this.ui.wachtMs(250);
     if (!kans(a.nauwkeurigheid)) {
-      await this.lepelAnimatie(false);
+      await this.lepelAnimatie(false, a.animatie);
       await this.zeg(`Maar ${this.v.naam} springt opzij!`);
       return;
     }
-    await this.lepelAnimatie(true);
+    await this.lepelAnimatie(true, a.animatie);
     const { schade, voltreffer } = berekenSchade(staat.niveau, a.kracht, staat.aanval, this.v.verdediging);
     const voor = this.v.gz;
     this.v.gz = Math.max(0, this.v.gz - schade);
@@ -260,9 +261,21 @@ export class GevechtScene extends Phaser.Scene {
     else this.ui.sluitDialoog();
   }
 
-  async lepelAnimatie(raak) {
-    const lepel = this.add.image(this.vijand.x - 6, this.vijand.y - 30, 'effect_lepel').setOrigin(0.2, 0.8).setRotation(-1.3).setDepth(10);
+  async lepelAnimatie(raak, soort = 'lepel') {
+    const textuur = soort === 'frikandel' ? 'effect_frikandel' : 'effect_lepel';
+    const lepel = this.add.image(this.vijand.x - 6, this.vijand.y - 30, textuur).setOrigin(0.2, 0.8).setRotation(-1.3).setDepth(10);
     await this.tween({ targets: lepel, rotation: 0.7, duration: 160, ease: 'Cubic.easeIn' });
+    if (raak && soort === 'frikandel') {
+      // ijssplinters
+      for (let i = 0; i < 6; i++) {
+        const s = this.add.image(this.vijand.x, this.vijand.y - 32, 'effect_ster').setTint(0xbfe0ff).setDepth(12);
+        const hoek = (i / 6) * Math.PI * 2;
+        this.tweens.add({
+          targets: s, x: s.x + Math.cos(hoek) * 18, y: s.y + Math.sin(hoek) * 14, alpha: 0, duration: 420,
+          onComplete: () => s.destroy(),
+        });
+      }
+    }
     if (raak) {
       audio.sfx('slag');
       const bonk = this.add.image(this.vijand.x, this.vijand.y - 30, 'effect_inslag').setDepth(11);
@@ -416,6 +429,11 @@ export class GevechtScene extends Phaser.Scene {
       await this.ui.wachtMs(30);
     }
     await this.ui.dialoog.wachtOpKnop();
+    if (v.geld) {
+      staat.geld = (staat.geld || 0) + v.geld;
+      audio.sfx('kies');
+      await this.zeg(`${beer()} vindt €${v.geld} in de zakken van ${v.naam}.`);
+    }
     for (const n of nieuw) {
       this.werkSpelerInfoBij();
       audio.jingle('niveau');

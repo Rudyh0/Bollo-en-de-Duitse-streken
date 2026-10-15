@@ -3,6 +3,7 @@ import { kader, tekst, breekAf } from './tekst.js';
 import { gezondheidsbalk } from './gezondheid.js';
 import { openRugzak } from './rugzak.js';
 import { openInstellingen } from './instellingenscherm.js';
+import { openTelefoon } from './telefoon.js';
 import { invoer } from '../core/invoer.js';
 import { audio } from '../core/audio.js';
 import { BREEDTE, HOOGTE } from '../core/constanten.js';
@@ -10,24 +11,26 @@ import { staat, slaOp, heeftOpslag, speeltijdTekst } from '../core/staat.js';
 import { beer, park, vul } from '../core/namen.js';
 import { opServer } from '../core/account.js';
 
-const OPTIES = [
-  { label: 'RUGZAK', uitleg: 'Bekijk en gebruik de spullen in je rugzak.' },
-  { label: '{BEER_HOOFD}', uitleg: 'Bekijk hoe het met {BEER} gaat.' },
-  { label: 'OPSLAAN', uitleg: 'Sla je voortgang op in deze browser.' },
-  { label: 'INSTELLINGEN', uitleg: 'Pas de tekstsnelheid, het geluid en de knoppen aan.' },
-  { label: 'SLUITEN', uitleg: 'Sluit dit menu en ga verder.' },
+const ALLE_OPTIES = [
+  { id: 'rugzak', label: 'RUGZAK', uitleg: 'Bekijk en gebruik de spullen in je rugzak.' },
+  { id: 'beer', label: '{BEER_HOOFD}', uitleg: 'Bekijk hoe het met {BEER} gaat.' },
+  { id: 'telefoon', label: 'TELEFOON', uitleg: 'Bekijk je berichtjes.', vlag: 'telefoon' },
+  { id: 'opslaan', label: 'OPSLAAN', uitleg: 'Sla je voortgang op.' },
+  { id: 'instellingen', label: 'INSTELLINGEN', uitleg: 'Pas de tekstsnelheid, het geluid en de knoppen aan.' },
+  { id: 'sluiten', label: 'SLUITEN', uitleg: 'Sluit dit menu en ga verder.' },
 ];
 
 export async function openPauzemenu(ui, wereld) {
   audio.sfx('menu');
   let start = 0;
   for (;;) {
+    const opties = ALLE_OPTIES.filter((o) => !o.vlag || staat.vlaggen[o.vlag]);
     const uitlegKader = kader(ui, 2, 112, 236, 46, 'tekst').setDepth(590);
     const uitlegRegels = [tekst(ui, 11, 120, '').setDepth(591), tekst(ui, 11, 134, '').setDepth(591)];
-    const keuze = await ui.kies(OPTIES.map((o) => o.label), {
-      rechts: 238, y: 2, annuleer: OPTIES.length - 1, start, startSluit: true, soort: 'menu', breedte: 96,
+    const keuze = await ui.kies(opties.map((o) => o.label), {
+      rechts: 238, y: 2, annuleer: opties.length - 1, start, startSluit: true, soort: 'menu', breedte: 96,
       opVerander: (i) => {
-        const regels = breekAf(ui, vul(OPTIES[i].uitleg), 214);
+        const regels = breekAf(ui, vul(opties[i].uitleg), 214);
         uitlegRegels[0].setText(regels[0] || '');
         uitlegRegels[1].setText(regels[1] || '');
       },
@@ -35,11 +38,15 @@ export async function openPauzemenu(ui, wereld) {
     uitlegKader.destroy();
     uitlegRegels.forEach((r) => r.destroy());
     start = keuze;
-    if (keuze === 0) await openRugzak(ui);
-    else if (keuze === 1) await ui.open(new StatusPaneel(ui));
-    else if (keuze === 2) {
+    const id = opties[keuze].id;
+    if (id === 'rugzak') {
+      // Een middel genomen? Dan meteen terug naar het spel, zodat je het effect ziet.
+      if (await openRugzak(ui)) return;
+    } else if (id === 'beer') await ui.open(new StatusPaneel(ui));
+    else if (id === 'telefoon') await openTelefoon(ui, wereld);
+    else if (id === 'opslaan') {
       if (await opslaanFlow(ui, wereld)) return;
-    } else if (keuze === 3) await openInstellingen(ui, { vanuitSpel: true });
+    } else if (id === 'instellingen') await openInstellingen(ui, { vanuitSpel: true });
     else return;
   }
 }
@@ -66,11 +73,12 @@ export class StatusPaneel {
     voeg(kader(ui, 96, 26, 142, 132, 'tekst'));
     const rijen = [
       [36, 'GEZONDHEID', `${staat.gezondheid}/${staat.maxGezondheid}`],
-      [62, 'BESTEMMING', ''],
-      [76, '', park()],
-      [96, 'SPEELTIJD', speeltijdTekst()],
-      [114, 'ONTBIJT', staat.intake.ontbijt || '-'],
-      [132, 'HOBBY', staat.intake.hobby || '-'],
+      [62, 'NIVEAU', `${staat.niveau}`],
+      [77, 'GELD', `€${staat.geld || 0}`],
+      [92, 'SPEELTIJD', speeltijdTekst()],
+      [107, 'BESTEMMING', ''],
+      [121, '', park()],
+      [136, 'ONTBIJT', staat.intake.ontbijt || '-'],
     ];
     rijen.forEach(([y, links, rechts]) => {
       if (links) voeg(tekst(ui, 106, y, links, 'grijs'), d + 1);

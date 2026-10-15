@@ -21,6 +21,8 @@ function nieuweStaat() {
     aanvallen: ['soeplepel', 'volkszanger'],
     pp: { soeplepel: 25, volkszanger: 5 },
     ppMax: { soeplepel: 25, volkszanger: 5 },
+    geld: 0,
+    effecten: {},
     rugzak: {},
     vlaggen: {},
     intake: {},
@@ -113,6 +115,15 @@ export function krijgXp(punten) {
     nieuw.push(staat.niveau);
   }
   return nieuw;
+}
+
+/** Een nieuwe aanval leren (maximaal 4). Geeft false als hij al bekend is. */
+export function leerAanval(id, pp) {
+  if (staat.aanvallen.includes(id)) return false;
+  staat.aanvallen.push(id);
+  staat.ppMax[id] = pp;
+  staat.pp[id] = pp;
+  return true;
 }
 
 /** Helemaal opknappen: gezondheid en alle PP. */

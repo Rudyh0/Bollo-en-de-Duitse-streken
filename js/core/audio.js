@@ -460,6 +460,35 @@ class Audio {
         this.toon(uit, 0.125, 1200, t, 0.05, 0.15, { verval: 1 });
         this.toon(uit, 0.125, 1500, t + 0.06, 0.05, 0.15, { verval: 1 });
         break;
+      case 'trillen':
+        // telefoon die trilt op tafel
+        for (let i = 0; i < 2; i++) this.toon(uit, 0.5, 58, t + i * 0.32, 0.22, 0.4, { naarFreq: 52, verval: 1 });
+        break;
+      case 'bericht':
+        this.toon(uit, 'sinus', 1046, t, 0.07, 0.35, { verval: 1 });
+        this.toon(uit, 'sinus', 1568, t + 0.08, 0.12, 0.35, { verval: 0.8 });
+        break;
+      case 'plons':
+        this.ruisSweep(uit, 'lowpass', 2500, 200, t, 0.5, 0.9);
+        this.toon(uit, 'sinus', 420, t, 0.18, 0.4, { naarFreq: 1200 });
+        this.ruisSweep(uit, 'bandpass', 1200, 3000, t + 0.15, 0.4, 0.25);
+        break;
+      case 'kwaak':
+        this.toon(uit, 0.25, 160, t, 0.09, 0.3, { naarFreq: 240, verval: 1 });
+        this.toon(uit, 0.25, 150, t + 0.12, 0.14, 0.3, { naarFreq: 110, verval: 1 });
+        break;
+      case 'kassa':
+        this.toon(uit, 0.5, 1568, t, 0.05, 0.2, { verval: 1 });
+        this.toon(uit, 0.5, 2093, t + 0.06, 0.18, 0.2, { verval: 0.6 });
+        this.ruis(uit, 'H', t + 0.02, 0.6);
+        break;
+      case 'ijs':
+        [0, 0.05, 0.11, 0.18].forEach((d, i) => this.toon(uit, 0.125, 2400 + i * 400, t + d, 0.05, 0.12, { verval: 1 }));
+        break;
+      case 'zoem':
+        this.toon(uit, 'sinus', 220, t, 0.6, 0.25, { naarFreq: 880 });
+        this.toon(uit, 'sinus', 330, t, 0.6, 0.18, { naarFreq: 1320 });
+        break;
       default:
         break;
     }

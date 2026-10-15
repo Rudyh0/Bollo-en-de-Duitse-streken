@@ -114,13 +114,16 @@ export default {
     await poortOpen(ctx);
   },
 
-  async poortUit({ ui }) {
-    await ui.zeg([
-      'Je stapt door de poort. Achter het prikkeldraad ligt de vrijheid... en heel veel Drentse heide.',
-      'Ergens achter die bossen ligt {PARK}. En je huisje. En het zwembad, dat om tien uur sluit.',
-      'EINDE VAN HOOFDSTUK 1. Wordt vervolgd!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+  async poortUit({ ui, wereld, staat }) {
+    if (!staat.vlaggen.kampVerlaten) {
+      staat.vlaggen.kampVerlaten = true;
+      await ui.zeg([
+        'Je stapt door de poort. Achter het prikkeldraad ligt de vrijheid... en heel veel Drentse heide.',
+        'Ergens achter die bossen ligt {PARK}. En je huisje. En het zwembad, dat om tien uur sluit.',
+      ]);
+      await ui.hoofdstuk('HOOFDSTUK 2', 'HET BOS');
+    }
+    wereld.gaNaar('bos1', 10, 18, 'omhoog');
   },
 
   async slaper({ ui }) {
