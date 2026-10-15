@@ -19,7 +19,7 @@ const CEL_H = 24;
 const ZIJ_X = 186;
 
 export class NaamInvoer {
-  /** cfg: { vraag, max, icoon: 'beer' | 'park', start } */
+  /** cfg: { vraag, max, min, icoon: 'beer' | 'park' | 'speler', start, toegestaan: RegExp per teken } */
   constructor(ui, cfg) {
     this.ui = ui;
     this.cfg = cfg;
@@ -35,6 +35,10 @@ export class NaamInvoer {
     voeg(kader(ui, 2, 2, 236, 38, 'info'));
     if (cfg.icoon === 'beer') {
       voeg(ui.add.sprite(19, 31, 'beer', 0).setOrigin(0.5, 1), 701);
+    } else if (cfg.icoon === 'speler') {
+      const g = voeg(ui.add.graphics(), 701);
+      g.fillStyle(0x384058).fillCircle(19, 14, 6).fillRoundedRect(10, 21, 18, 11, 4);
+      g.fillStyle(0x8ca0c8).fillCircle(19, 14, 4).fillRoundedRect(12, 23, 14, 8, 3);
     } else {
       const g = voeg(ui.add.graphics(), 701);
       g.fillStyle(0x302018).fillRect(17, 25, 4, 7);
@@ -126,6 +130,10 @@ export class NaamInvoer {
   }
 
   typ(teken) {
+    if (this.cfg.toegestaan && teken !== ' ' && !this.cfg.toegestaan.test(teken)) {
+      audio.sfx('fout');
+      return;
+    }
     if (this.naam.length >= this.cfg.max) {
       audio.sfx('fout');
       return;
@@ -156,7 +164,7 @@ export class NaamInvoer {
 
   klaarMet() {
     const naam = this.naam.trim();
-    if (!naam.length) {
+    if (naam.length < (this.cfg.min || 1)) {
       audio.sfx('fout');
       this.ui.cameras.main.shake(120, 0.004);
       return;

@@ -8,6 +8,7 @@ import { audio } from '../core/audio.js';
 import { BREEDTE, HOOGTE } from '../core/constanten.js';
 import { staat, slaOp, heeftOpslag, speeltijdTekst } from '../core/staat.js';
 import { beer, park, vul } from '../core/namen.js';
+import { opServer } from '../core/account.js';
 
 const OPTIES = [
   { label: 'RUGZAK', uitleg: 'Bekijk en gebruik de spullen in je rugzak.' },
@@ -129,11 +130,16 @@ async function opslaanFlow(ui, wereld) {
     ui.sluitGevraagd = false;
     await ui.dialoog.toon('Bezig met opslaan... Zet het spel niet uit!', { wachtAanEinde: false });
     wereld.bewaarPositie();
-    const gelukt = slaOp(wereld.kaartNaam);
-    await ui.wachtMs(600);
-    if (!gelukt) {
+    const [resultaat] = await Promise.all([slaOp(wereld.kaartNaam), ui.wachtMs(600)]);
+    if (!resultaat.ok) {
       audio.sfx('fout');
-      await ui.zeg('Opslaan is niet gelukt. Staat opslag in deze browser misschien uit?');
+      if (resultaat.uitgelogd) {
+        await ui.zeg(['Opslaan op de server lukte niet: je bent uitgelogd.', 'Ga terug naar het titelscherm en log opnieuw in.']);
+      } else if (opServer()) {
+        await ui.zeg(['Opslaan op de server lukte niet. Is je internet weg?', 'Er staat wel een reservekopie in deze browser. Probeer het straks nog eens.']);
+      } else {
+        await ui.zeg('Opslaan is niet gelukt. Staat opslag in deze browser misschien uit?');
+      }
       return false;
     }
     wereld.alOpgeslagen = true;

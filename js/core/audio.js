@@ -2,6 +2,12 @@
 // net als op een oude handheld. Er zijn geen geluidsbestanden nodig.
 import { instellingen, bijWijziging } from './instellingen.js';
 import { LIEDJES } from './muziek.js';
+import { VERSIE } from './constanten.js';
+
+// Muziek uit een geluidsbestand in plaats van de chiptune-synthesizer.
+const BESTANDEN = {
+  intake: { url: 'assets/audio/intake.mp3', volume: 0.55, herhaal: true },
+};
 
 const NOTEN = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
 
@@ -31,6 +37,8 @@ function ontleedSpoor(tekst) {
 class Audio {
   constructor() {
     this.ctx = null;
+    this.bestandData = {};    // id -> Promise<ArrayBuffer>
+    this.bestandBuffers = {}; // id -> AudioBuffer
     this.klaar = false;
     this.huidig = null;
     this.golven = {};
@@ -192,6 +200,50 @@ class Audio {
     return lied;
   }
 
+  /** Begint alvast met downloaden, zodat de muziek meteen klaar is als hij nodig is. */
+  voorladen(id) {
+    const info = BESTANDEN[id];
+    if (!info || this.bestandData[id]) return;
+    this.bestandData[id] = fetch(`${info.url}?v=${VERSIE}`)
+      .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(r.status))))
+      .catch(() => { delete this.bestandData[id]; return null; });
+  }
+
+  async decodeer(id) {
+    if (this.bestandBuffers[id]) return this.bestandBuffers[id];
+    this.voorladen(id);
+    const data = await this.bestandData[id];
+    if (!data || !this.ctx) return null;
+    try {
+      this.bestandBuffers[id] = await new Promise((ok, fout) => this.ctx.decodeAudioData(data.slice(0), ok, fout));
+    } catch (e) {
+      return null;
+    }
+    return this.bestandBuffers[id];
+  }
+
+  speelBestand(id) {
+    const info = BESTANDEN[id];
+    const ctx = this.ctx;
+    const bus = ctx.createGain();
+    bus.gain.value = 0;
+    bus.connect(this.muziekGain);
+    const huidig = { id, bus, bron: null };
+    this.huidig = huidig;
+    this.decodeer(id).then((buffer) => {
+      if (!buffer || this.huidig !== huidig) return;
+      const bron = ctx.createBufferSource();
+      bron.buffer = buffer;
+      bron.loop = info.herhaal !== false;
+      bron.connect(bus);
+      const t = ctx.currentTime;
+      bus.gain.setValueAtTime(0, t);
+      bus.gain.linearRampToValueAtTime(info.volume ?? 0.6, t + 0.6);
+      bron.start(t);
+      huidig.bron = bron;
+    });
+  }
+
   speelMuziek(id, { herstart = false } = {}) {
     if (!this.klaar) {
       this.wachtend = id;
@@ -199,6 +251,10 @@ class Audio {
     }
     if (this.huidig && this.huidig.id === id && !herstart) return;
     this.stopMuziek(0.15);
+    if (BESTANDEN[id]) {
+      this.speelBestand(id);
+      return;
+    }
     const lied = this.bereidVoor(id);
     if (!lied) return;
     const ctx = this.ctx;
@@ -217,18 +273,21 @@ class Audio {
 
   stopMuziek(fade = 0.3) {
     if (!this.huidig) return;
-    const { bus } = this.huidig;
+    const { bus, bron } = this.huidig;
     const t = this.ctx.currentTime;
     bus.gain.cancelScheduledValues(t);
     bus.gain.setValueAtTime(bus.gain.value, t);
     bus.gain.linearRampToValueAtTime(0, t + fade);
-    setTimeout(() => bus.disconnect(), (fade + 0.6) * 1000);
+    setTimeout(() => {
+      try { if (bron) bron.stop(); } catch (e) { /* al gestopt */ }
+      bus.disconnect();
+    }, (fade + 0.6) * 1000);
     this.huidig = null;
   }
 
   plan() {
     const h = this.huidig;
-    if (!h || !this.ctx) return;
+    if (!h || !h.lied || !this.ctx) return;
     const ctx = this.ctx;
     const zestiende = 60 / h.lied.bpm / 4;
     const tot = ctx.currentTime + 0.2;

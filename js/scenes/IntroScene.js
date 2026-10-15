@@ -47,7 +47,7 @@ export class IntroScene extends Phaser.Scene {
     });
     this.time.addEvent({ delay: 650, loop: true, callback: () => this.rookwolkje() });
 
-    audio.speelMuziek('intro');
+    audio.speelMuziek('intake');
     this.verhaal();
   }
 

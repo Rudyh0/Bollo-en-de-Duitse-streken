@@ -9,11 +9,18 @@
   --tekst: #d8d8e8;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  /* Geen dubbeltik-zoom, knijpzoom of scrollen: alles is spelbesturing. */
+  touch-action: none;
+}
 
 html, body {
   margin: 0;
   height: 100%;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   background: var(--achtergrond);
   overflow: hidden;
   touch-action: none;

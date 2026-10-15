@@ -3,7 +3,8 @@ import { zetCamera, VERSIE } from '../core/constanten.js';
 import { tekst, centreerX } from '../ui/tekst.js';
 import { invoer } from '../core/invoer.js';
 import { audio } from '../core/audio.js';
-import { heeftNamen } from '../core/namen.js';
+import { heeftNamen, laadNamen } from '../core/namen.js';
+import { account, bepaalModus, herstelSessie } from '../core/account.js';
 
 export class StartScene extends Phaser.Scene {
   constructor() {
@@ -21,6 +22,10 @@ export class StartScene extends Phaser.Scene {
     tekst(this, 4, 148, `v${VERSIE}`, 'grijs').setAlpha(0.6);
     this.verder = false;
     this.input.once('pointerdown', () => this.ga());
+    // Alvast kijken of er een opslagserver is en of deze browser nog ingelogd is.
+    this.voorbereiding = bepaalModus().then(async (modus) => {
+      if (modus === 'server') this.sessie = await herstelSessie();
+    });
   }
 
   update() {
@@ -33,7 +38,14 @@ export class StartScene extends Phaser.Scene {
     audio.ontgrendel();
     audio.sfx('ok');
     const ui = this.scene.get('UI');
-    await ui.naarZwart(250);
+    await Promise.all([ui.naarZwart(250), this.voorbereiding]);
+    if (account.modus === 'server') {
+      if (!this.sessie) {
+        this.scene.start('Inlog');
+        return;
+      }
+      laadNamen(account.profiel);
+    }
     this.scene.start(heeftNamen() ? 'Titel' : 'Setup');
   }
 }

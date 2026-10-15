@@ -4,17 +4,24 @@ import { invoer } from './core/invoer.js';
 import { audio } from './core/audio.js';
 import { instellingen, bijWijziging } from './core/instellingen.js';
 import { werkTitelBij } from './core/namen.js';
+import { blokkeerZoom } from './core/geenzoom.js';
 import { BootScene } from './scenes/BootScene.js';
 import { StartScene } from './scenes/StartScene.js';
+import { InlogScene } from './scenes/InlogScene.js';
 import { SetupScene } from './scenes/SetupScene.js';
 import { TitelScene } from './scenes/TitelScene.js';
 import { IntroScene } from './scenes/IntroScene.js';
 import { WereldScene } from './scenes/WereldScene.js';
 import { UIScene } from './scenes/UIScene.js';
 
+blokkeerZoom();
 werkTitelBij();
 invoer.start();
 invoer.bijEersteInteractie(() => audio.ontgrendel());
+// iOS staat geluid pas toe na het loslaten van een tik; daarom ook hier (her)starten.
+['touchend', 'pointerup', 'keyup'].forEach((soort) => {
+  window.addEventListener(soort, () => audio.ontgrendel(), { capture: true, passive: true });
+});
 
 function isAanraakApparaat() {
   return window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window || invoer.gebruiktAanraak;
@@ -53,7 +60,7 @@ game = new Phaser.Game({
   },
   disableContextMenu: true,
   banner: false,
-  scene: [BootScene, StartScene, SetupScene, TitelScene, IntroScene, WereldScene, UIScene],
+  scene: [BootScene, StartScene, InlogScene, SetupScene, TitelScene, IntroScene, WereldScene, UIScene],
 });
 
 game.events.on('prestep', () => invoer.beginFrame());

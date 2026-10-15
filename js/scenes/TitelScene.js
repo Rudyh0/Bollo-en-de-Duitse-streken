@@ -3,7 +3,8 @@ import { zetCamera, BREEDTE, VERSIE } from '../core/constanten.js';
 import { tekst, kader, centreerX, meet } from '../ui/tekst.js';
 import { invoer } from '../core/invoer.js';
 import { audio } from '../core/audio.js';
-import { beer } from '../core/namen.js';
+import { beer, laadNamen } from '../core/namen.js';
+import { account, ingelogd, opServer, uitloggen } from '../core/account.js';
 import { heeftOpslag, opslagInfo, nieuwSpel, laad, speeltijdTekst } from '../core/staat.js';
 
 export class TitelScene extends Phaser.Scene {
@@ -46,9 +47,15 @@ export class TitelScene extends Phaser.Scene {
     this.drukStart.setVisible(false);
     this.knipper = this.time.addEvent({ delay: 550, loop: true, callback: () => this.drukStart.setAlpha(this.drukStart.alpha > 0.5 ? 0 : 1) });
     tekst(this, 4, 150, `v${VERSIE}`, 'grijs').setAlpha(0.7);
+    const spelerTekst = ingelogd() ? `SPELER: ${account.naam}` : (opServer() ? '' : 'OFFLINE: OPSLAAN IN DEZE BROWSER');
+    if (spelerTekst) {
+      const t = tekst(this, 0, 150, spelerTekst, 'wit').setAlpha(0.8);
+      t.x = 236 - t.width;
+    }
 
     this.fase = 'intro';
     audio.speelMuziek('titel');
+    audio.voorladen('intake');
     this.ui.vanZwart(500);
     this.tweens.add({
       targets: this.logo, y: 12, duration: 700, ease: 'Bounce.easeOut', delay: 200,
@@ -155,6 +162,15 @@ export class TitelScene extends Phaser.Scene {
           if (r === 'namen') {
             await ui.naarZwart(400);
             this.scene.start('Setup');
+            return;
+          }
+          if (r === 'uitloggen') {
+            if (await ui.vraag(`Wil je uitloggen als ${account.naam}?`) !== 0) continue;
+            await uitloggen();
+            laadNamen({});
+            audio.stopMuziek(0.4);
+            await ui.naarZwart(400);
+            this.scene.start('Inlog');
             return;
           }
           continue;

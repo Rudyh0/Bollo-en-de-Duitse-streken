@@ -44,6 +44,10 @@ SSL_DIR="/etc/nginx/$NAAM-ssl"
 NGINX_SITE="/etc/nginx/sites-available/$NAAM"
 NGINX_VANGNET="/etc/nginx/sites-available/$NAAM-vangnet"
 UPDATE_BIN="/usr/local/bin/$NAAM-update"
+DIENST_DIR="/opt/$NAAM/dienst"
+DATA_DIR="/var/lib/$NAAM"
+BACKUP_DIR="/var/backups/$NAAM"
+DIENST_GEBRUIKER="$NAAM"
 
 # ------------------------------------------------------------------ uiterlijk
 
@@ -136,9 +140,20 @@ echo "${BOLD}Installer: ... en de Duitse streken${RESET} ${DIM}(${PRETTY_NAME:-L
 if [ "$VERWIJDER" = 1 ]; then
   stap "Game verwijderen"
   ja_nee "Weet je het zeker? De website en de instellingen worden verwijderd" "n" || { info "Niets gedaan."; exit 0; }
-  systemctl disable --now "$NAAM-update.timer" >/dev/null 2>&1 || true
-  rm -f "/etc/systemd/system/$NAAM-update.timer" "/etc/systemd/system/$NAAM-update.service" "$UPDATE_BIN"
+  for unit in "$NAAM-update.timer" "$NAAM-backup.timer" "$NAAM-opslag.service"; do
+    systemctl disable --now "$unit" >/dev/null 2>&1 || true
+  done
+  rm -f "/etc/systemd/system/$NAAM-update.timer" "/etc/systemd/system/$NAAM-update.service" "$UPDATE_BIN" \
+        "/etc/systemd/system/$NAAM-backup.timer" "/etc/systemd/system/$NAAM-backup.service" \
+        "/etc/systemd/system/$NAAM-opslag.service"
   systemctl daemon-reload || true
+  if ja_nee "Ook alle spelers en opgeslagen spellen verwijderen (inclusief back-ups)?" "n"; then
+    rm -rf "$DATA_DIR" "$BACKUP_DIR"
+    userdel "$DIENST_GEBRUIKER" >/dev/null 2>&1 || true
+    ok "Spelers en saves verwijderd."
+  else
+    info "Spelers en saves blijven staan in $DATA_DIR."
+  fi
   rm -f "/etc/nginx/sites-enabled/$NAAM" "/etc/nginx/sites-enabled/$NAAM-vangnet" "$NGINX_SITE" "$NGINX_VANGNET"
   if command -v nginx >/dev/null 2>&1 && nginx -t >/dev/null 2>&1; then systemctl reload nginx || true; fi
   rm -rf "$WEB_DIR" "$ACME_DIR" "/opt/$NAAM" "$SSL_DIR" "$CONFIG_DIR"
@@ -159,6 +174,7 @@ if [ -f "$CONFIG" ]; then
   [ "$EMAIL_GEZET" = 1 ] || EMAIL="${CFG_EMAIL:-}"
   AUTOUPDATE="${AUTOUPDATE:-${CFG_AUTOUPDATE:-}}"
   BRANCH="${BRANCH:-${CFG_BRANCH:-}}"
+  API_POORT="${CFG_API_POORT:-}"
   if [ "$NAMEN_GEZET" = 0 ]; then
     PARKNAAM="${CFG_PARKNAAM:-}"
     BEERNAAM="${CFG_BEERNAAM:-}"
@@ -236,8 +252,8 @@ APT_OPTS=(-y -q -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-co
 
 stap "Software installeren"
 apt-get update -q >/dev/null || let_op "apt-get update gaf een waarschuwing; ik probeer het toch."
-apt-get install "${APT_OPTS[@]}" ca-certificates curl git rsync ufw openssl ssl-cert >/dev/null
-ok "git, rsync, curl, UFW"
+apt-get install "${APT_OPTS[@]}" ca-certificates curl git rsync ufw openssl ssl-cert python3 >/dev/null
+ok "git, rsync, curl, UFW, Python 3"
 
 if ! command -v nginx >/dev/null 2>&1; then
   if ! apt-get install "${APT_OPTS[@]}" nginx >/dev/null 2>&1; then
@@ -271,6 +287,14 @@ fi
 VERSIE_COMMIT="$(git -C "$BRON_DIR" rev-parse --short HEAD)"
 ok "Versie $VERSIE_COMMIT (branch $BRANCH)"
 
+# ------------------------------------------------------------------ poort voor de opslagdienst
+
+poort_bezet() { ss -ltnH 2>/dev/null | awk '{print $4}' | grep -Eq "[:.]$1\$"; }
+if [ -z "${API_POORT:-}" ]; then
+  API_POORT=8765
+  while poort_bezet "$API_POORT"; do API_POORT=$((API_POORT + 1)); done
+fi
+
 # ------------------------------------------------------------------ instellingen bewaren
 
 mkdir -p "$CONFIG_DIR"
@@ -285,6 +309,8 @@ mkdir -p "$CONFIG_DIR"
   printf 'CFG_BEERNAAM=%q\n' "$BEERNAAM"
   printf 'CFG_BRON_DIR=%q\n' "$BRON_DIR"
   printf 'CFG_WEB_DIR=%q\n' "$WEB_DIR"
+  printf 'CFG_DIENST_DIR=%q\n' "$DIENST_DIR"
+  printf 'CFG_API_POORT=%q\n' "$API_POORT"
 } > "$CONFIG"
 chmod 600 "$CONFIG"
 
@@ -336,6 +362,18 @@ CONFIG_JS
 mkdir -p "$WEB"
 rsync -a --delete --chmod=D755,F644 "$TMP/" "$WEB/"
 chown -R root:root "$WEB"
+
+# Opslagdienst (spelers en saves) bijwerken en herstarten als de code veranderd is.
+if [ -f "$BRON/server/opslagdienst.py" ] && [ -n "${CFG_DIENST_DIR:-}" ]; then
+  mkdir -p "$CFG_DIENST_DIR"
+  if ! cmp -s "$BRON/server/opslagdienst.py" "$CFG_DIENST_DIR/opslagdienst.py"; then
+    install -m 644 "$BRON/server/opslagdienst.py" "$CFG_DIENST_DIR/opslagdienst.py"
+    if systemctl is-active --quiet duitse-streken-opslag 2>/dev/null; then
+      systemctl restart duitse-streken-opslag
+      echo "Opslagdienst herstart."
+    fi
+  fi
+fi
 echo "Game bijgewerkt naar $(git -C "$BRON" rev-parse --short HEAD)."
 UPDATE_SCRIPT
 chmod 755 "$UPDATE_BIN"
@@ -343,6 +381,83 @@ chmod 755 "$UPDATE_BIN"
 stap "Game neerzetten"
 "$UPDATE_BIN" --forceer | sed 's/^/  /'
 ok "Bestanden staan in $WEB_DIR"
+
+# ------------------------------------------------------------------ opslagdienst (spelers en saves)
+
+stap "Opslag voor spelers (spelersnaam + pincode)"
+if ! id -u "$DIENST_GEBRUIKER" >/dev/null 2>&1; then
+  useradd --system --home-dir "$DATA_DIR" --no-create-home --shell /usr/sbin/nologin "$DIENST_GEBRUIKER"
+fi
+install -d -m 700 -o "$DIENST_GEBRUIKER" -g "$DIENST_GEBRUIKER" "$DATA_DIR" "$BACKUP_DIR"
+cat > "/etc/systemd/system/$NAAM-opslag.service" <<UNIT
+[Unit]
+Description=Opslagdienst (spelers en saves) voor '... en de Duitse streken'
+After=network.target
+
+[Service]
+User=$DIENST_GEBRUIKER
+Group=$DIENST_GEBRUIKER
+ExecStart=/usr/bin/python3 $DIENST_DIR/opslagdienst.py serveer --db $DATA_DIR/spel.db --adres 127.0.0.1 --poort $API_POORT
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=$DATA_DIR
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+cat > "/etc/systemd/system/$NAAM-backup.service" <<UNIT
+[Unit]
+Description=Dagelijkse back-up van de spelers en saves van '... en de Duitse streken'
+
+[Service]
+Type=oneshot
+User=$DIENST_GEBRUIKER
+Group=$DIENST_GEBRUIKER
+ExecStart=/usr/bin/python3 $DIENST_DIR/opslagdienst.py backup --db $DATA_DIR/spel.db --map $BACKUP_DIR --bewaar 14
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=$DATA_DIR $BACKUP_DIR
+UNIT
+cat > "/etc/systemd/system/$NAAM-backup.timer" <<UNIT
+[Unit]
+Description=Elke nacht een back-up van de spelers en saves
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+RandomizedDelaySec=30min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+UNIT
+systemctl daemon-reload
+systemctl enable "$NAAM-opslag.service" >/dev/null 2>&1
+systemctl restart "$NAAM-opslag.service"
+systemctl enable --now "$NAAM-backup.timer" >/dev/null 2>&1
+DIENST_OK=0
+for _ in 1 2 3 4 5 6 7 8 9 10; do
+  if curl -fsS --max-time 2 "http://127.0.0.1:$API_POORT/api/status" >/dev/null 2>&1; then DIENST_OK=1; break; fi
+  sleep 1
+done
+if [ "$DIENST_OK" = 1 ]; then
+  ok "Opslagdienst draait (poort $API_POORT, alleen intern bereikbaar)"
+  ok "Elke nacht een back-up in $BACKUP_DIR (14 dagen bewaard)"
+else
+  let_op "De opslagdienst reageert niet. Kijk met: journalctl -u $NAAM-opslag"
+fi
 
 # ------------------------------------------------------------------ certificaten en nginx
 
@@ -388,6 +503,8 @@ schrijf_site() {  # schrijf_site <cert> <key>   (leeg = alleen HTTP)
   fi
   {
     echo "# Gemaakt door de installer van '... en de Duitse streken'. Wordt overschreven bij bijwerken."
+    echo "limit_req_zone \$binary_remote_addr zone=${NAAM//-/_}_api:10m rate=5r/s;"
+    echo
     echo "server {"
     echo "    listen 80;"
     echo "    listen [::]:80;"
@@ -439,6 +556,18 @@ schrijf_site() {  # schrijf_site <cert> <key>   (leeg = alleen HTTP)
     echo "    location = /lib/phaser.min.js {"
     echo "        expires 30d;"
     echo "        add_header Cache-Control \"public\" always;"
+    echo "        add_header X-Content-Type-Options \"nosniff\" always;"
+    echo "    }"
+    echo
+    echo "    # Opslagdienst: spelers en saves"
+    echo "    location /api/ {"
+    echo "        limit_req zone=${NAAM//-/_}_api burst=20 nodelay;"
+    echo "        proxy_pass http://127.0.0.1:$API_POORT;"
+    echo "        proxy_set_header Host \$host;"
+    echo "        proxy_set_header X-Real-IP \$remote_addr;"
+    echo "        proxy_read_timeout 20s;"
+    echo "        client_max_body_size 128k;"
+    echo "        add_header Cache-Control \"no-store\" always;"
     echo "        add_header X-Content-Type-Options \"nosniff\" always;"
     echo "    }"
     echo
@@ -647,6 +776,7 @@ else
   echo "  DNS: een A-record voor $DOMEIN naar het IP-adres van deze server."
 fi
 echo "  Andere domeinnamen en het kale IP-adres laten de game niet zien."
+echo "  Spelers en saves: $DATA_DIR/spel.db (back-ups in $BACKUP_DIR)."
 echo "  Nu meteen bijwerken:  sudo $NAAM-update"
 echo "  Instellingen wijzigen: draai de installer opnieuw (of pas $CONFIG aan)."
 echo "  Verwijderen:           sudo bash install.sh --verwijder"

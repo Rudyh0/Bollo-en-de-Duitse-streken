@@ -1,6 +1,7 @@
 // De toestand van het lopende spel. Dit is precies wat er wordt opgeslagen.
 import { lees, schrijf } from './opslag.js';
 import { OPSLAG_SLEUTELS, VERSIE } from './constanten.js';
+import { account, opServer, bewaarSave } from './account.js';
 
 function nieuweStaat() {
   return {
@@ -48,27 +49,36 @@ export function herstel(punten) {
 }
 
 // ---------------------------------------------------------------- opslaan / laden
+// Ingelogd: de save staat op de server (en wordt bij het inloggen opgehaald).
+// Zonder server: alleen in deze browser, zoals vroeger.
 
-export function heeftOpslag() {
-  return Boolean(lees(OPSLAG_SLEUTELS.spel));
-}
-
-export function opslagInfo() {
+function opgeslagen() {
+  if (opServer()) return account.save;
   return lees(OPSLAG_SLEUTELS.spel);
 }
 
-export function slaOp(kaartnaam) {
+export function heeftOpslag() {
+  return Boolean(opgeslagen());
+}
+
+export function opslagInfo() {
+  return opgeslagen();
+}
+
+/** Slaat het spel op. Geeft { ok, fout } terug. */
+export async function slaOp(kaartnaam) {
   const kopie = JSON.parse(JSON.stringify(staat));
   kopie.opgeslagenOp = new Date().toISOString();
   kopie.kaartnaam = kaartnaam;
-  return schrijf(OPSLAG_SLEUTELS.spel, kopie);
+  if (opServer()) return bewaarSave(kopie);
+  return { ok: schrijf(OPSLAG_SLEUTELS.spel, kopie) };
 }
 
 export function laad() {
-  const data = lees(OPSLAG_SLEUTELS.spel);
+  const data = opgeslagen();
   if (!data) return false;
   Object.keys(staat).forEach((k) => delete staat[k]);
-  Object.assign(staat, nieuweStaat(), data);
+  Object.assign(staat, nieuweStaat(), JSON.parse(JSON.stringify(data)));
   return true;
 }
 

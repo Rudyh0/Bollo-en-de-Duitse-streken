@@ -2,6 +2,7 @@
 import { kader, tekst, breekAf } from './tekst.js';
 import { instellingen, zet, TEKSTSNELHEDEN, KNOP_OPTIES } from '../core/instellingen.js';
 import { namenVast } from '../core/namen.js';
+import { ingelogd, account } from '../core/account.js';
 import { audio } from '../core/audio.js';
 import { BREEDTE, HOOGTE } from '../core/constanten.js';
 
@@ -17,6 +18,9 @@ function rijen(vanuitSpel) {
   ];
   if (!vanuitSpel && !namenVast()) {
     lijst.push({ id: 'namen', label: 'NAMEN WIJZIGEN', uitleg: 'Kies een nieuwe naam voor het vakantiepark en de beer.' });
+  }
+  if (!vanuitSpel && ingelogd()) {
+    lijst.push({ id: 'uitloggen', label: 'UITLOGGEN', uitleg: `Je bent ingelogd als ${account.naam}. Uitloggen op dit apparaat.` });
   }
   lijst.push({ id: 'terug', label: 'TERUG', uitleg: 'Toetsen: pijltjes of WASD, Z/Enter = A, X/Backspace = B, Esc = START.' });
   return lijst;
@@ -50,7 +54,7 @@ function wijzig(id, richting) {
   return true;
 }
 
-/** Opent het instellingenscherm. Geeft 'namen' terug als de speler de namen wil wijzigen. */
+/** Opent het instellingenscherm. Geeft 'namen' of 'uitloggen' terug als de speler dat kiest. */
 export async function openInstellingen(ui, { vanuitSpel = false } = {}) {
   ui.sluitDialoog();
   audio.sfx('ok');
@@ -106,12 +110,13 @@ export async function openInstellingen(ui, { vanuitSpel = false } = {}) {
       opLinksRechts: (i, richting, lijst) => verwerk(i, richting, lijst),
       opA: (i, lijst) => {
         const id = lijstRijen[i].id;
-        if (id === 'terug' || id === 'namen') return false;
+        if (id === 'terug' || id === 'namen' || id === 'uitloggen') return false;
         verwerk(i, 1, lijst);
         return true;
       },
     });
-    return lijstRijen[keuze].id === 'namen' ? 'namen' : null;
+    const id = lijstRijen[keuze].id;
+    return id === 'namen' || id === 'uitloggen' ? id : null;
   } finally {
     objecten.forEach((o) => o.destroy());
   }
