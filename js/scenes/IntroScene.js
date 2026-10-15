@@ -105,6 +105,7 @@ export class IntroScene extends Phaser.Scene {
         'DIRECTEUR: Het is 2026, maar het voelt als 1940. De Duitsers zijn de grens weer over gekomen.',
         'DIRECTEUR: Niet met een caravan dit keer, maar in ouderwetse uniformen, met stalen helmen en heel veel regels.',
         'DIRECTEUR: Ze hebben heel Drenthe ingepikt. Zelfs de ligbedden bij het zwembad. Zoals altijd eigenlijk.',
+        'DIRECTEUR: En ze zoeken Friezen. Overal. Iedereen die ook maar een beetje Fries lijkt, gaat naar Kamp Westerbork.',
         'DIRECTEUR: Maar genoeg over mij. Laten we beginnen met de intake!',
       ]);
 
@@ -128,7 +129,7 @@ export class IntroScene extends Phaser.Scene {
       await ui.zeg([
         'DIRECTEUR: Mooi, dan is je reservering bijna rond. Alleen... is er een klein probleempje.',
         'DIRECTEUR: Op weg naar {PARK} ben je aangehouden door een Duitse patrouille.',
-        'DIRECTEUR: Je fietsverlichting deed het niet. Daar zijn ze tegenwoordig érg streng in.',
+        'DIRECTEUR: Je fietsverlichting deed het niet, en je had een Fries suikerbrood achterop. Heel verdacht.',
         'DIRECTEUR: Nu zit je vast in Kamp Westerbork. Barak 7, om precies te zijn.',
         'DIRECTEUR: Je moet daar zien te ontsnappen en helemaal naar {PARK} zien te komen. Langs Orvelte, Wezup en Aalden.',
         'DIRECTEUR: Onderweg kom je vast heel wat Duitsers tegen. Laat je niet kisten!',

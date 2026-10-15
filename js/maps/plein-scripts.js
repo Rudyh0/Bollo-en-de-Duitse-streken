@@ -61,7 +61,8 @@ export default {
     if (persoon) wereld.kijkNaarElkaar(persoon);
     await ui.zeg([
       'KLAUS: Halt! Waar denk jij dat jij naartoe gaat, kleine beer?',
-      'KLAUS: Niemand gaat door deze poort! Behalve isch. Om vijf uur. Feierabend!',
+      "KLAUS: Ben jij soms een Fries? Zeg eens: 'bûter, brea en griene tsiis'!",
+      'KLAUS: ...Dat klonk verdacht Fries! Niemand gaat door deze poort! Behalve isch. Om vijf uur. Feierabend!',
       'KLAUS: Isch heb een Walther P38 en een mesje. Jij hebt... een soeplepel? Hahaha!',
     ]);
     const uitslag = await wereld.gevecht('klaus');
@@ -97,6 +98,7 @@ export default {
       await ui.zeg([
         'DIETER: Ho ho! Jij bent toch die beer van barak 7? Terug naar binnen, schnell!',
         'DIETER: Nee? Dan zal isch het je moeten leren. Ordnung muss sein!',
+      'DIETER: En daarna ga isch jouw stamboom nakijken. Isch ruik hier suikerbrood!',
       ]);
     }
     const uitslag = await wereld.gevecht('dieter');
@@ -134,7 +136,7 @@ export default {
   async fritz({ ui }) {
     await ui.zeg([
       'FRITZ: Links, rechts, links, rechts! Wij lopen rondjes. Waarom? Omdat het in het rooster staat!',
-      'FRITZ: Jij daar! Waarom loop jij los rond? ...Ach, isch heb geen tijd. Nog zeven rondjes.',
+      'FRITZ: Jij daar! Ben jij een Fries? ...Nee? Beren tellen niet. Isch heb geen tijd, nog zeven rondjes.',
     ]);
   },
 
@@ -154,8 +156,8 @@ export default {
 
   async jan({ ui }) {
     await ui.zeg([
-      'JAN: Ik ben zevenentachtig en ik heb levenslang gekregen.',
-      'JAN: Dus eerlijk gezegd valt het reuze mee.',
+      'JAN: Ze denken dat ik Fries ben, omdat ik lang ben en weinig zeg. Ik kom uit Assen.',
+      'JAN: Ik ben zevenentachtig en heb levenslang gekregen. Dus eerlijk gezegd valt het reuze mee.',
     ]);
   },
 
@@ -191,6 +193,7 @@ export default {
 
   async boer({ ui }) {
     await ui.zeg([
+      'BOER GERRIT: Ze hebben me opgepakt omdat mijn koeien zwart-wit zijn. Fries vee, zeiden ze.',
       'BOER GERRIT: Mijn koeien staan thuis nog op stal.',
       'BOER GERRIT: Ik hoop maar dat ze de deur hebben gevonden. Ik heb hem in elk geval niet gevonden.',
     ]);

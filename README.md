@@ -1,6 +1,6 @@
 # … en de Duitse streken
 
-Een korte RPG in de stijl van de klassieke handheld-monster-RPG's, helemaal in het Nederlands, die je in de browser speelt. Een beer zit vast in Kamp Westerbork en moet ontsnappen naar zijn vakantiepark bij Aalden, terwijl Drenthe weer eens bezet is door Duitsers in ouderwetse uniformen. Speelduur: ongeveer een uur (als alles af is).
+Een korte RPG in de stijl van de klassieke handheld-monster-RPG's, helemaal in het Nederlands, die je in de browser speelt. Een beer zit vast in Kamp Westerbork en moet ontsnappen naar zijn vakantiepark bij Aalden, terwijl Drenthe weer eens bezet is door Duitsers in ouderwetse uniformen. Ze zijn op zoek naar Friezen. Speelduur: ongeveer een uur (als alles af is).
 
 Gebouwd met [Phaser 3](https://phaser.io). Geen build-stap: het zijn gewone statische bestanden.
 
@@ -106,7 +106,7 @@ Klaar (hoofdstuk 1, Kamp Westerbork):
 - barak 7: kistje onder het bed (voedselbonnen en soeplepel), en de rookpuzzel: schep water uit de emmer, gooi het op de kachel, het brandalarm laat de deur openspringen
 - het kampplein: rondlopende gevangenen, stoeten geketende gevangenen met een wachter voorop, de keuken, een waterpomp die je opknapt
 - de uitgang: twee wachters die je zien aankomen en die je moet verslaan om de poort open te krijgen
-- gevechten: SOEPLEPELSLAG en de VOLKSZANGER (Sepp Schunkelhuber brengt de vijand in de war, waardoor die vaker mist) tegen een Walther P38 en een mesje; rugzak tijdens het gevecht, ervaring en niveaus; wie verliest, wordt wakker in de barak
+- gevechten: SOEPLEPELSLAG en de VOLKSZANGER (Sepp Schunkelhuber brengt de vijand in de war, waardoor die vaker mist) tegen een Walther P38 en een mesje; rugzak tijdens het gevecht, ervaring en niveaus; wie verliest, begint opgeknapt opnieuw aan het begin van de scène
 - pauzemenu met rugzak, status, opslaan en instellingen
 
 Nog te doen: de route langs Orvelte, Wezup en Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.

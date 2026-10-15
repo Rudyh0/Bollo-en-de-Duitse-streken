@@ -87,6 +87,10 @@ export class WereldScene extends Phaser.Scene {
       staat.y = s.y;
       staat.richting = s.richting;
     }
+    // Het begin van deze scène onthouden: wie een gevecht verliest, begint hier opnieuw.
+    if (this.start.nieuw || (this.start.binnen && !this.start.naVerlies) || !staat.respawn) {
+      staat.respawn = { kaart: this.kaart.id, x: staat.x, y: staat.y, richting: staat.richting };
+    }
     this.maakSpeler();
 
     const cam = this.cameras.main;
@@ -108,6 +112,14 @@ export class WereldScene extends Phaser.Scene {
   async binnenkomst() {
     const script = this.scripts.binnenkomst;
     await this.ui.script(async () => {
+      if (this.start.naVerlies) {
+        await this.ui.vanZwart(600);
+        await this.ui.zeg([
+          '{BEER} komt langzaam weer bij...',
+          'Je bent terug bij het begin van deze plek. Gelukkig voel je je weer helemaal fit.',
+        ]);
+        return;
+      }
       if (this.start.nieuw && script) {
         await script(this.context(), { nieuw: true });
       } else {
@@ -444,15 +456,15 @@ export class WereldScene extends Phaser.Scene {
     return resultaat;
   }
 
-  /** Verloren: terug naar de barak, weer helemaal opgeknapt. */
+  /** Verloren: opnieuw beginnen aan het begin van de scène, weer helemaal opgeknapt. */
   async verloren() {
     staat.gezondheid = staat.maxGezondheid;
     Object.keys(staat.pp || {}).forEach((k) => { staat.pp[k] = staat.ppMax[k]; });
-    staat.vlaggen.netVerloren = true;
-    staat.kaart = 'barak';
-    staat.x = 2;
-    staat.y = 4;
-    staat.richting = 'omlaag';
+    const r = staat.respawn || { kaart: this.kaart.id, ...this.kaart.start };
+    staat.kaart = r.kaart;
+    staat.x = r.x;
+    staat.y = r.y;
+    staat.richting = r.richting;
     this.overgang = true;
     this.scene.restart({ binnen: true, naVerlies: true, stil: true });
   }

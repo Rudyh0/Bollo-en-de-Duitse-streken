@@ -1,6 +1,6 @@
 // Alle gebeurtenissen en gesprekken in Barak 7.
 // Elk script krijgt { ui, wereld, staat, audio } en eventueel { x, y, persoon }.
-import { aantal, knapOp } from '../core/staat.js';
+import { aantal } from '../core/staat.js';
 
 const BEDTEKSTEN = [
   'Een stapelbed. Het ruikt naar natte sokken.',
@@ -82,18 +82,7 @@ export default {
     }
   },
 
-  async binnenkomst({ ui, staat }, { nieuw, naVerlies }) {
-    if (naVerlies || staat.vlaggen.netVerloren) {
-      delete staat.vlaggen.netVerloren;
-      knapOp();
-      await ui.vanZwart(600);
-      await ui.zeg([
-        '{BEER} wordt wakker in zijn eigen bed. Alles doet pijn.',
-        'HENK: Ze hebben je teruggebracht, jong. Je zag er niet uit.',
-        'HENK: Rust even uit en probeer het dan nog eens. De deur staat nog steeds open.',
-      ]);
-      return;
-    }
+  async binnenkomst({ ui }, { nieuw }) {
     if (!nieuw) return;
     ui.ooglidBoven.setVisible(true).y = 0;
     ui.ooglidOnder.setVisible(true).y = 80;
@@ -121,6 +110,7 @@ export default {
       await ui.zeg([
         'HENK: Zo, ben jij de nieuwe? Ik ben Henk.',
         'HENK: Ik zit hier al sinds de Duitsers de bingoavond hebben verboden.',
+        'HENK: Ze dachten dat ik Fries was. Ik heb ooit één keer een skûtsje gezien. Op tv.',
         'HENK: Als je hier weg wilt, heb je spullen nodig. Kijk eens goed om je heen, jong.',
       ]);
       return;
@@ -206,7 +196,7 @@ export default {
   async prikbord({ ui }) {
     await ui.zeg([
       'Op het prikbord hangt een briefje:',
-      'KAMPREGELS. 1: Niet ontsnappen. 2: Niet klagen over het eten. 3: Zie regel 1.',
+      'KAMPREGELS. 1: Niet ontsnappen. 2: Niet klagen over het eten. 3: Friezen melden zich bij de Kommandant.',
       "Iemand heeft eronder gekrabbeld: 'Regel 4: handdoeken NIET op de ligbedden leggen!'",
       "En daaronder, met kleine letters: 'Bij brand gaan alle deuren automatisch open.'",
     ]);
