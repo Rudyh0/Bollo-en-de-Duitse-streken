@@ -309,6 +309,41 @@ export const LIEDJES = {
     ],
   },
 
+  // Wezup: een vissers- en ambachtsstadje (een beetje een zeemanslied)
+  wezup: {
+    bpm: 140,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.12, vibrato: true,
+        noten: `
+          D5:3 D5:1 F5:4 A5:4 F5:4  G5:3 F5:1 E5:4 C5:8  F5:3 E5:1 D5:4 A4:4 D5:4  E5:3 F5:1 E5:4 A4:8
+          D5:3 D5:1 F5:4 A5:4 C6:4  Bb5:3 A5:1 G5:4 E5:8  F5:3 E5:1 D5:4 C#5:4 E5:4  D5:12 -:4`,
+      },
+      { golf: 'puls12', volume: 0.05, legato: 1, noten: 'F4:16 E4:16 F4:16 E4:16 F4:16 D4:16 F4:8 E4:8 F4:16' },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.7,
+        noten: `
+          D2:4 A2:4 D3:4 A2:4  C2:4 G2:4 C3:4 G2:4  D2:4 A2:4 D3:4 A2:4  A1:4 E2:4 A2:4 E2:4
+          D2:4 A2:4 D3:4 A2:4  G2:4 D3:4 G2:4 D3:4  D2:4 A2:4 A1:4 C#2:4  D2:4 A2:4 D3:8`,
+      },
+      { golf: 'ruis', volume: 0.1, noten: maat('K:4 H:2 H:2 S:4 H:2 H:2', 8) },
+    ],
+  },
+
+  // de geheime kamer: een stil speeldoosje
+  achterkamer: {
+    bpm: 72,
+    kanalen: [
+      {
+        golf: 'puls12', volume: 0.08, legato: 0.6,
+        noten: `
+          A5:4 E5:4 C5:4 E5:4  B5:4 E5:4 G#5:8  A5:4 C6:4 B5:4 A5:4  G#5:4 E5:4 B4:8
+          F5:4 A5:4 C6:4 A5:4  G5:4 E5:4 C5:8  D5:4 F5:4 E5:4 G#5:4  A5:12 -:4`,
+      },
+      { golf: 'driehoek', volume: 0.2, legato: 0.9, noten: 'A2:16 E2:16 A2:16 E2:16 F2:16 C3:16 D3:8 E2:8 A2:16' },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   onderduiker: {
     bpm: 120,

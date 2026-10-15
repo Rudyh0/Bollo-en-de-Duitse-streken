@@ -24,6 +24,7 @@ import art_gevecht  # noqa: E402
 import art_bos  # noqa: E402
 import art_dorp  # noqa: E402
 import art_n34  # noqa: E402
+import art_wezup  # noqa: E402
 
 
 def pad(*delen):
@@ -64,7 +65,7 @@ def main():
     for naam, frames in art_mensen.alle().items():
         vel(frames, 3).save(pad('sprites', f'mens_{naam}.png'))
     # buitenterrein
-    vel(art_buiten.tegelset() + art_bos.tegelset_extra() + art_dorp.tegelset_extra() + art_n34.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
+    vel(art_buiten.tegelset() + art_bos.tegelset_extra() + art_dorp.tegelset_extra() + art_n34.tegelset_extra() + art_wezup.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
     for naam, img in art_buiten.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     # bos
@@ -74,7 +75,7 @@ def main():
     for naam, img in art_bos.iconen().items():
         img.save(pad('ui' if naam.startswith('icoon') else 'sprites', naam + '.png'))
     # Orvelte
-    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
+    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra() + art_wezup.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
     for naam, img in art_dorp.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     for naam, frames in art_dorp.animaties().items():
@@ -93,6 +94,11 @@ def main():
     art_n34.icoon_dagboek().save(pad('ui', 'icoon_dagboek.png'))
     art_n34.gevecht_weg().save(pad('bg', 'gevecht_weg.png'))
     art_n34.gevecht_winkel().save(pad('bg', 'gevecht_winkel.png'))
+    # Wezup
+    for naam, img in art_wezup.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    art_wezup.effect_snert().save(pad('sprites', 'effect_snert.png'))
+    art_wezup.effect_spetter().save(pad('sprites', 'effect_spetter.png'))
     # gevechten
     for naam, img in art_gevecht.alles().items():
         img.save(pad('sprites', naam + '.png'))

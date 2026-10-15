@@ -471,6 +471,30 @@ PERSONEN = {
         t='#5a6a7a', T='#3e4a58', p='#3e4a58', P='#2a3440', f='#1e1e22', b='#2a2a2c')),
     'jens': ('kort', 'normaal', kleuren(
         h='#e8d070', H='#c0a848', t='#5a6a7a', T='#3e4a58', p='#3e4a58', P='#2a3440', f='#1e1e22', b='#2a2a2c')),
+    # Wezup
+    'anne': ('lang', 'normaal', kleuren(
+        h='#e8c868', H='#c0a048', t='#4a7ac8', T='#3a5a9a', p='#4a7ac8', P='#3a5a9a', f='#6a4a2a', b='#f4f4f0',
+        s='#f6cfae', S='#d8a888')),
+    'hendrik': ('kaal', 'normaal', kleuren(
+        h='#a8a8a8', H='#808080', t='#8a6a44', T='#6a4e30', p='#3a3a42', P='#26262c', f='#3a2a20', b='#e8e0cc')),
+    'bakker': ('muts', 'normaal', kleuren(
+        h='#c8a070', H='#a08050', g='#f8f8f4', G='#d8d8d0', l='#ffffff',
+        t='#f4f4f0', T='#d0d0c8', p='#5a5a62', P='#44444c', f='#3a2a20', b='#f4f4f0')),
+    'slager': ('kort', 'normaal', kleuren(
+        h='#3a2a1e', H='#24180e', t='#f4f4f0', T='#c83a3a', p='#3a3a42', P='#26262c', f='#2a2a2a', b='#c83a3a',
+        s='#f0b090', S='#d08a6a')),
+    'visser': ('muts', 'normaal', kleuren(
+        h='#a8a8a8', H='#808080', g='#f0c830', G='#c8a020', l='#f8e060',
+        t='#f0c830', T='#c8a020', p='#2a3a5a', P='#1e2a44', f='#2a2a2a', b='#c8a020')),
+    'vissersvrouw': ('hoofddoek', 'normaal', kleuren(
+        g='#3a5aa8', G='#2a4278', l='#5a7ac8', t='#3a3a42', T='#26262c', p='#3a3a42', P='#26262c',
+        f='#3a2a20', b='#f4f4f0')),
+    'leutnant': ('pet', 'normaal', kleuren(
+        h='#d8c090', H='#b0a070', g='#2a2e28', G='#141614', l='#4a4e44',
+        t='#5c6250', T='#40463a', p='#4a5040', P='#34382e', f='#141414', b='#c8b060')),
+    'klompenmaker': ('pet', 'normaal', kleuren(
+        h='#d8d8d8', H='#b0b0b0', g='#6a4a2a', G='#4a3420', l='#8a6a4a',
+        t='#4a6a8a', T='#3a5068', p='#5a4a3a', P='#44382c', f='#f0e0b0', b='#4a6a8a')),
     'dichter': ('lang', 'normaal', kleuren(
         h='#2a2a30', H='#18181c', t='#4a3a5a', T='#342842', p='#2a2a34', P='#1c1c24', f='#1a1a1a', b='#4a3a5a')),
 }

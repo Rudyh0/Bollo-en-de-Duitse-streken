@@ -15,6 +15,10 @@ import { coffeeshop, hut1, hut2, hut3 } from './binnen-dorp.js';
 import { coffeeshopScripts, hut1Scripts, hut2Scripts, hut3Scripts } from './binnen-dorp-scripts.js';
 import { n34a, n34b, n34c, tankstation } from './n34.js';
 import { n34aScripts, n34bScripts, n34cScripts, tankstationScripts } from './n34-scripts.js';
+import { wezup, kruidenier, bakkerij, slagerij, achterkamer } from './wezup.js';
+import {
+  wezupScripts, kruidenierScripts, bakkerijScripts, slagerijScripts, achterkamerScripts,
+} from './wezup-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -31,6 +35,11 @@ export const KAARTEN = {
   n34b,
   n34c,
   tankstation,
+  wezup,
+  kruidenier,
+  bakkerij,
+  slagerij,
+  achterkamer,
 };
 
 export const SCRIPTS = {
@@ -48,4 +57,9 @@ export const SCRIPTS = {
   n34b: n34bScripts,
   n34c: n34cScripts,
   tankstation: tankstationScripts,
+  wezup: wezupScripts,
+  kruidenier: kruidenierScripts,
+  bakkerij: bakkerijScripts,
+  slagerij: slagerijScripts,
+  achterkamer: achterkamerScripts,
 };

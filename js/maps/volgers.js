@@ -19,6 +19,15 @@ export const ONDERDUIKERS = {
       ['TJITSKE: Wat bist do foar in bear? Gjin aardige, dat is wis.'],
     ],
   },
+  anne: {
+    naam: 'ANNE',
+    ketting: false,
+    zinnen: [
+      ['ANNE: Waar gaan we heen? ...Je hoeft het niet te zeggen. Ik weet het al.'],
+      ['ANNE: Heit zei altijd: als je bang bent, tel dan de kerktorens. In Friesland zijn er heel veel.', 'ANNE: Hier zie ik er maar één.'],
+      ['ANNE: Mag ik nog één keer naar de lucht kijken? ...Dank je.'],
+    ],
+  },
   wiebe: {
     naam: 'WIEBE',
     zinnen: [

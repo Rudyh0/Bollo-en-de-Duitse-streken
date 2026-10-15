@@ -247,18 +247,48 @@ export class GevechtScene extends Phaser.Scene {
     }
     await this.tekstZonderWachten(`${beer()} gebruikt ${a.naam}!`);
     await this.ui.wachtMs(250);
+    const animatie = (raak) => (a.animatie === 'snert' ? this.snertAnimatie(raak) : this.lepelAnimatie(raak, a.animatie));
     if (!kans(a.nauwkeurigheid)) {
-      await this.lepelAnimatie(false, a.animatie);
+      await animatie(false);
       await this.zeg(`Maar ${this.v.naam} springt opzij!`);
       return;
     }
-    await this.lepelAnimatie(true, a.animatie);
+    await animatie(true);
     const { schade, voltreffer } = berekenSchade(staat.niveau, a.kracht, staat.aanval, this.v.verdediging);
     const voor = this.v.gz;
     this.v.gz = Math.max(0, this.v.gz - schade);
     await this.animeerGz('vijand', voor, this.v.gz);
     if (voltreffer) await this.zeg('Een voltreffer! BONK!');
-    else this.ui.sluitDialoog();
+    if (a.raakTekst && this.v.gz > 0) await this.zeg(a.raakTekst.replace('{VIJAND}', this.v.naam));
+    else if (!voltreffer) this.ui.sluitDialoog();
+  }
+
+  async snertAnimatie(raak) {
+    audio.sfx('zoef');
+    const pan = this.add.image(this.speler.x + 18, this.speler.y - 44, 'effect_snert').setDepth(12);
+    const doelX = raak ? this.vijand.x : this.vijand.x + 46;
+    const doelY = raak ? this.vijand.y - 36 : this.vijand.y - 6;
+    this.tweens.add({ targets: pan, x: doelX, angle: 320, duration: 460 });
+    await this.tween({ targets: pan, y: pan.y - 34, duration: 230, ease: 'Sine.easeOut' });
+    await this.tween({ targets: pan, y: doelY, duration: 230, ease: 'Sine.easeIn' });
+    pan.destroy();
+    audio.sfx('plons');
+    const spetter = this.add.image(doelX, doelY + 4, 'effect_spetter').setDepth(12);
+    if (raak) {
+      audio.sfx('sis');
+      for (let i = 0; i < 5; i++) {
+        const stoom = this.add.circle(doelX + Phaser.Math.Between(-12, 12), doelY, 3, 0xf0f0f0, 0.8).setDepth(13);
+        this.tweens.add({
+          targets: stoom, y: stoom.y - 24, scale: 2.5, alpha: 0, duration: 700, delay: i * 80, onComplete: () => stoom.destroy(),
+        });
+      }
+      this.cameras.main.shake(140, 0.006);
+      await this.knipper(this.vijand, 3);
+    } else {
+      await this.ui.wachtMs(300);
+    }
+    await this.tween({ targets: spetter, alpha: 0, duration: 400 });
+    spetter.destroy();
   }
 
   async lepelAnimatie(raak, soort = 'lepel') {

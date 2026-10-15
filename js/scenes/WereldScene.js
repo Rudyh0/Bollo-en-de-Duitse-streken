@@ -8,7 +8,7 @@ import { audio } from '../core/audio.js';
 import { instellingen } from '../core/instellingen.js';
 import { staat } from '../core/staat.js';
 import { KAARTEN, SCRIPTS } from '../maps/index.js';
-import { praatMetVolger } from '../maps/volgers.js';
+import { praatMetVolger, ONDERDUIKERS } from '../maps/volgers.js';
 import { VIJANDEN } from '../gevecht/data.js';
 
 const LOOP_MS = 240;
@@ -103,6 +103,25 @@ const OBJECT_TYPES = {
   koelkast: { textuur: () => 'obj_koelkast', b: 1, h: 1 },
   koffieautomaat: { textuur: () => 'obj_koffieautomaat', b: 1, h: 1 },
   kassabalie: { textuur: () => 'obj_kassabalie', b: 3, h: 1 },
+  // Wezup
+  huis: { textuur: (o) => `obj_huis_${o.kleur || 'rood'}`, b: 3, h: 2 },
+  winkel: { textuur: (o) => `obj_winkel_${o.soort}`, b: 4, h: 2 },
+  viskraam: { textuur: () => 'obj_viskraam', b: 3, h: 1 },
+  vissersboot: { textuur: () => 'obj_vissersboot', b: 3, h: 1, dx: -4, dy: 4 },
+  roeiboot: { textuur: () => 'obj_roeiboot', b: 2, h: 1, dy: 1 },
+  netten: { textuur: () => 'obj_netten', b: 2, h: 1, dx: -4 },
+  tonnen: { textuur: () => 'obj_tonnen', b: 1, h: 1 },
+  poster_gezocht: { textuur: () => 'obj_poster_gezocht', b: 1, h: 1, dx: -2 },
+  boekenkast: { textuur: (o) => (staat.vlaggen[o.vlag] ? 'obj_boekenkast_open' : 'obj_boekenkast'), b: 2, h: 1 },
+  toonbank_oud: { textuur: () => 'obj_toonbank_oud', b: 3, h: 1 },
+  kast_kruidenier: { textuur: () => 'obj_kast_kruidenier', b: 2, h: 1 },
+  broodvitrine: { textuur: () => 'obj_broodvitrine', b: 3, h: 1 },
+  oven: { textuur: () => 'obj_oven', b: 2, h: 1 },
+  vleesvitrine: { textuur: () => 'obj_vleesvitrine', b: 3, h: 1 },
+  worsten: { textuur: () => 'obj_worsten', b: 2, h: 1 },
+  bedje: { textuur: () => 'obj_bedje', b: 2, h: 1 },
+  bureautje: { textuur: () => 'obj_bureautje', b: 2, h: 1 },
+  smokkelwaar: { textuur: () => 'obj_smokkelwaar', b: 1, h: 1 },
 };
 
 // Meldingen als een middel is uitgewerkt.
@@ -1073,6 +1092,8 @@ export class WereldScene extends Phaser.Scene {
     g.clear();
     const punten = [s.sprite, ...this.volgers.map((v) => v.sprite)];
     for (let i = 0; i < punten.length - 1; i++) {
+      // sommige volgers lopen gewoon mee, zonder handboeien
+      if (ONDERDUIKERS[this.volgers[i].id]?.ketting === false) continue;
       const a = punten[i];
       const b = punten[i + 1];
       const ax = a.x;

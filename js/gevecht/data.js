@@ -18,6 +18,16 @@ export const AANVALLEN = {
     animatie: 'frikandel',
     uitleg: 'Een keiharde, bevroren frikandel. Doet flink pijn.',
   },
+  snert: {
+    naam: 'GLOEIEND HETE SNERT',
+    soort: 'WORP',
+    kracht: 12,
+    nauwkeurigheid: 80,
+    pp: 8,
+    animatie: 'snert',
+    raakTekst: '{VIJAND} zit onder de snert. Gloeiend heet! Met stukjes rookworst.',
+    uitleg: 'Een pan kokende erwtensoep, recht in het gezicht. Ook lekker.',
+  },
   volkszanger: {
     naam: 'VOLKSZANGER',
     soort: 'MUZIEK',

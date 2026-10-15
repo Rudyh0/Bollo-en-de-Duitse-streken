@@ -20,7 +20,7 @@ export const OPSLAG_SLEUTELS = {
   spel: 'duitse-streken:opslag-1',
 };
 
-export const VERSIE = '0.5.0';
+export const VERSIE = '0.6.0';
 
 /** Zet de camera van een scène op het 240x160-raster. */
 export function zetCamera(scene) {

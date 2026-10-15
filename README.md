@@ -132,4 +132,12 @@ Klaar (hoofdstuk 4, de N34 - Hunebed Highway):
 - deel 2: tankstation Tank & Tosti. Ga je naar binnen, dan vecht je meteen met Unteroffizier Bernd; loop je door, dan stormt hij naar buiten en houdt hij je tegen. Daarna krijg je van de kassière een broodje kroket
 - deel 3: de afslag naar Wezup met een grenscontrole (Grenzer Helmut, Jens en drugshond Rex). Drugs op zak: in beslag genomen en gevecht. Niks op zak: speekseltest. Ooit iets gebruikt (van Kikker of uit de coffeeshop): positief en gevecht. Nooit iets gebruikt: negatief, maar dan ben je een mietje, en mietjes horen hier niet thuis: gevecht
 
-Nog te doen: Wezup (de geheime kamer), Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.
+Klaar (hoofdstuk 5, Wezup):
+
+- een ambachtsstadje met trapgeveltjes, een haventje met vissersboten, een viskraam, een bakkerij, slagerij, klompenmaker en kruidenier (de bakkerij, slagerij en kruidenier zijn van binnen te bezoeken)
+- de inwoners zijn het hartgrondig met de Duitsers eens en hebben het voortdurend over "die verdomde tjibbes uit Friesland"
+- verstopt achter de visnetten op de kade: een kistje met een voedselbon en de vierde aanval, GLOEIEND HETE SNERT (een pan kokende erwtensoep die je naar de Duitsers gooit)
+- wie het stadje wil verlaten, wordt tegengehouden door Leutnant Friedrich: zoek Anne Fries, de dochter van de kruidenier, die gezocht wordt voor de verkoop van Friese droge worst en suikerbrood
+- ze zit achter de boekenkast van kruidenier Hendrik, in een geheime kamer. Heb je haar dagboek bij je, dan geef je het terug. Ze loopt met je mee; bij de Leutnant kies je of je haar inlevert. Pas daarna kun je verder
+
+Nog te doen: Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.

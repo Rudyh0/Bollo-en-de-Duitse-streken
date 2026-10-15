@@ -375,12 +375,15 @@ export const n34cScripts = {
     await ui.zeg('FIETSPAD AFGESLOTEN. Omleiding via Wezup. Bedankt voor uw begrip. - Die Kommandantur');
   },
 
-  async stadje({ ui }) {
-    await ui.zeg([
-      'Je loopt de afslag af. Achter de bomen zie je de eerste daken van Wezup.',
-      'Ergens in dit stadje is een kruidenier. Met een boekenkast...',
-      'EINDE VAN HOOFDSTUK 4. Wordt vervolgd!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+  async stadje({ ui, wereld, staat }, { warp }) {
+    if (!staat.vlaggen.n34Verlaten) {
+      staat.vlaggen.n34Verlaten = true;
+      await ui.zeg([
+        'Je loopt de afslag af. Achter de bomen zie je de eerste trapgeveltjes van Wezup.',
+        staat.vlaggen.dagboekGelezen ? 'Ergens in dit stadje is een kruidenier. Met een boekenkast...' : 'Het ruikt naar vers brood en vis.',
+      ]);
+      await ui.hoofdstuk('HOOFDSTUK 5', 'WEZUP');
+    }
+    wereld.gaNaar('wezup', warp.x === 24 ? 20 : 21, 32, 'omhoog');
   },
 };

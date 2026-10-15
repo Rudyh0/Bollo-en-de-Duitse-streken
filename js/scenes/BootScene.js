@@ -56,6 +56,8 @@ export class BootScene extends Phaser.Scene {
       gevecht_djelano: 'sprites/gevecht_djelano.png',
       gevecht_mustafah: 'sprites/gevecht_mustafah.png',
       effect_vape: 'sprites/effect_vape.png',
+      effect_snert: 'sprites/effect_snert.png',
+      effect_spetter: 'sprites/effect_spetter.png',
       gevecht_wachter_klaus: 'sprites/gevecht_wachter_klaus.png',
       gevecht_wachter_dieter: 'sprites/gevecht_wachter_dieter.png',
       gevecht_soldaat_horst: 'sprites/gevecht_soldaat_horst.png',
@@ -78,7 +80,11 @@ export class BootScene extends Phaser.Scene {
       'meelzakken', 'bedstee', 'haard', 'tafeltje', 'luik', 'luik_open', 'spinnewiel', 'toonbank', 'bank', 'plant',
       'boxen', 'asbak',
       'bord_hunebedhighway', 'bord_n34', 'bord_afslag', 'krat', 'krat_open', 'dranghek', 'pion', 'tankstation',
-      'schap', 'koelkast', 'koffieautomaat', 'kassabalie'].forEach((naam) => {
+      'schap', 'koelkast', 'koffieautomaat', 'kassabalie',
+      'huis_rood', 'huis_donker', 'huis_geel', 'huis_wit', 'winkel_bakker', 'winkel_slager', 'winkel_kruidenier',
+      'winkel_klompen', 'viskraam', 'vissersboot', 'roeiboot', 'netten', 'tonnen', 'poster_gezocht', 'boekenkast',
+      'boekenkast_open', 'toonbank_oud', 'kast_kruidenier', 'broodvitrine', 'oven', 'vleesvitrine', 'worsten', 'bedje',
+      'bureautje', 'smokkelwaar'].forEach((naam) => {
       afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
     });
     ['auto_rood', 'auto_blauw', 'auto_zilver', 'auto_geel', 'caravan', 'jeep', 'truck', 'truck_kisten', 'pantser'].forEach((naam) => {
@@ -99,7 +105,8 @@ export class BootScene extends Phaser.Scene {
     ['wachter', 'wachter_pet', 'gevangene_a', 'gevangene_b', 'gevangene_c', 'gevangene_d',
       'oma', 'sporter', 'boer', 'kokkin', 'dichter', 'soldaat_bos', 'soldaat_muts', 'feldwebel',
       'djelano', 'mustafah', 'sjoerd', 'tjitske', 'wiebe', 'molenaar', 'budtender', 'grenswacht', 'opa', 'toerist',
-      'dorpsvrouw', 'bernd', 'kassiere', 'helmut', 'jens'].forEach((naam) => {
+      'dorpsvrouw', 'bernd', 'kassiere', 'helmut', 'jens',
+      'anne', 'hendrik', 'bakker', 'slager', 'visser', 'vissersvrouw', 'leutnant', 'klompenmaker'].forEach((naam) => {
       this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
     });
 
