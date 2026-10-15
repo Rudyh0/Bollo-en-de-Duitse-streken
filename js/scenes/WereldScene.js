@@ -8,12 +8,17 @@ import { audio } from '../core/audio.js';
 import { instellingen } from '../core/instellingen.js';
 import { staat } from '../core/staat.js';
 import { KAARTEN, SCRIPTS } from '../maps/index.js';
+import { praatMetVolger } from '../maps/volgers.js';
+import { VIJANDEN } from '../gevecht/data.js';
 
 const LOOP_MS = 240;
 const REN_MS = 120;
 // met een snel-effect (ritalin, 3MMC)
 const SNEL_LOOP_MS = 120;
 const SNEL_REN_MS = 72;
+// stoned (wiet, hasj): alles gaat wat trager
+const TRAAG_LOOP_MS = 330;
+const TRAAG_REN_MS = 180;
 const DRAAI_MS = 90;
 const NPC_LOOP_MS = 300;
 
@@ -54,12 +59,45 @@ const OBJECT_TYPES = {
   schatkist: { textuur: (o) => (staat.vlaggen[o.vlag] ? 'obj_schatkist_open' : 'obj_schatkist'), b: 1, h: 1 },
   bron: { textuur: () => 'obj_bron', b: 2, h: 1, dy: 3, diepte: () => -5 },
   boomstronk: { textuur: () => 'obj_boomstronk', b: 1, h: 1 },
+  // Orvelte
+  molen: {
+    textuur: () => 'obj_molen', b: 3, h: 2,
+    extra: (scene, o, sprite) => {
+      const wieken = scene.add.image(sprite.x + 24, sprite.y - 61, 'anim_wieken', 0).setDepth(sprite.depth + 0.2);
+      let f = 0;
+      scene.time.addEvent({ delay: 170, loop: true, callback: () => { f = (f + 1) % 4; wieken.setFrame(f); } });
+      return [wieken];
+    },
+  },
+  hunebed: { textuur: () => 'obj_hunebed', b: 4, h: 1 },
+  plaggenhut: { textuur: () => 'obj_plaggenhut', b: 3, h: 2 },
+  coffeeshop: { textuur: () => 'obj_coffeeshop', b: 5, h: 3 },
+  boerderij: { textuur: () => 'obj_boerderij', b: 6, h: 3 },
+  vlag: { textuur: () => 'anim_vlag', b: 1, h: 1, dx: 4, animatie: { frames: 2, ms: 380 } },
+  slagboom: {
+    textuur: (o) => (staat.vlaggen[o.openVlag] ? 'obj_slagboom_open' : 'obj_slagboom'), b: 1, h: 1, dx: 3,
+    extraVast: (o) => (staat.vlaggen[o.openVlag] ? [] : [[1, 0], [2, 0]]),
+  },
+  fatbike: { textuur: () => 'obj_fatbike', b: 2, h: 1, dy: -1 },
+  eik: { textuur: () => 'obj_eik', b: 2, h: 1, dx: -8 },
+  meelzakken: { textuur: () => 'obj_meelzakken', b: 1, h: 1 },
+  bedstee: { textuur: () => 'obj_bedstee', b: 2, h: 1 },
+  haard: { textuur: () => 'obj_haard', b: 2, h: 1 },
+  tafeltje: { textuur: () => 'obj_tafeltje', b: 2, h: 1 },
+  luik: { textuur: (o) => (staat.vlaggen[o.vlag] ? 'obj_luik_open' : 'obj_luik'), b: 1, h: 1, diepte: () => -5 },
+  spinnewiel: { textuur: () => 'obj_spinnewiel', b: 1, h: 1, dx: -4 },
+  toonbank: { textuur: () => 'obj_toonbank', b: 4, h: 1 },
+  bank: { textuur: () => 'obj_bank', b: 3, h: 1 },
+  plant: { textuur: () => 'obj_plant', b: 1, h: 1 },
+  boxen: { textuur: () => 'obj_boxen', b: 1, h: 1 },
+  asbak: { textuur: () => 'obj_asbak', b: 1, h: 1 },
 };
 
 // Meldingen als een middel is uitgewerkt.
 const EFFECT_EINDE = {
   snel: 'Je benen zijn weer normaal.',
   trip: 'De kleuren zijn weer gewoon. Jammer.',
+  stoned: 'Weer helder. Wel trek in een frikandel.',
 };
 
 const sleutel = (x, y) => `${x},${y}`;
@@ -90,6 +128,7 @@ export class WereldScene extends Phaser.Scene {
     this.bezigMetMenu = false;
     this.overgang = false;
     this.trip = null;
+    this.stoned = null;
     this.bouwKaart();
     this.bouwObjecten();
     this.bouwPersonen();
@@ -106,6 +145,7 @@ export class WereldScene extends Phaser.Scene {
       staat.respawn = { kaart: this.kaart.id, x: staat.x, y: staat.y, richting: staat.richting };
     }
     this.maakSpeler();
+    this.bouwVolgers();
 
     const cam = this.cameras.main;
     cam.setZoom(SCHAAL);
@@ -121,6 +161,7 @@ export class WereldScene extends Phaser.Scene {
     this.events.once('shutdown', () => {
       invoer.reset();
       this.stopTrip();
+      this.stopStoned();
     });
     if (this.scripts.opbouw) this.scripts.opbouw(this.context());
     this.binnenkomst();
@@ -189,7 +230,10 @@ export class WereldScene extends Phaser.Scene {
 
   bouwObjecten() {
     this.objecten = {};
-    (this.kaart.objecten || []).forEach((o) => this.maakObject(o));
+    (this.kaart.objecten || []).forEach((o) => {
+      if (o.verbergVlag && staat.vlaggen[o.verbergVlag]) return;
+      this.maakObject(o);
+    });
   }
 
   maakObject(o) {
@@ -207,8 +251,19 @@ export class WereldScene extends Phaser.Scene {
       oorsprong = [0, 1];
     }
     const diepte = type.diepte ? type.diepte(o) : (o.y + Math.max(1, type.h)) * TEGEL;
-    const sprite = this.add.image(px, py, type.textuur(o)).setOrigin(...oorsprong).setDepth(diepte);
-    if (o.id) this.objecten[o.id] = { sprite, data: o, type };
+    const sprite = this.add.image(px, py, type.textuur(o), 0).setOrigin(...oorsprong).setDepth(diepte);
+    if (type.animatie) {
+      let f = 0;
+      this.time.addEvent({
+        delay: type.animatie.ms, loop: true,
+        callback: () => { f = (f + 1) % type.animatie.frames; sprite.setFrame(f); },
+      });
+    }
+    const extra = type.extra ? type.extra(this, o, sprite) : [];
+    // extra tegels die (soms) dicht zitten, zoals een slagboom over de weg
+    const extraVast = type.extraVast ? type.extraVast(o) : [];
+    extraVast.forEach(([dx, dy]) => this.vast.add(sleutel(o.x + dx, o.y + dy)));
+    if (o.id) this.objecten[o.id] = { sprite, data: o, type, extra, extraVast };
     for (let dy = 0; dy < type.h; dy++) {
       for (let dx = 0; dx < type.b; dx++) {
         this.vast.add(sleutel(o.x + dx, o.y + dy));
@@ -350,7 +405,39 @@ export class WereldScene extends Phaser.Scene {
 
   vernieuwObject(id) {
     const o = this.objecten[id];
-    if (o) o.sprite.setTexture(o.type.textuur(o.data));
+    if (!o) return;
+    o.sprite.setTexture(o.type.textuur(o.data));
+    if (o.type.extraVast) {
+      o.extraVast.forEach(([dx, dy]) => this.vast.delete(sleutel(o.data.x + dx, o.data.y + dy)));
+      o.extraVast = o.type.extraVast(o.data);
+      o.extraVast.forEach(([dx, dy]) => this.vast.add(sleutel(o.data.x + dx, o.data.y + dy)));
+    }
+  }
+
+  verwijderObject(id) {
+    const o = this.objecten[id];
+    if (!o) return;
+    o.sprite.destroy();
+    (o.extra || []).forEach((e) => e.destroy());
+    const t = o.type;
+    for (let dy = 0; dy < t.h; dy++) {
+      for (let dx = 0; dx < t.b; dx++) this.vast.delete(sleutel(o.data.x + dx, o.data.y + dy));
+    }
+    delete this.objecten[id];
+  }
+
+  /** Een vrije tegel naast (x, y), bij voorkeur achter de speler. */
+  vrijePlekBij(x, y) {
+    const s = this.speler;
+    const volgorde = [TEGENOVER[s.richting], 'links', 'rechts', 'omlaag', 'omhoog'];
+    for (const r of volgorde) {
+      const nx = x + RICHTINGEN[r].dx;
+      const ny = y + RICHTINGEN[r].dy;
+      if (this.kanLopen(nx, ny) && !this.isWarp(nx, ny) && !this.volgerOp(nx, ny) && !(nx === s.x && ny === s.y)) {
+        return { x: nx, y: ny };
+      }
+    }
+    return { x, y };
   }
 
   persoon(id) {
@@ -389,6 +476,7 @@ export class WereldScene extends Phaser.Scene {
   npcKanLopen(p, x, y) {
     if (!this.kanLopen(x, y)) return false;
     if (this.spelerOp(x, y)) return false;
+    if (this.volgerOp(x, y)) return false;
     if ((this.kaart.warps || []).some((w) => w.x === x && w.y === y)) return false;
     return true;
   }
@@ -456,7 +544,7 @@ export class WereldScene extends Phaser.Scene {
   async gevecht(vijandId) {
     this.bewaarPositie();
     audio.stopMuziek(0.1);
-    audio.speelMuziek('gevecht');
+    audio.speelMuziek(VIJANDEN[vijandId]?.muziek || 'gevecht');
     await this.ui.gevechtsOvergang();
     const resultaat = await new Promise((klaar) => {
       this.scene.launch('Gevecht', { vijand: vijandId, klaar, achtergrond: this.kaart.gevechtAchtergrond });
@@ -491,6 +579,7 @@ export class WereldScene extends Phaser.Scene {
   update(tijd, delta) {
     staat.speeltijdMs += delta;
     this.updatePersonen(delta);
+    this.updateVolgers();
     this.tekenKettingen();
     if (this.overgang) return;
     this.updateEffecten(delta);
@@ -576,12 +665,17 @@ export class WereldScene extends Phaser.Scene {
       s.voortgang = 0;
       s.voet = 1 - s.voet;
       const rent = instellingen.altijdRennen || invoer.ingedrukt('b');
-      if (this.heeftEffect('snel')) {
+      const snel = this.heeftEffect('snel');
+      const traag = this.heeftEffect('stoned');
+      if (snel && !traag) {
         s.duur = rent ? SNEL_REN_MS : SNEL_LOOP_MS;
         this.stofwolkje();
+      } else if (traag && !snel) {
+        s.duur = rent ? TRAAG_REN_MS : TRAAG_LOOP_MS;
       } else {
         s.duur = rent ? REN_MS : LOOP_MS;
       }
+      this.volgersStap(s.x, s.y);
       this.plaatsSpeler();
     } else {
       s.liep = false;
@@ -745,6 +839,54 @@ export class WereldScene extends Phaser.Scene {
     if (this.heeftEffect('trip') && !this.trip) this.startTrip();
     else if (!this.heeftEffect('trip') && this.trip) this.stopTrip();
     if (this.trip) this.updateTrip(delta);
+    if (this.heeftEffect('stoned') && !this.stoned) this.startStoned();
+    else if (!this.heeftEffect('stoned') && this.stoned) this.stopStoned();
+    if (this.stoned) this.updateStoned(delta);
+  }
+
+  startStoned() {
+    const cam = this.cameras.main;
+    this.stoned = { tijd: 0, wolk: 400 };
+    if (cam.postFX) {
+      try {
+        this.stoned.rand = cam.postFX.addVignette(0.5, 0.5, 0.9, 0.45);
+        this.stoned.kleur = cam.postFX.addColorMatrix();
+      } catch (e) {
+        this.stoned.rand = null;
+        this.stoned.kleur = null;
+      }
+    }
+  }
+
+  stopStoned() {
+    if (!this.stoned) return;
+    const cam = this.cameras.main;
+    if (cam && cam.postFX) {
+      if (this.stoned.rand) cam.postFX.remove(this.stoned.rand);
+      if (this.stoned.kleur) cam.postFX.remove(this.stoned.kleur);
+    }
+    this.stoned = null;
+  }
+
+  updateStoned(delta) {
+    const st = this.stoned;
+    st.tijd += delta;
+    if (st.rand) st.rand.radius = 0.82 + Math.sin(st.tijd / 900) * 0.06;
+    if (st.kleur) {
+      st.kleur.saturate(0.35);
+      st.kleur.brightness(1.05, true);
+    }
+    // rookwolkjes boven het hoofd van de beer
+    st.wolk -= delta;
+    if (st.wolk <= 0) {
+      st.wolk = 900;
+      const s = this.speler.sprite;
+      const w = this.add.circle(s.x + 3, s.y - 20, 2, 0xe8e8e8, 0.7).setDepth(9000);
+      this.tweens.add({
+        targets: w, y: w.y - 14, x: w.x + Phaser.Math.Between(-4, 6), scale: 3, alpha: 0, duration: 1600,
+        onComplete: () => w.destroy(),
+      });
+    }
   }
 
   /** Stofwolkjes achter de beer als hij supersnel loopt. */
@@ -819,6 +961,164 @@ export class WereldScene extends Phaser.Scene {
     }
   }
 
+  // ------------------------------------------------------------ volgers (geboeid achter de beer aan)
+
+  isWarp(x, y) {
+    return (this.kaart.warps || []).some((w) => w.x === x && w.y === y);
+  }
+
+  volgerOp(x, y) {
+    return (this.volgers || []).find((v) => v.x === x && v.y === y && v.zichtbaar !== false) || null;
+  }
+
+  bouwVolgers() {
+    this.volgers = [];
+    this.volgKetting = this.add.graphics();
+    const s = this.speler;
+    const terug = RICHTINGEN[TEGENOVER[s.richting]];
+    let vorige = { x: s.x, y: s.y };
+    (staat.volgers || []).forEach((id) => {
+      const plek = { x: vorige.x + terug.dx, y: vorige.y + terug.dy };
+      const vrij = this.binnenKaart(plek.x, plek.y) && this.kanLopen(plek.x, plek.y) && !this.isWarp(plek.x, plek.y);
+      const p = vrij ? plek : { ...vorige };
+      this.volgers.push(this.maakVolger(id, p.x, p.y, s.richting));
+      vorige = p;
+    });
+  }
+
+  maakVolger(id, x, y, richting) {
+    const sprite = this.add.sprite(x * TEGEL + 8, (y + 1) * TEGEL, `mens_${id}`, 0).setOrigin(0.5, 1);
+    const v = { id, sprite, x, y, vanX: x, vanY: y, richting, voet: 0, beweegt: false };
+    this.plaatsVolger(v, 1);
+    return v;
+  }
+
+  /** Een gevonden onderduiker sluit achteraan aan. */
+  voegVolgerToe(id, x, y) {
+    staat.volgers = [...(staat.volgers || []), id];
+    const v = this.maakVolger(id, x, y, richtingNaar({ x, y }, this.speler));
+    this.volgers.push(v);
+    return v;
+  }
+
+  /** De speler zet een stap vanaf (x, y): iedere volger schuift één plek op. */
+  volgersStap(x, y) {
+    let doel = { x, y };
+    this.volgers.forEach((v) => {
+      const oud = { x: v.x, y: v.y };
+      v.vanX = v.x;
+      v.vanY = v.y;
+      v.x = doel.x;
+      v.y = doel.y;
+      if (v.x !== v.vanX || v.y !== v.vanY) {
+        v.richting = richtingNaar(oud, v);
+        v.voet = 1 - v.voet;
+        v.beweegt = true;
+      }
+      doel = oud;
+    });
+  }
+
+  plaatsVolger(v, t) {
+    const px = (v.vanX + (v.x - v.vanX) * t) * TEGEL + 8;
+    const py = (v.vanY + (v.y - v.vanY) * t + 1) * TEGEL;
+    v.sprite.setPosition(Math.round(px), Math.round(py));
+    v.sprite.setDepth(py + 0.4);
+    let frame = RICHTINGEN[v.richting].frame * 3;
+    if (v.beweegt && t < 0.55) frame += 1 + v.voet;
+    v.sprite.setFrame(frame);
+  }
+
+  updateVolgers() {
+    if (!this.volgers || !this.volgers.length) {
+      if (this.volgKetting) this.volgKetting.clear();
+      return;
+    }
+    const s = this.speler;
+    const t = s.beweegt ? Math.min(1, s.voortgang) : 1;
+    this.volgers.forEach((v) => {
+      this.plaatsVolger(v, t);
+      if (!s.beweegt && v.beweegt) {
+        v.beweegt = false;
+        v.vanX = v.x;
+        v.vanY = v.y;
+        this.plaatsVolger(v, 1);
+      }
+    });
+    // ketting van handboeien: beer -> eerste -> tweede -> derde
+    const g = this.volgKetting;
+    g.clear();
+    const punten = [s.sprite, ...this.volgers.map((v) => v.sprite)];
+    for (let i = 0; i < punten.length - 1; i++) {
+      const a = punten[i];
+      const b = punten[i + 1];
+      const ax = a.x;
+      const ay = a.y - 7;
+      const bx = b.x;
+      const by = b.y - 7;
+      const lengte = Math.hypot(bx - ax, by - ay);
+      if (lengte < 3) continue;
+      const stappen = Math.floor(lengte / 2);
+      for (let k = 0; k <= stappen; k++) {
+        const f = k / stappen;
+        const x = Math.round(ax + (bx - ax) * f);
+        const y = Math.round(ay + (by - ay) * f + Math.sin(f * Math.PI) * 2);
+        g.fillStyle(k % 2 ? 0x9aa0ae : 0x5c6070, 1).fillRect(x, y, 1, 1);
+      }
+    }
+    g.setDepth(Math.min(...punten.map((p) => p.depth)) - 0.1);
+  }
+
+  /** Volgers worden gewone personen (bijvoorbeeld als ze worden overgedragen). */
+  volgersLoslaten() {
+    const personen = this.volgers.map((v) => {
+      v.sprite.destroy();
+      const p = this.nieuwPersoon({ id: v.id, sprite: `mens_${v.id}`, x: v.x, y: v.y, richting: v.richting });
+      p.gescript = true;
+      this.personen[v.id] = p;
+      return p;
+    });
+    this.volgers = [];
+    staat.volgers = [];
+    return personen;
+  }
+
+  /** Zet een persoon direct op een andere plek. */
+  zetPersoon(p, x, y, richting = p.richting) {
+    this.personenOpPlek.forEach((waarde, k) => { if (waarde === p) this.personenOpPlek.delete(k); });
+    p.x = x;
+    p.y = y;
+    p.beweegt = false;
+    p.richting = richting;
+    this.personenOpPlek.set(sleutel(x, y), p);
+    this.plaatsPersoon(p);
+  }
+
+  /** Zet de speler direct op een andere plek (bijvoorbeeld tijdens een zwart scherm). */
+  zetSpeler(x, y, richting) {
+    const s = this.speler;
+    s.x = x;
+    s.y = y;
+    s.beweegt = false;
+    s.voortgang = 0;
+    if (richting) s.richting = richting;
+    this.bewaarPositie();
+    this.plaatsSpeler();
+  }
+
+  /** Een rij mensen loopt achter elkaar aan (de eerste loopt in `richting`). */
+  async stoetLoop(leden, richting, stappen) {
+    for (let i = 0; i < stappen; i++) {
+      const oud = leden.map((l) => ({ x: l.x, y: l.y }));
+      leden.forEach((l, k) => {
+        l.gescript = true;
+        if (k === 0) this.stapPersoon(l, richting, { negeerBezet: true });
+        else if (oud[k - 1].x !== l.x || oud[k - 1].y !== l.y) this.stapPersoon(l, richtingNaar(l, oud[k - 1]), { negeerBezet: true });
+      });
+      await this.ui.wachtOp(() => leden.every((l) => !l.beweegt));
+    }
+  }
+
   async openMenu() {
     this.bezigMetMenu = true;
     this.bewaarPositie();
@@ -841,6 +1141,12 @@ export class WereldScene extends Phaser.Scene {
       persoon.kijk(TEGENOVER[s.richting]);
       scriptNaam = persoon.script;
     } else {
+      const volger = this.volgerOp(tx, ty);
+      if (volger) {
+        audio.sfx('kies');
+        await this.ui.script(() => praatMetVolger(this.context(), volger));
+        return;
+      }
       scriptNaam = this.interacties.get(sleutel(tx, ty));
     }
     if (!scriptNaam) return;

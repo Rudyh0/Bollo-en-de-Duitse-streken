@@ -31,6 +31,9 @@ export class BootScene extends Phaser.Scene {
       icoon_ritalin: 'ui/icoon_ritalin.png',
       icoon_xtc: 'ui/icoon_xtc.png',
       icoon_3mmc: 'ui/icoon_3mmc.png',
+      icoon_wiet: 'ui/icoon_wiet.png',
+      icoon_hasj: 'ui/icoon_hasj.png',
+      icoon_handboeien: 'ui/icoon_handboeien.png',
       obj_stapelbed: 'sprites/obj_stapelbed.png',
       obj_stapelbed_rood: 'sprites/obj_stapelbed_rood.png',
       obj_kist: 'sprites/obj_kist.png',
@@ -41,8 +44,13 @@ export class BootScene extends Phaser.Scene {
       obj_emmer: 'sprites/obj_emmer.png',
       binnen: 'tiles/binnen.png',
       buiten: 'tiles/buiten.png',
+      dorp_binnen: 'tiles/dorp_binnen.png',
       bg_gevecht: 'bg/gevecht.png',
       bg_gevecht_bos: 'bg/gevecht_bos.png',
+      bg_gevecht_dorp: 'bg/gevecht_dorp.png',
+      gevecht_djelano: 'sprites/gevecht_djelano.png',
+      gevecht_mustafah: 'sprites/gevecht_mustafah.png',
+      effect_vape: 'sprites/effect_vape.png',
       gevecht_wachter_klaus: 'sprites/gevecht_wachter_klaus.png',
       gevecht_wachter_dieter: 'sprites/gevecht_wachter_dieter.png',
       gevecht_soldaat_horst: 'sprites/gevecht_soldaat_horst.png',
@@ -60,7 +68,10 @@ export class BootScene extends Phaser.Scene {
     };
     ['barak', 'barak_5', 'barak_6', 'barak_7', 'barak_7_open', 'keuken', 'wachttoren', 'poort', 'poort_open',
       'wachthuisje', 'den', 'waterpomp', 'lantaarn', 'bankje', 'kisten', 'bord',
-      'schatkist', 'schatkist_open', 'bron', 'boomstronk'].forEach((naam) => {
+      'schatkist', 'schatkist_open', 'bron', 'boomstronk',
+      'molen', 'hunebed', 'plaggenhut', 'coffeeshop', 'boerderij', 'slagboom', 'slagboom_open', 'fatbike', 'eik',
+      'meelzakken', 'bedstee', 'haard', 'tafeltje', 'luik', 'luik_open', 'spinnewiel', 'toonbank', 'bank', 'plant',
+      'boxen', 'asbak'].forEach((naam) => {
       afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
     });
     Object.entries(afbeeldingen).forEach(([k, pad]) => this.load.image(k, pad + v));
@@ -70,10 +81,14 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('fenna', `sprites/fenna.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('directeur', `sprites/directeur.png${v}`, { frameWidth: 48, frameHeight: 64 });
     this.load.spritesheet('beer_groot', `sprites/beer_groot.png${v}`, { frameWidth: 48, frameHeight: 56 });
+    this.load.spritesheet('anim_wieken', `sprites/anim_wieken.png${v}`, { frameWidth: 96, frameHeight: 96 });
+    this.load.spritesheet('anim_vlag', `sprites/anim_vlag.png${v}`, { frameWidth: 32, frameHeight: 48 });
     this.load.spritesheet('kikker', `sprites/kikker.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('gevecht_volkszanger', `sprites/gevecht_volkszanger.png${v}`, { frameWidth: 48, frameHeight: 56 });
     ['wachter', 'wachter_pet', 'gevangene_a', 'gevangene_b', 'gevangene_c', 'gevangene_d',
-      'oma', 'sporter', 'boer', 'kokkin', 'dichter', 'soldaat_bos', 'soldaat_muts', 'feldwebel'].forEach((naam) => {
+      'oma', 'sporter', 'boer', 'kokkin', 'dichter', 'soldaat_bos', 'soldaat_muts', 'feldwebel',
+      'djelano', 'mustafah', 'sjoerd', 'tjitske', 'wiebe', 'molenaar', 'budtender', 'grenswacht', 'opa', 'toerist',
+      'dorpsvrouw'].forEach((naam) => {
       this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
     });
 

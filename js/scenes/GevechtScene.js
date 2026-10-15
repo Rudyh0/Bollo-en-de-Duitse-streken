@@ -148,7 +148,7 @@ export class GevechtScene extends Phaser.Scene {
         this.tween({ targets: this.vijand, x: VIJAND_X, duration: 900, ease: 'Sine.easeOut' }),
         this.tween({ targets: this.speler, x: SPELER_X, duration: 900, ease: 'Sine.easeOut' }),
       ]);
-      await this.zeg(`${this.v.naam} wil vechten!`);
+      await this.zeg(this.v.intro || `${this.v.naam} wil vechten!`);
       await Promise.all([
         this.tween({ targets: this.vijandInfo, x: 0, duration: 300, ease: 'Sine.easeOut' }),
         this.tween({ targets: this.spelerInfo, x: 0, duration: 300, ease: 'Sine.easeOut' }),
@@ -350,10 +350,12 @@ export class GevechtScene extends Phaser.Scene {
     await this.ui.wachtMs(250);
     const raak = kans(a.nauwkeurigheid * nauwkeurigheidFactor);
     if (a.animatie === 'schot') await this.schotAnimatie(raak);
+    else if (a.animatie === 'vape') await this.vapeAnimatie(raak);
     else await this.mesAnimatie(raak);
     if (!raak) {
       await this.zeg(a.misTekst.replace('{BEER}', beer()));
     } else {
+      if (a.raakTekst) await this.zeg(a.raakTekst.replace('{BEER}', beer()));
       const { schade, voltreffer } = berekenSchade(v.niveau, a.kracht, v.aanval, staat.verdediging);
       const voor = staat.gezondheid;
       staat.gezondheid = Math.max(0, staat.gezondheid - schade);
@@ -394,6 +396,30 @@ export class GevechtScene extends Phaser.Scene {
       audio.sfx('mis');
       await this.tween({ targets: this.speler, x: this.speler.x - 10, duration: 110, yoyo: true });
     }
+  }
+
+  async vapeAnimatie(raak) {
+    audio.sfx('sis');
+    const startX = this.vijand.x - 16;
+    const startY = this.vijand.y - 36;
+    const wolken = [];
+    for (let i = 0; i < 4; i++) {
+      const w = this.add.image(startX, startY, 'effect_vape').setDepth(12).setScale(0.3).setAlpha(0.9);
+      wolken.push(w);
+      this.tweens.add({
+        targets: w,
+        x: raak ? this.speler.x + Phaser.Math.Between(-10, 10) : startX + Phaser.Math.Between(10, 30),
+        y: raak ? this.speler.y - 30 + Phaser.Math.Between(-8, 8) : startY - Phaser.Math.Between(20, 40),
+        scale: raak ? 1.1 : 0.8,
+        duration: 600,
+        delay: i * 90,
+        ease: 'Sine.easeOut',
+      });
+    }
+    await this.ui.wachtMs(900);
+    if (raak) await this.knipper(this.speler, 2);
+    await this.tween({ targets: wolken, alpha: 0, duration: 400 });
+    wolken.forEach((w) => w.destroy());
   }
 
   async mesAnimatie(raak) {

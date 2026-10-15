@@ -114,13 +114,13 @@ export class UIScene extends Phaser.Scene {
   }
 
   /** Voorwerp krijgen, met melodietje. */
-  async krijgItem(id, n = 1) {
+  async krijgItem(id, n = 1, werkwoord = 'vond') {
     geefItem(id, n);
     const naam = itemNaam(id, n);
     const wat = n === 1 ? `een ${naam}` : `${n} ${naam}`;
     const jingle = audio.jingle('item');
     this.sluitGevraagd = false;
-    await this.dialoog.toon(`${beer()} vond ${wat}!`, { wachtAanEinde: false });
+    await this.dialoog.toon(`${beer()} ${werkwoord} ${wat}!`, { wachtAanEinde: false });
     await jingle;
     await this.dialoog.wachtOpKnop();
     await this.zeg(`${beer()} stopte ${n === 1 ? 'de' : 'de'} ${naam} in de RUGZAK.`);

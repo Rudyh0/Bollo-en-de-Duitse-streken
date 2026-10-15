@@ -137,13 +137,16 @@ async function melding({ ui, wereld, staat, audio }) {
   }
 }
 
-async function einde({ ui }) {
-  await ui.zeg([
-    'Je laat het bos achter je. Het zandpad loopt verder naar het oosten.',
-    'In de verte zie je de kerktoren van Aalden. En daarachter ligt {PARK}...',
-    'EINDE VAN HOOFDSTUK 2. Wordt vervolgd!',
-    '(Tip: sla je spel op via START, dan kun je straks verder.)',
-  ]);
+async function einde({ ui, wereld, staat }, { warp }) {
+  if (!staat.vlaggen.bosVerlaten) {
+    staat.vlaggen.bosVerlaten = true;
+    await ui.zeg([
+      'Je laat het bos achter je. Het zandpad loopt verder naar het oosten.',
+      'In de verte zie je een molen boven de rieten daken uit steken. Orvelte.',
+    ]);
+    await ui.hoofdstuk('HOOFDSTUK 3', 'ORVELTE');
+  }
+  wereld.gaNaar('dorp', 1, warp && warp.y === 7 ? 15 : 14, 'rechts');
 }
 
 export default {
@@ -202,7 +205,7 @@ export default {
     else await ui.zeg('KIKKER: Kom maar terug als je je bedenkt. Kikker gaat nergens heen. Nog niet.');
   },
 
-  async uitgang(ctx) {
+  async uitgang(ctx, extra) {
     const { ui, staat, audio } = ctx;
     if (!staat.vlaggen.kikkerWeg) {
       audio.sfx('kwaak');
@@ -222,7 +225,7 @@ export default {
       await openTelefoon(ui);
       if (!staat.vlaggen.kikkerGeblokkeerd) return;
     }
-    await einde(ctx);
+    await einde(ctx, extra);
   },
 
   async poel({ ui, staat }) {
@@ -235,8 +238,8 @@ export default {
 
   async bord({ ui }) {
     await ui.zeg([
-      'AALDEN - 3 KM.',
-      '{PARK_HOOFD} - 4 KM. Inchecken tot 22:00 uur.',
+      'ORVELTE - 1 KM. Wezup - 6 KM. Aalden - 9 KM.',
+      '{PARK_HOOFD} - 10 KM. Inchecken tot 22:00 uur.',
     ]);
   },
 

@@ -202,6 +202,44 @@ HOOFD = {
             "....kkkkkkk.....",
         ],
     },
+    'muts': {
+        'omlaag': [
+            "................",
+            "....kkkkkkkk....",
+            "...kgggggggggk..",
+            "..kgGgGgGgGgGk..",
+            "..kllllllllllk..",
+            "..khhhhhhhhhhk..",
+            "..khsesssseshk..",
+            "..kssssSSssssk..",
+            "...ksssqqsssk...",
+            "....kkkkkkkk....",
+        ],
+        'omhoog': [
+            "................",
+            "....kkkkkkkk....",
+            "...kgggggggggk..",
+            "..kgGgGgGgGgGk..",
+            "..kllllllllllk..",
+            "..khhhhhhhhhhk..",
+            "..khhhhhhhhhhk..",
+            "..ksHHHHHHHHsk..",
+            "...kssssssssk...",
+            "....kkkkkkkk....",
+        ],
+        'links': [
+            "................",
+            ".....kkkkkkk....",
+            "....kgggggggk...",
+            "...kgGgGgGgGgk..",
+            "...kllllllllk...",
+            "...ksssshhhhHk..",
+            "..ksessshhhHHk..",
+            "..ksssssshHHk...",
+            "...ksqsssshk....",
+            "....kkkkkkk.....",
+        ],
+    },
     'hoofddoek': {
         'omlaag': [
             "................",
@@ -388,6 +426,40 @@ PERSONEN = {
     'feldwebel': ('pet', 'normaal', kleuren(
         h='#4a3424', H='#2e2018', g='#5c6250', G='#2c3028', l='#787e6a',
         t='#5c6250', T='#40463a', p='#4a5040', P='#34382e', f='#1e1e22', b='#c8b060')),
+    # Orvelte
+    'djelano': ('pet', 'normaal', kleuren(
+        h='#1a1412', H='#0e0a08', g='#1a1a1e', G='#0e0e12', l='#e0c048',
+        t='#26262c', T='#16161a', p='#26262c', P='#16161a', f='#f4f4f4', b='#f4f4f4',
+        s='#b07a52', S='#8c5e3c')),
+    'mustafah': ('kort', 'normaal', kleuren(
+        h='#1e1814', H='#0e0a08', t='#8a8e98', T='#6a6e78', p='#8a8e98', P='#6a6e78', f='#f4f4f4', b='#1a1a1e',
+        s='#d8a478', S='#b4825a')),
+    'sjoerd': ('kort', 'boeien', kleuren(
+        h='#e8d070', H='#c0a848', t='#3a6ab8', T='#f4f4f4', p='#4a4a52', P='#34343c', f='#c89a50', b='#4a4a52')),
+    'tjitske': ('lang', 'boeien', kleuren(
+        h='#f0d88a', H='#c8b060', t='#c83a3a', T='#9a2a2a', p='#3a5a9a', P='#2a4278', f='#c89a50', b='#3a5a9a')),
+    'wiebe': ('pet', 'boeien', kleuren(
+        h='#c8c8c8', H='#9a9a9a', g='#3a4a6a', G='#26324a', l='#5a6a8a',
+        t='#7a5a3a', T='#5a4028', p='#3a3a42', P='#26262c', f='#c89a50', b='#3a3a42',
+        s='#f0c4a0', S='#d09c7a')),
+    'molenaar': ('pet', 'normaal', kleuren(
+        h='#9a7a5a', H='#7a5a3a', g='#f4f4f4', G='#c8c8d0', l='#ffffff',
+        t='#f0ece0', T='#c8c4b8', p='#8a8a94', P='#6a6a74', f='#4a3424', b='#c8c4b8')),
+    'budtender': ('muts', 'normaal', kleuren(
+        h='#c8b8a0', H='#a89880', g='#d83a30', G='#3a9a4a', l='#f0c830',
+        t='#6a8a4a', T='#4e6a34', p='#3a5a8a', P='#2a4268', f='#8a6a44', b='#6a8a4a')),
+    'grenswacht': ('pet', 'normaal', kleuren(
+        h='#c8a868', H='#a08048', g='#4a5040', G='#1e1e22', l='#6a705c',
+        t='#5c6250', T='#40463a', p='#4a5040', P='#34382e', f='#1e1e22', b='#2a2a2c')),
+    'opa': ('kaal', 'normaal', kleuren(
+        h='#d8d8d8', H='#b0b0b0', t='#7a6a9a', T='#5a4c78', p='#5a5a62', P='#44444c', f='#3a2a20', b='#7a6a9a',
+        s='#f0c4a0', S='#d09c7a')),
+    'toerist': ('pet', 'normaal', kleuren(
+        h='#e0c060', H='#b89838', g='#f0f0f0', G='#3a8ac8', l='#ffffff',
+        t='#f08848', T='#e05a8a', p='#e8d8b0', P='#c8b890', f='#7a5a3a', b='#e8d8b0',
+        s='#f4b090', S='#d88a6a')),
+    'dorpsvrouw': ('lang', 'normaal', kleuren(
+        h='#7a4a2a', H='#5a3418', t='#4a7ac8', T='#3a5a9a', p='#4a7ac8', P='#3a5a9a', f='#3a2a20', b='#f0f0f0')),
     'dichter': ('lang', 'normaal', kleuren(
         h='#2a2a30', H='#18181c', t='#4a3a5a', T='#342842', p='#2a2a34', P='#1c1c24', f='#1a1a1a', b='#4a3a5a')),
 }

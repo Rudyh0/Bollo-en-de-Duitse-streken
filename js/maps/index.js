@@ -9,6 +9,10 @@ import bos2 from './bos2.js';
 import bos2Scripts from './bos2-scripts.js';
 import bos3 from './bos3.js';
 import bos3Scripts from './bos3-scripts.js';
+import dorp from './dorp.js';
+import dorpScripts from './dorp-scripts.js';
+import { coffeeshop, hut1, hut2, hut3 } from './binnen-dorp.js';
+import { coffeeshopScripts, hut1Scripts, hut2Scripts, hut3Scripts } from './binnen-dorp-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -16,6 +20,11 @@ export const KAARTEN = {
   bos1,
   bos2,
   bos3,
+  dorp,
+  coffeeshop,
+  hut1,
+  hut2,
+  hut3,
 };
 
 export const SCRIPTS = {
@@ -24,4 +33,9 @@ export const SCRIPTS = {
   bos1: bos1Scripts,
   bos2: bos2Scripts,
   bos3: bos3Scripts,
+  dorp: dorpScripts,
+  coffeeshop: coffeeshopScripts,
+  hut1: hut1Scripts,
+  hut2: hut2Scripts,
+  hut3: hut3Scripts,
 };

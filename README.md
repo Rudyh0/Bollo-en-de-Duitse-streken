@@ -117,4 +117,12 @@ Klaar (hoofdstuk 2, het bos):
 - als alles verkocht is, springt Kikker de poel in. Daarna trilt je telefoon: in de chat-app KWEBBEL eist Kikker zijn tientje en noemt hij je een oplichter. Pas na CONTACT BLOKKEREN kun je verder. Het gesprek blijft terug te lezen via START, TELEFOON
 - de middelen werken ongeveer anderhalve minuut en alleen buiten gevechten
 
-Nog te doen: de route langs Orvelte, Wezup en Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.
+Klaar (hoofdstuk 3, Orvelte):
+
+- een Drents dorpje met klinkers, een draaiende molen, hunebedden, een boerderij met rieten dak en plaggenhutten waar je naar binnen kunt; bij de in- en uitgang hangt de vlag van de bezetter
+- coffeeshop De Zwevende Kei met 8-bit reggae: WIET en HASJ (onbeperkt te koop) herstellen gezondheid, ook in gevechten; buiten gevechten word je even stoned (wazige randen, rookwolkjes, langzamer lopen)
+- Djelano en Mustafah staan met hun fatbikes voor de coffeeshop. Spreek je ze aan, dan volgen twee (makkelijke) gevechten tegen een broodmes en een vapewolk; daarna scheuren ze weg
+- de quest: wie het dorp wil verlaten, wordt bij de slagboom tegengehouden door Obergefreiter Wolfgang. Hij geeft drie handboeien: vind de drie Friese onderduikers (onder een hunebed, in de molen en onder de vloer van een plaggenhut). Ze lopen geboeid achter je aan, ook naar binnen en na opslaan. Lever ze af bij Wolfgang, dan gaat de slagboom open
+- dorpelingen geven hints (en spreken een beetje Drents, de onderduikers Fries)
+
+Nog te doen: de route langs Wezup en Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.

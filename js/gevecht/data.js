@@ -41,9 +41,53 @@ export const AANVALLEN = {
     animatie: 'mes',
     misTekst: 'Maar {BEER} duikt op tijd weg!',
   },
+  broodmes: {
+    naam: 'BROODMES',
+    kracht: 2,
+    nauwkeurigheid: 70,
+    animatie: 'mes',
+    misTekst: 'Hij zwaait met het broodmes, maar snijdt alleen door de lucht. Van een boterham zou hij al winnen.',
+  },
+  vapewolk: {
+    naam: 'VAPEWOLK',
+    kracht: 1,
+    nauwkeurigheid: 90,
+    animatie: 'vape',
+    raakTekst: '{BEER} moet hoesten. Het ruikt naar aardbeien-ijs.',
+    misTekst: 'De wolk waait de verkeerde kant op. Recht in zijn eigen gezicht.',
+  },
 };
 
 export const VIJANDEN = {
+  // Orvelte: de jongens met de fatbikes
+  djelano: {
+    naam: 'DJELANO',
+    sprite: 'gevecht_djelano',
+    muziek: 'straat',
+    intro: 'DJELANO stapt van zijn fatbike af!',
+    niveau: 4,
+    maxGz: 14,
+    aanval: 2,
+    verdediging: 2,
+    snelheid: 6,
+    xp: 30,
+    geld: 4,
+    aanvallen: [['broodmes', 50], ['vapewolk', 50]],
+  },
+  mustafah: {
+    naam: 'MUSTAFAH',
+    sprite: 'gevecht_mustafah',
+    muziek: 'straat',
+    intro: 'MUSTAFAH stapt van zijn fatbike af!',
+    niveau: 4,
+    maxGz: 15,
+    aanval: 2,
+    verdediging: 3,
+    snelheid: 5,
+    xp: 30,
+    geld: 6,
+    aanvallen: [['vapewolk', 60], ['broodmes', 40]],
+  },
   klaus: {
     naam: 'WACHTER KLAUS',
     sprite: 'gevecht_wachter_klaus',
