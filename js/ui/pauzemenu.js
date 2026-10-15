@@ -46,7 +46,7 @@ export async function openPauzemenu(ui, wereld) {
 
 // ------------------------------------------------------------ status van de beer
 
-class StatusPaneel {
+export class StatusPaneel {
   constructor(ui) {
     this.ui = ui;
     this.volledigScherm = true;

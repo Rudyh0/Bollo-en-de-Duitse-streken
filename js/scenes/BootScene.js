@@ -37,7 +37,23 @@ export class BootScene extends Phaser.Scene {
       obj_kruk: 'sprites/obj_kruk.png',
       obj_emmer: 'sprites/obj_emmer.png',
       binnen: 'tiles/binnen.png',
+      buiten: 'tiles/buiten.png',
+      bg_gevecht: 'bg/gevecht.png',
+      gevecht_wachter_klaus: 'sprites/gevecht_wachter_klaus.png',
+      gevecht_wachter_dieter: 'sprites/gevecht_wachter_dieter.png',
+      gevecht_beer_rug: 'sprites/gevecht_beer_rug.png',
+      effect_noot: 'sprites/effect_noot.png',
+      effect_uitroep: 'sprites/effect_uitroep.png',
+      effect_ster: 'sprites/effect_ster.png',
+      effect_flits: 'sprites/effect_flits.png',
+      effect_inslag: 'sprites/effect_inslag.png',
+      effect_snee: 'sprites/effect_snee.png',
+      effect_lepel: 'sprites/effect_lepel.png',
     };
+    ['barak', 'barak_5', 'barak_6', 'barak_7', 'barak_7_open', 'keuken', 'wachttoren', 'poort', 'poort_open',
+      'wachthuisje', 'den', 'waterpomp', 'lantaarn', 'bankje', 'kisten', 'bord'].forEach((naam) => {
+      afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
+    });
     Object.entries(afbeeldingen).forEach(([k, pad]) => this.load.image(k, pad + v));
 
     this.load.spritesheet('beer', `sprites/beer.png${v}`, { frameWidth: 16, frameHeight: 20 });
@@ -45,6 +61,11 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('fenna', `sprites/fenna.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('directeur', `sprites/directeur.png${v}`, { frameWidth: 48, frameHeight: 64 });
     this.load.spritesheet('beer_groot', `sprites/beer_groot.png${v}`, { frameWidth: 48, frameHeight: 56 });
+    this.load.spritesheet('gevecht_volkszanger', `sprites/gevecht_volkszanger.png${v}`, { frameWidth: 48, frameHeight: 56 });
+    ['wachter', 'wachter_pet', 'gevangene_a', 'gevangene_b', 'gevangene_c', 'gevangene_d',
+      'oma', 'sporter', 'boer', 'kokkin', 'dichter'].forEach((naam) => {
+      this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
+    });
 
     ['donker', 'wit', 'grijs', 'rood', 'blauw', 'titel'].forEach((naam) => {
       this.load.bitmapFont(`font_${naam}`, `fonts/font_${naam}.png${v}`, `fonts/font_${naam}.xml${v}`);

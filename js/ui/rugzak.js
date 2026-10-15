@@ -74,21 +74,25 @@ async function gebruik(ui, id, scherm) {
       `${beer()} ruilde een VOEDSELBON in voor ${maaltijd}.`,
       `${beer()} kreeg ${hersteld} punten gezondheid terug!`,
     ]);
-    return;
+    return true;
   }
 
   if (id === 'soeplepel') {
-    await ui.zeg([
+    await ui.zeg(staat.vlaggen.rookAlarm ? [
+      'Een stevige metalen soeplepel. Er zit nog een beetje roet op.',
+      'Hij is ook prima geschikt om Duitsers mee te slaan.',
+    ] : [
       'Een stevige metalen soeplepel. Hij ruikt nog een beetje naar erwtensoep.',
-      'Misschien komt hij later nog van pas...',
+      'Je kunt er van alles mee scheppen...',
     ]);
-    return;
+    return false;
   }
 
   await ui.zeg('Daar kun je hier niets mee.');
 }
 
-export async function openRugzak(ui) {
+/** Opent de rugzak. Met { inGevecht: true } sluit hij na het gebruiken van een voorwerp en geeft hij true terug. */
+export async function openRugzak(ui, { inGevecht = false } = {}) {
   ui.sluitDialoog();
   audio.sfx('ok');
   const scherm = new RugzakScherm(ui);
@@ -106,9 +110,10 @@ export async function openRugzak(ui) {
         x: 92, y: 2, breedte: 146, annuleer: opties.length - 1, start, diepte: 710,
         opVerander: (i) => scherm.toon(ids[i]),
       });
-      if (keuze >= ids.length) return;
+      if (keuze >= ids.length) return false;
       start = keuze;
-      await gebruik(ui, ids[keuze], scherm);
+      const gebruikt = await gebruik(ui, ids[keuze], scherm);
+      if (gebruikt && inGevecht) return true;
       if (aantal(ids[keuze]) === 0) start = Math.max(0, keuze - 1);
     }
   } finally {

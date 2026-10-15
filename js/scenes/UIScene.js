@@ -141,6 +141,25 @@ export class UIScene extends Phaser.Scene {
   vanWit(ms = 400) { return this.gordijnNaar(0, ms, 0xffffff); }
   zetZwart() { this.gordijn.setFillStyle(0x000000, 1).setAlpha(1); }
 
+  /** Overgang naar een gevecht: twee flitsen en zwarte balken die het beeld dichtschuiven. */
+  async gevechtsOvergang() {
+    audio.sfx('flits');
+    for (let i = 0; i < 2; i++) {
+      await this.gordijnNaar(0.85, 70, 0xffffff);
+      await this.gordijnNaar(0, 90, 0xffffff);
+    }
+    const balken = [];
+    for (let i = 0; i < 10; i++) {
+      const vanLinks = i % 2 === 0;
+      const r = this.add.rectangle(vanLinks ? -BREEDTE : BREEDTE, i * 16, BREEDTE, 16, 0x000000).setOrigin(0, 0).setDepth(4950);
+      balken.push(r);
+      this.tweens.add({ targets: r, x: 0, duration: 380, delay: i * 30, ease: 'Sine.easeIn' });
+    }
+    await this.wachtMs(380 + 10 * 30 + 60);
+    this.zetZwart();
+    balken.forEach((b) => b.destroy());
+  }
+
   /** Wakker worden: oogleden gaan twee keer open. Het gordijn moet dan al weg zijn. */
   async ogenOpen() {
     const boven = this.ooglidBoven;

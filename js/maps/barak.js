@@ -70,5 +70,13 @@ export default {
     { x: 11, y: 1, script: 'prikbord' },
     { x: 19, y: 1, script: 'deur' },
   ],
+  // De deur gaat open door het brandalarm; daarna kun je naar buiten.
+  tegelVlaggen: [
+    { vlag: 'deurOpen', x: 19, y: 0, tegel: 15 },
+    { vlag: 'deurOpen', x: 19, y: 1, tegel: 16 },
+  ],
+  warps: [
+    { x: 19, y: 1, vlag: 'deurOpen', naar: 'plein', nx: 21, ny: 16, richting: 'omlaag' },
+  ],
   start: { x: 2, y: 4, richting: 'omlaag' },
 };

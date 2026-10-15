@@ -18,6 +18,9 @@ import art_portretten  # noqa: E402
 import art_ui  # noqa: E402
 import art_font  # noqa: E402
 import art_achtergronden  # noqa: E402
+import art_mensen  # noqa: E402
+import art_buiten  # noqa: E402
+import art_gevecht  # noqa: E402
 
 
 def pad(*delen):
@@ -54,6 +57,18 @@ def main():
     art_font.maak_font('rood', '#d83830', '#f0c0b0', fonts, fonts, 'font_rood')
     art_font.maak_font('blauw', '#3060c8', '#c0d0f0', fonts, fonts, 'font_blauw')
     art_font.maak_titelfont(fonts)
+    # mensen buiten (16x20, 12 frames: omlaag, omhoog, links, rechts x staan/stap1/stap2)
+    for naam, frames in art_mensen.alle().items():
+        vel(frames, 3).save(pad('sprites', f'mens_{naam}.png'))
+    # buitenterrein
+    vel(art_buiten.tegelset(), 6).save(pad('tiles', 'buiten.png'))
+    for naam, img in art_buiten.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    # gevechten
+    for naam, img in art_gevecht.alles().items():
+        img.save(pad('sprites', naam + '.png'))
+    vel([art_gevecht.volkszanger(False), art_gevecht.volkszanger(True)], 2).save(pad('sprites', 'gevecht_volkszanger.png'))
+    art_gevecht.achtergrond().save(pad('bg', 'gevecht.png'))
     # achtergronden
     art_achtergronden.titel_achtergrond().save(pad('bg', 'titel.png'))
     art_achtergronden.intro_achtergrond().save(pad('bg', 'intro.png'))

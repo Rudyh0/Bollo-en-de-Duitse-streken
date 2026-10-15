@@ -12,6 +12,15 @@ function nieuweStaat() {
     richting: 'omlaag',
     gezondheid: 12,
     maxGezondheid: 20,
+    // vechten
+    niveau: 5,
+    xp: 0,
+    aanval: 5,
+    verdediging: 5,
+    snelheid: 6,
+    aanvallen: ['soeplepel', 'volkszanger'],
+    pp: { soeplepel: 25, volkszanger: 5 },
+    ppMax: { soeplepel: 25, volkszanger: 5 },
     rugzak: {},
     vlaggen: {},
     intake: {},
@@ -80,6 +89,36 @@ export function laad() {
   Object.keys(staat).forEach((k) => delete staat[k]);
   Object.assign(staat, nieuweStaat(), JSON.parse(JSON.stringify(data)));
   return true;
+}
+
+// ---------------------------------------------------------------- niveau en ervaring
+
+/** Ervaring die nodig is om van dit niveau naar het volgende te gaan. */
+export function xpNodig(niveau = staat.niveau) {
+  return niveau * 10;
+}
+
+/** Ervaring erbij. Geeft een lijst met nieuwe niveaus terug (meestal leeg of één). */
+export function krijgXp(punten) {
+  const nieuw = [];
+  staat.xp += punten;
+  while (staat.xp >= xpNodig()) {
+    staat.xp -= xpNodig();
+    staat.niveau += 1;
+    staat.maxGezondheid += 4;
+    staat.gezondheid = Math.min(staat.maxGezondheid, staat.gezondheid + 4);
+    staat.aanval += 1;
+    staat.verdediging += 1;
+    staat.snelheid += 1;
+    nieuw.push(staat.niveau);
+  }
+  return nieuw;
+}
+
+/** Helemaal opknappen: gezondheid en alle PP. */
+export function knapOp() {
+  staat.gezondheid = staat.maxGezondheid;
+  Object.keys(staat.ppMax || {}).forEach((k) => { staat.pp[k] = staat.ppMax[k]; });
 }
 
 export function speeltijdTekst(ms = staat.speeltijdMs) {

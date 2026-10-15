@@ -166,6 +166,25 @@ def deur_tegels():
     return muur.crop((0, 0, 16, 16)), muur.crop((0, 16, 16, 32))
 
 
+def deur_open_tegels():
+    """Open deur: je kijkt naar buiten (daglicht en grind)."""
+    muur = nieuw(16, 32)
+    muur.paste(muur_boven(), (0, 0))
+    muur.paste(muur_onder(), (0, 16))
+    k, L = '#2a180e', '#9a6a40'
+    rect(muur, 1, 5, 14, 27, k)
+    rect(muur, 2, 6, 12, 26, L)
+    rect(muur, 3, 7, 10, 25, '#a8d4ec')
+    rect(muur, 3, 7, 10, 6, '#cfe8f4')
+    rect(muur, 3, 19, 10, 13, '#cbbb98')
+    rect(muur, 3, 19, 10, 1, '#5aa850')
+    rect(muur, 3, 13, 10, 6, '#4c7c46')
+    # opengeslagen deurblad
+    rect(muur, 3, 7, 3, 25, '#6e4628')
+    rect(muur, 5, 7, 1, 25, '#4c2f1a')
+    return muur.crop((0, 0, 16, 16)), muur.crop((0, 16, 16, 32))
+
+
 def prikbord_tegel():
     t = muur_onder()
     k = '#2a180e'
@@ -222,6 +241,7 @@ def tegelset():
     vb = sprite(VLOER_B, VLOER_PALET, 16, 16, 'vloer-b')
     raam_b, raam_o = raam_tegels()
     deur_b, deur_o = deur_tegels()
+    open_b, open_o = deur_open_tegels()
     tegels = [
         va,                       # 0 vloer
         vb,                       # 1 vloer variant
@@ -238,6 +258,8 @@ def tegelset():
         zijmuur(False),           # 12
         onderrand(),              # 13
         hoek(),                   # 14
+        open_b,                   # 15 open deur boven
+        open_o,                   # 16 open deur onder
     ]
     return tegels
 

@@ -88,6 +88,61 @@ export const LIEDJES = {
     ],
   },
 
+  plein: {
+    bpm: 104,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.14, vibrato: true,
+        noten: `
+          D4:4 F4:4 A4:6 G4:2  F4:4 E4:4 D4:8  F4:4 Bb4:4 D5:6 C5:2  Bb4:2 A4:2 G4:4 A4:8
+          D5:4 C5:4 A4:6 F4:2  G4:4 Bb4:4 D5:8  C#5:4 E5:4 D5:4 C#5:4  D5:12 -:4`,
+      },
+      { golf: 'puls12', volume: 0.06, legato: 1, noten: 'F4:16 F4:16 D4:16 C#4:16 F4:16 Bb3:16 C#4:16 F4:16' },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.8,
+        noten: `
+          D3:4 A2:4 D3:4 A2:4  D3:4 A2:4 D3:4 A2:4  Bb2:4 F2:4 Bb2:4 F2:4  A2:4 E2:4 A2:4 E2:4
+          D3:4 A2:4 D3:4 A2:4  G2:4 D2:4 G2:4 D2:4  A2:4 E2:4 A2:4 E2:4  D3:4 A2:4 D3:8`,
+      },
+      { golf: 'ruis', volume: 0.14, noten: maat('K:4 S:2 S:2 K:4 S:4', 8) },
+    ],
+  },
+
+  gevecht: {
+    bpm: 156,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.15, vibrato: true,
+        noten: `
+          E5:2 -:2 E5:2 G5:2 F#5:2 E5:2 D5:2 B4:2  E5:6 B4:2 G4:4 B4:4
+          C5:2 -:2 C5:2 E5:2 D5:2 C5:2 B4:2 G4:2  A4:6 B4:2 C5:4 D5:4
+          E5:2 -:2 E5:2 G5:2 A5:2 G5:2 F#5:2 E5:2  G5:6 F#5:2 E5:4 B4:4
+          C5:4 E5:4 D5:4 C5:4  B4:8 D#5:4 F#5:4`,
+      },
+      { golf: 'puls50', volume: 0.06, legato: 1, noten: 'B4:16 G4:16 G4:16 F#4:16 B4:16 B4:16 E4:16 D#4:16' },
+      {
+        golf: 'driehoek', volume: 0.32, legato: 0.7,
+        noten: `
+          ${maat('E2:2 E3:2', 4)} ${maat('E2:2 E3:2', 4)} ${maat('C2:2 C3:2', 4)} ${maat('D2:2 D3:2', 4)}
+          ${maat('E2:2 E3:2', 4)} ${maat('E2:2 E3:2', 4)} ${maat('C2:2 C3:2', 4)} ${maat('B1:2 B2:2', 4)}`,
+      },
+      { golf: 'ruis', volume: 0.2, noten: maat('K:2 H:2 S:2 H:2 K:2 K:2 S:2 H:2', 8) },
+    ],
+  },
+
+  overwinning: {
+    bpm: 132,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.15,
+        noten: 'C5:2 E5:2 G5:2 C6:6 -:4  A5:2 G5:2 F5:2 E5:2 D5:4 G4:4  C5:2 E5:2 G5:2 C6:4 E6:2 D6:2 C6:2  B5:4 G5:4 C6:8',
+      },
+      { golf: 'puls25', volume: 0.07, legato: 1, noten: 'E4:16 F4:8 B3:8 E4:16 D4:8 E4:8' },
+      { golf: 'driehoek', volume: 0.3, noten: 'C3:4 G2:4 C3:4 G2:4  F2:4 C3:4 G2:4 B2:4  C3:4 G2:4 E3:4 G2:4  G2:4 D3:4 C3:8' },
+      { golf: 'ruis', volume: 0.14, noten: maat('K:4 S:4 K:4 S:4', 4) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   item: {
     bpm: 150,
@@ -104,6 +159,25 @@ export const LIEDJES = {
     kanalen: [
       { golf: 'puls50', volume: 0.18, noten: 'C5:2 E5:2 G5:2 C6:6' },
       { golf: 'driehoek', volume: 0.3, noten: 'C3:6 G3:6' },
+    ],
+  },
+  volkszanger: {
+    bpm: 180,
+    herhaal: false,
+    kanalen: [
+      { golf: 'puls50', volume: 0.17, noten: 'C5:4 A4:4 C5:4  F5:8 E5:4  D5:2 E5:2 F5:2 D5:2 C5:4  F5:8 -:4' },
+      { golf: 'puls25', volume: 0.08, noten: 'A4:4 F4:4 A4:4  A4:8 G4:4  Bb4:2 C5:2 D5:2 Bb4:2 A4:4  A4:8 -:4' },
+      { golf: 'driehoek', volume: 0.32, noten: 'F2:4 -:8  C3:4 -:8  C2:4 -:8  F2:4 -:8' },
+      { golf: 'puls12', volume: 0.07, noten: '-:4 A3:2 -:2 A3:2 -:2  -:4 A3:2 -:2 A3:2 -:2  -:4 Bb3:2 -:2 Bb3:2 -:2  -:4 A3:2 -:2 A3:2 -:2' },
+    ],
+  },
+  niveau: {
+    bpm: 180,
+    herhaal: false,
+    kanalen: [
+      { golf: 'puls50', volume: 0.18, noten: 'C5:1 E5:1 G5:1 C6:3 G5:1 C6:5' },
+      { golf: 'puls25', volume: 0.08, noten: 'E4:1 G4:1 C5:1 E5:3 C5:1 E5:5' },
+      { golf: 'driehoek', volume: 0.3, noten: 'C3:6 G2:6' },
     ],
   },
   herstel: {

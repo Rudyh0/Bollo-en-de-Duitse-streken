@@ -99,11 +99,14 @@ python3 tools/genereer_assets.py
 
 ## Stand van zaken
 
-Klaar:
+Klaar (hoofdstuk 1, Kamp Westerbork):
 
-- hoofdmenu (nieuw spel, spel laden, instellingen) en de namen-invoer bij de eerste keer openen
-- intro met de directeur van het vakantiepark, inclusief intake
-- barak 7 van Kamp Westerbork: rondlopen, praten met medegevangenen, een kistje onder een bed met voedselbonnen en een soeplepel
-- pauzemenu met rugzak (voedselbonnen gebruiken), status, opslaan en instellingen (tekstsnelheid, muziek, geluidseffecten, aanraakknoppen, altijd rennen)
+- hoofdmenu, inloggen met spelersnaam + pincode, en de namen-invoer bij de eerste keer spelen
+- intro met de directeur van het vakantiepark, met intake en eigen intakemuziek
+- barak 7: kistje onder het bed (voedselbonnen en soeplepel), en de rookpuzzel: schep water uit de emmer, gooi het op de kachel, het brandalarm laat de deur openspringen
+- het kampplein: rondlopende gevangenen, stoeten geketende gevangenen met een wachter voorop, de keuken, een waterpomp die je opknapt
+- de uitgang: twee wachters die je zien aankomen en die je moet verslaan om de poort open te krijgen
+- gevechten: SOEPLEPELSLAG en de VOLKSZANGER (Sepp Schunkelhuber brengt de vijand in de war, waardoor die vaker mist) tegen een Walther P38 en een mesje; rugzak tijdens het gevecht, ervaring en niveaus; wie verliest, wordt wakker in de barak
+- pauzemenu met rugzak, status, opslaan en instellingen
 
-Nog te doen: ontsnappen uit de barak, de route langs Orvelte, Wezup en Aalden, gevechten tegen Duitsers per gebied, quests en het einde bij het vakantiepark.
+Nog te doen: de route langs Orvelte, Wezup en Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.

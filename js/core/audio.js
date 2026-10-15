@@ -188,6 +188,23 @@ class Audio {
     bron.stop(start + duur + 0.02);
   }
 
+  /** Ruis door een filter waarvan de frequentie verschuift (sissen, zoeven, schoten). */
+  ruisSweep(bestemming, type, van, naar, start, duur, vol) {
+    const ctx = this.ctx;
+    const bron = ctx.createBufferSource();
+    bron.buffer = this.ruisBuffer;
+    const filter = ctx.createBiquadFilter();
+    filter.type = type;
+    filter.frequency.setValueAtTime(van, start);
+    filter.frequency.exponentialRampToValueAtTime(naar, start + duur);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(vol, start);
+    g.gain.exponentialRampToValueAtTime(0.001, start + duur);
+    bron.connect(filter).connect(g).connect(bestemming);
+    bron.start(start, Math.random() * 0.4);
+    bron.stop(start + duur + 0.05);
+  }
+
   // ------------------------------------------------------------ muziek
 
   bereidVoor(id) {
@@ -396,6 +413,52 @@ class Audio {
         break;
       case 'trekje':
         this.toon(uit, 0.25, 520, t, 0.06, 0.12, { verval: 1 });
+        break;
+      case 'uitroep':
+        this.toon(uit, 0.5, 700, t, 0.08, 0.22, { naarFreq: 1900, verval: 1 });
+        this.toon(uit, 0.5, 1900, t + 0.09, 0.08, 0.18, { verval: 1 });
+        break;
+      case 'deur_open':
+        this.toon(uit, 'zaag', 120, t, 0.18, 0.08, { naarFreq: 240 });
+        this.ruis(uit, 'H', t + 0.16, 0.4);
+        break;
+      case 'klik':
+        this.ruis(uit, 'H', t, 0.8);
+        this.toon(uit, 0.25, 2200, t, 0.03, 0.2, { verval: 1 });
+        this.toon(uit, 0.25, 1600, t + 0.06, 0.03, 0.18, { verval: 1 });
+        break;
+      case 'sis':
+        this.ruisSweep(uit, 'highpass', 3000, 7000, t, 1.4, 0.55);
+        this.ruisSweep(uit, 'bandpass', 900, 400, t, 1.0, 0.3);
+        break;
+      case 'alarm':
+        for (let i = 0; i < 5; i++) {
+          this.toon(uit, 0.5, 620, t + i * 0.5, 0.25, 0.2, { naarFreq: 1150, verval: 1 });
+          this.toon(uit, 0.5, 1150, t + i * 0.5 + 0.25, 0.25, 0.2, { naarFreq: 620, verval: 1 });
+        }
+        break;
+      case 'slag':
+        this.ruis(uit, 'S', t, 0.7);
+        this.toon(uit, 'sinus', 180, t, 0.12, 0.6, { naarFreq: 60 });
+        this.toon(uit, 0.125, 1480, t + 0.02, 0.18, 0.12, { naarFreq: 1400 });
+        break;
+      case 'pang':
+        this.ruisSweep(uit, 'lowpass', 4000, 300, t, 0.35, 1.0);
+        this.toon(uit, 0.5, 300, t, 0.12, 0.35, { naarFreq: 50 });
+        break;
+      case 'mes':
+        this.ruisSweep(uit, 'bandpass', 2500, 7000, t, 0.16, 0.6);
+        this.ruisSweep(uit, 'bandpass', 3000, 8000, t + 0.12, 0.12, 0.4);
+        break;
+      case 'mis':
+        this.ruisSweep(uit, 'bandpass', 600, 1800, t, 0.25, 0.3);
+        break;
+      case 'ko':
+        this.toon(uit, 0.5, 660, t, 0.7, 0.25, { naarFreq: 80, verval: 0.9 });
+        break;
+      case 'flits':
+        this.toon(uit, 0.125, 1200, t, 0.05, 0.15, { verval: 1 });
+        this.toon(uit, 0.125, 1500, t + 0.06, 0.05, 0.15, { verval: 1 });
         break;
       default:
         break;
