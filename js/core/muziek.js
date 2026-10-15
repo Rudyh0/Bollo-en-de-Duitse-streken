@@ -484,6 +484,34 @@ export const LIEDJES = {
     ],
   },
 
+  // Het vakantiepark: vrolijk en een tikje triomfantelijk, je bent er bijna!
+  park: {
+    bpm: 138,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.15, vibrato: true,
+        noten: `
+          C5:2 E5:2 G5:4 E5:2 G5:2 C6:4  B5:4 A5:2 G5:2 E5:8  F5:2 A5:2 C6:4 A5:2 F5:2 D5:4  G5:4 F5:2 E5:2 D5:8
+          C5:2 E5:2 G5:4 A5:2 G5:2 E5:4  F5:4 A5:2 F5:2 D5:8  E5:2 G5:2 C6:4 B5:2 A5:2 G5:4  D6:4 B5:2 G5:2 C6:8`,
+      },
+      {
+        golf: 'puls25', volume: 0.07,
+        noten: `
+          E4:8 G4:8  E4:8 G4:8  F4:8 A4:8  G4:8 B4:8
+          E4:8 G4:8  F4:8 A4:8  E4:8 G4:8  F4:8 E4:8`,
+      },
+      {
+        golf: 'driehoek', volume: 0.32, legato: 0.6,
+        noten: `
+          C3:2 C3:2 C3:2 C3:2 G2:2 G2:2 G2:2 G2:2  E3:2 E3:2 E3:2 E3:2 B2:2 B2:2 B2:2 B2:2
+          F2:2 F2:2 F2:2 F2:2 C3:2 C3:2 C3:2 C3:2  G2:2 G2:2 G2:2 G2:2 D3:2 D3:2 D3:2 D3:2
+          C3:2 C3:2 C3:2 C3:2 G2:2 G2:2 G2:2 G2:2  D3:2 D3:2 D3:2 D3:2 A2:2 A2:2 A2:2 A2:2
+          C3:2 C3:2 C3:2 C3:2 E3:2 E3:2 E3:2 E3:2  G2:2 G2:2 G2:2 G2:2 C3:2 C3:2 C3:2 C3:2`,
+      },
+      { golf: 'ruis', volume: 0.16, noten: maat('K:2 H:2 S:2 H:2 K:2 K:2 S:2 H:2', 8) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   onderduiker: {
     bpm: 120,

@@ -42,6 +42,7 @@ export class BootScene extends Phaser.Scene {
       dobber: 'sprites/dobber.png',
       icoon_kipsate: 'ui/icoon_kipsate.png',
       icoon_shag: 'ui/icoon_shag.png',
+      icoon_slagboomkaart: 'ui/icoon_slagboomkaart.png',
       icoon_envelop: 'ui/icoon_envelop.png',
       icoon_pepermuntje: 'ui/icoon_pepermuntje.png',
       icoon_broodplankje: 'ui/icoon_broodplankje.png',
@@ -107,7 +108,9 @@ export class BootScene extends Phaser.Scene {
       'restaurant_beren', 'beren_balie', 'beren_tafel', 'beren_tafel_groen', 'houten_beer', 'beren_plant',
       'huisje_rood', 'huisje_geel', 'huisje_wit', 'tabakszaak', 'bejaardenhuis', 'scootmobiel', 'bord_vakantiepark',
       'tabaksbalie', 'tabaksschap', 'krantenrek', 'tv_kast', 'fauteuil', 'fauteuil_groen', 'bingotafel', 'staande_klok',
-      'rollator'].forEach((naam) => {
+      'rollator',
+      'parkeerbord', 'parkeerautomaat', 'koffers', 'kaartlezer', 'kaartlezer_groen', 'parkhuisje', 'poortboog',
+      'receptie', 'bungalow', 'bungalow_groen', 'wegwijzer', 'remsporen'].forEach((naam) => {
       afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
     });
     ['auto_rood', 'auto_blauw', 'auto_zilver', 'auto_geel', 'caravan', 'jeep', 'truck', 'truck_kisten', 'pantser',
@@ -124,6 +127,11 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('anim_wieken', `sprites/anim_wieken.png${v}`, { frameWidth: 96, frameHeight: 96 });
     this.load.spritesheet('anim_vlag', `sprites/anim_vlag.png${v}`, { frameWidth: 32, frameHeight: 48 });
     this.load.spritesheet('koe', `sprites/koe.png${v}`, { frameWidth: 24, frameHeight: 20 });
+    ['levi', 'wit', 'rood', 'blauw', 'zilver', 'geel', 'zwart', 'groen'].forEach((kleur) => {
+      this.load.spritesheet(`auto_${kleur}`, `sprites/auto_${kleur}.png${v}`, { frameWidth: 32, frameHeight: 32 });
+    });
+    this.load.spritesheet('anim_parkvlag', `sprites/anim_parkvlag.png${v}`, { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('anim_slagboomkaart', `sprites/anim_slagboomkaart.png${v}`, { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet('rex', `sprites/rex.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('kikker', `sprites/kikker.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('gevecht_volkszanger', `sprites/gevecht_volkszanger.png${v}`, { frameWidth: 48, frameHeight: 56 });
@@ -133,7 +141,7 @@ export class BootScene extends Phaser.Scene {
       'dorpsvrouw', 'bernd', 'kassiere', 'helmut', 'jens',
       'anne', 'hendrik', 'bakker', 'slager', 'visser', 'vissersvrouw', 'leutnant', 'klompenmaker',
       'heinz', 'rudiger', 'karl', 'kurt', 'ijsman', 'gastvrouw', 'kok',
-      'jannes', 'zuster', 'gerard', 'manfred'].forEach((naam) => {
+      'jannes', 'zuster', 'gerard', 'manfred', 'medewerker'].forEach((naam) => {
       this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
     });
 

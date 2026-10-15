@@ -155,6 +155,14 @@ Klaar (hoofdstuk 7, Aalden):
 - met de shag gaat de slagboom open. Ga je daarna nog bij opa Jannes langs, dan weet hij niet meer waarvoor je kwam en krijg je een pepermuntje
 - eigen muziek: een dorpsdeuntje en een orgelwals in het bejaardenhuis
 
+Klaar (hoofdstuk 8, het vakantiepark, deel 1 en 2):
+
+- de parkeerplaats: rijen Duitse auto's en caravans, Duitsers die heel erg zin hebben in hun vakantie (ook Heinz, Rüdiger en Karl van de Blue Lagoon) en een kistje met een voedselbon
+- loop je richting het park, dan krijg je een melding: het park is alleen per auto bereikbaar. Je hoort een motor (!), springt opzij en Levi stopt naast je in zijn witte Audi A1. Hij gaat met 180 over het park scheuren en raast weg
+- daarna kun je elke geparkeerde auto pakken en rondrijden (veel sneller dan lopen, met B nog sneller). Terug naar Aalden rijden mag niet
+- de ingang: een welkomstboog met de naam van jouw park, een slagboom met een kaartlezer en slagboomwachter Jochem. Levi heeft de slagboomkaart uit zijn raampje de struiken in gegooid: zoek de glinstering, haal de kaart langs de lezer en rijd naar de receptie
+- eigen muziek bij de ingang; op de parkeerplaats klinkt de schlager van de Duitsers
+
 De Beren (in elk dorp):
 
 - een restaurant in Orvelte (naast de molen), in Wezup (aan de noordkant) en in Aalden (aan de hoofdstraat), met eigen muziekje
@@ -162,4 +170,4 @@ De Beren (in elk dorp):
 - AFHALEN voor onderweg: BROODPLANKJE (€5, herstelt 15), KIPSATE (€10, herstelt 30) en SPARERIBS (€18, herstelt 60), ook te gebruiken in gevechten
 - bij De Beren wordt niet gevochten, ook niet door de Duitsers die er zitten te eten
 
-Nog te doen: het einde bij het vakantiepark, en meer vijanden en quests per gebied.
+Nog te doen: de finale bij de receptie, en daarna een speelronde om bugs te vinden en op te lossen.

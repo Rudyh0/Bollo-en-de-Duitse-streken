@@ -9,6 +9,15 @@ export const ITEMS = {
     herstel: 8,
     beschrijving: 'Een gestempelde bon voor een warme maaltijd. Herstelt 8 punten gezondheid.',
   },
+  // ---- het vakantiepark
+  slagboomkaart: {
+    naam: 'SLAGBOOMKAART',
+    meervoud: 'SLAGBOOMKAARTEN',
+    icoon: 'icoon_slagboomkaart',
+    soort: 'sleutel',
+    beschrijving: 'De slagboomkaart van het vakantiepark. Levi gooide hem uit zijn raampje, de struiken in.',
+    bekijk: 'Op de kaart staat: "PERSONEEL - NIET UITLENEN". Er zit een vlek pindasaus op.',
+  },
   // ---- Aalden
   shag: {
     naam: 'ZWARE SHAG',

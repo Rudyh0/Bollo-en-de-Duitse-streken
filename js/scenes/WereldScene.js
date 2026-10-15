@@ -20,6 +20,10 @@ const SNEL_REN_MS = 72;
 const TRAAG_LOOP_MS = 330;
 const TRAAG_REN_MS = 180;
 const DRAAI_MS = 90;
+// in de auto (op de parkeerplaats en in het vakantiepark)
+const AUTO_MS = 110;
+const AUTO_REN_MS = 70;
+const AUTO_FRAME = { omlaag: 0, omhoog: 1, links: 2, rechts: 3 };
 const NPC_LOOP_MS = 300;
 
 // Objecten met een vaste "voet" (tegels waar je niet doorheen kunt).
@@ -138,6 +142,36 @@ const OBJECT_TYPES = {
   zandkasteel: { textuur: () => 'obj_zandkasteel', b: 1, h: 1, dx: -4 },
   schep: { textuur: () => 'obj_schep', b: 1, h: 1 },
   bord_natuur: { textuur: () => 'obj_bord_natuur', b: 3, h: 1 },
+  // het vakantiepark
+  auto: {
+    textuur: (o) => `auto_${o.kleur}`, frame: (o) => AUTO_FRAME[o.richting || 'omlaag'], b: 1, h: 1,
+    positie: (o) => [o.x * TEGEL + 8, (o.y + 1) * TEGEL + 4], oorsprong: [0.5, 1],
+  },
+  geparkeerd: {
+    textuur: (o) => `auto_${o.kleur}`, frame: (o) => AUTO_FRAME[o.richting || 'omlaag'], b: 2, h: 1,
+    positie: (o) => [(o.x + 1) * TEGEL, (o.y + 1) * TEGEL + 4], oorsprong: [0.5, 1],
+  },
+  caravan: { textuur: () => 'voertuig_caravan', b: 4, h: 1, dy: 2 },
+  parkeerbord: { textuur: () => 'obj_parkeerbord', b: 1, h: 1 },
+  parkeerautomaat: { textuur: () => 'obj_parkeerautomaat', b: 1, h: 1 },
+  koffers: { textuur: () => 'obj_koffers', b: 1, h: 1, dx: -1 },
+  kaartlezer: { textuur: (o) => (staat.vlaggen[o.openVlag] ? 'obj_kaartlezer_groen' : 'obj_kaartlezer'), b: 1, h: 1 },
+  parkhuisje: { textuur: () => 'obj_parkhuisje', b: 2, h: 2 },
+  poortboog: {
+    textuur: () => 'obj_poortboog', b: 0, h: 0,
+    positie: (o) => [o.x * TEGEL, (o.y + 1) * TEGEL], oorsprong: [0, 1],
+    diepte: () => 5000,
+    extraVast: () => [[0, 0], [7, 0]],
+  },
+  receptie: { textuur: () => 'obj_receptie', b: 7, h: 2 },
+  bungalow: { textuur: (o) => (o.kleur === 'groen' ? 'obj_bungalow_groen' : 'obj_bungalow'), b: 3, h: 2 },
+  wegwijzer: { textuur: () => 'obj_wegwijzer', b: 1, h: 1, dx: -22 },
+  parkvlag: { textuur: () => 'anim_parkvlag', b: 1, h: 1, dx: 4, animatie: { frames: 2, ms: 400 } },
+  slagboomkaart: { textuur: () => 'anim_slagboomkaart', b: 1, h: 1, animatie: { frames: 2, ms: 500 } },
+  remsporen: {
+    textuur: () => 'obj_remsporen', b: 0, h: 0,
+    positie: (o) => [o.x * TEGEL, o.y * TEGEL], oorsprong: [0, 0], diepte: () => -5,
+  },
   // Aalden
   huisje: { textuur: (o) => `obj_huisje_${o.kleur || 'rood'}`, b: 3, h: 2 },
   tabakszaak: { textuur: () => 'obj_tabakszaak', b: 4, h: 2 },
@@ -328,7 +362,7 @@ export class WereldScene extends Phaser.Scene {
       oorsprong = [0, 1];
     }
     const diepte = type.diepte ? type.diepte(o) : (o.y + Math.max(1, type.h)) * TEGEL;
-    const sprite = this.add.image(px, py, type.textuur(o), 0).setOrigin(...oorsprong).setDepth(diepte);
+    const sprite = this.add.image(px, py, type.textuur(o), type.frame ? type.frame(o) : 0).setOrigin(...oorsprong).setDepth(diepte);
     if (type.animatie) {
       let f = 0;
       this.time.addEvent({
@@ -406,8 +440,13 @@ export class WereldScene extends Phaser.Scene {
     });
   }
 
+  /** In de auto? Alleen op kaarten waar je mag rijden (de parkeerplaats en het park). */
+  get inAuto() {
+    return Boolean(this.kaart.autos && staat.vlaggen.auto);
+  }
+
   maakSpeler() {
-    const sprite = this.add.sprite(0, 0, 'beer', 0).setOrigin(0.5, 1);
+    const sprite = this.add.sprite(0, 0, this.inAuto ? `auto_${staat.vlaggen.auto}` : 'beer', 0).setOrigin(0.5, 1);
     this.speler = {
       sprite,
       x: staat.x,
@@ -432,6 +471,12 @@ export class WereldScene extends Phaser.Scene {
       const t = s.voortgang;
       px = (s.x + r.dx * t) * TEGEL + 8;
       py = (s.y + r.dy * t + 1) * TEGEL;
+    }
+    if (this.inAuto) {
+      s.sprite.setPosition(Math.round(px), Math.round(py) + 4);
+      s.sprite.setDepth(py + 0.5);
+      s.sprite.setFrame(AUTO_FRAME[s.richting]);
+      return;
     }
     s.sprite.setPosition(Math.round(px), Math.round(py));
     s.sprite.setDepth(py + 0.5);
@@ -745,7 +790,9 @@ export class WereldScene extends Phaser.Scene {
       const rent = instellingen.altijdRennen || invoer.ingedrukt('b');
       const snel = this.heeftEffect('snel');
       const traag = this.heeftEffect('stoned');
-      if (snel && !traag) {
+      if (this.inAuto) {
+        s.duur = rent ? AUTO_REN_MS : AUTO_MS;
+      } else if (snel && !traag) {
         s.duur = rent ? SNEL_REN_MS : SNEL_LOOP_MS;
         this.stofwolkje();
       } else if (traag && !snel) {
@@ -968,6 +1015,13 @@ export class WereldScene extends Phaser.Scene {
   }
 
   /** Stofwolkjes achter de beer als hij supersnel loopt. */
+  /** De beer stapt in een auto (kleur: rood, blauw, ...). */
+  stapInAuto(kleur) {
+    staat.vlaggen.auto = kleur;
+    this.speler.sprite.setTexture(`auto_${kleur}`);
+    this.plaatsSpeler();
+  }
+
   stofwolkje() {
     const s = this.speler;
     const r = RICHTINGEN[s.richting];

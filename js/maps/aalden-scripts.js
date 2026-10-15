@@ -2,6 +2,7 @@
 // maar verkoopt het voor €150. Opa Jannes in Huize Avondrood geeft je geld voor zijn boodschappen...
 import { aantal, neemItem } from '../core/staat.js';
 import { berenGevel } from './beren-scripts.js';
+import { park } from '../core/namen.js';
 
 const PRIJS = 150;
 
@@ -119,14 +120,18 @@ export const aaldenScripts = {
     ]);
   },
 
-  async uitgang({ ui, staat }) {
+  async uitgang({ ui, wereld, staat }, { warp }) {
     if (!staat.vlaggen.aaldenKlaar) return;
-    await ui.zeg([
-      'Je loopt onder de slagboom door. Achter je hoor je Manfred tevreden hoesten.',
-      'Het pad gaat het bos in. Tussen de bomen zie je al vlaggetjes, een slagboom en een receptie. {PARK}!',
-      'EINDE VAN HOOFDSTUK 7. Wordt vervolgd!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+    if (!staat.vlaggen.aaldenVerlaten) {
+      staat.vlaggen.aaldenVerlaten = true;
+      await ui.zeg([
+        'Je loopt onder de slagboom door. Achter je hoor je Manfred tevreden hoesten.',
+        'Het pad gaat het bos in. Tussen de bomen zie je al vlaggetjes en een grote parkeerplaats. {PARK}!',
+      ]);
+      const naam = park().toUpperCase();
+      await ui.hoofdstuk('HOOFDSTUK 8', naam.length <= 16 ? naam : 'HET VAKANTIEPARK');
+    }
+    wereld.gaNaar('parkeerplaats', warp.x === 31 ? 17 : 18, 22, 'omhoog');
   },
 
   async huisje({ ui }) {

@@ -530,6 +530,8 @@ PERSONEN = {
     'gerard': ('kort', 'normaal', kleuren(
         h='#a8a8a8', H='#808080', t='#8a5a34', T='#6a4224', p='#3a3a42', P='#26262c', f='#2a1a10', b='#8a5a34',
         s='#f0c4a0', S='#d09c7a')),
+    'medewerker': ('kort', 'normaal', kleuren(
+        h='#5a3a20', H='#3e2614', t='#2e8a5a', T='#1e6a42', p='#3a3a42', P='#26262c', f='#2a2a2a', b='#f0902a')),
     'manfred': ('pet', 'normaal', kleuren(
         h='#7a5a3a', H='#5a4028', g='#5a6250', G='#1e1e22', l='#7a826c',
         t='#68705c', T='#4a5242', p='#4a5040', P='#34382e', f='#1e1e22', b='#2a2a2c')),

@@ -25,6 +25,8 @@ import { berenOrvelte, berenWezup, berenAalden } from './beren.js';
 import { berenOrvelteScripts, berenWezupScripts, berenAaldenScripts } from './beren-scripts.js';
 import { aalden, tabakszaak, avondrood } from './aalden.js';
 import { aaldenScripts, tabakszaakScripts, avondroodScripts } from './aalden-scripts.js';
+import { parkeerplaats, parkingang } from './park.js';
+import { parkeerplaatsScripts, parkingangScripts } from './park-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -55,6 +57,8 @@ export const KAARTEN = {
   tabakszaak,
   avondrood,
   beren_aalden: berenAalden,
+  parkeerplaats,
+  parkingang,
 };
 
 export const SCRIPTS = {
@@ -86,4 +90,6 @@ export const SCRIPTS = {
   tabakszaak: tabakszaakScripts,
   avondrood: avondroodScripts,
   beren_aalden: berenAaldenScripts,
+  parkeerplaats: parkeerplaatsScripts,
+  parkingang: parkingangScripts,
 };
