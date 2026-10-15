@@ -278,18 +278,21 @@ export const strandScripts = {
     if (uitslag === 'gewonnen') ctx.staat.vlaggen.kurtVerslagen = true;
   },
 
-  async verder({ ui, staat, wereld }) {
+  async verder({ ui, staat, wereld }, { warp }) {
     if (!staat.vlaggen.kurtVerslagen) {
       // je komt hier pas na Kurt, maar voor de zekerheid
       if (!wereld.persoon('kurt')) await zandDuitser(wereld.context());
       return;
     }
-    await ui.zeg([
-      'Je laat het strandje achter je. Het zand gaat over in een fietspad, met een bordje: AALDEN.',
-      'Het laatste stadje voor {PARK}. Je bent er bijna.',
-      'EINDE VAN HOOFDSTUK 6. Wordt vervolgd!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+    if (!staat.vlaggen.strandVerlaten) {
+      staat.vlaggen.strandVerlaten = true;
+      await ui.zeg([
+        'Je laat het strandje achter je. Het zand gaat over in een fietspad, met een bordje: AALDEN.',
+        'Het laatste stadje voor {PARK}. Je bent er bijna.',
+      ]);
+      await ui.hoofdstuk('HOOFDSTUK 7', 'AALDEN');
+    }
+    wereld.gaNaar('aalden', 1, warp.y <= 8 ? 15 : 16, 'rechts');
   },
 
   async ijsman({ ui }) {

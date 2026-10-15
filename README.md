@@ -146,11 +146,20 @@ Klaar (hoofdstuk 6, het Drentse land):
 - deel 2, de Drentse Blue Lagoon: Duitsers op verlof (verbrand, sokken in sandalen, barbecue en schlagermuziek) vallen je niet aan. Heinz geeft je zijn hengel: vang drie vissen (baars, snoek en karper) bij drie verschillende steigers. Vissen is een minispel: wacht tot de dobber echt onder gaat en druk dan op A. Te vroeg of te laat, dan is de vis weg. Pas als je de hengel en de vissen terugbrengt, kun je verder
 - deel 3, het recreatiestrandje: vlak voor de uitgang komt Strandduitser Kurt uit het zand, vertelt waarom Duitsers altijd kuilen graven en valt je aan (met een schep, een zandstraal en een handdoekslag)
 
-De Beren (in elk dorp, ook in Aalden straks):
+Klaar (hoofdstuk 7, Aalden):
 
-- een restaurant in Orvelte (naast de molen) en in Wezup (aan de noordkant), met eigen muziekje
+- het laatste stadje: Drentse huisjes met groen-witte luiken, molen De Hoop, een brink met een eik en een dobbe, tabakszaak Gerard, bejaardenhuis Huize Avondrood en een De Beren
+- de weg naar het vakantiepark (met een bruin bord VAKANTIEPARK) zit dicht: Stabsgefreiter Manfred is zijn pakje Duitse zware shag kwijt en laat niemand door
+- gevonden spullen gaan in Aalden naar de tabakszaak. Gerard wil €150 voor het pakje, en dat heb je niet
+- opa Jannes in Huize Avondrood geeft je een envelop met boodschappengeld (koffie, beschuit, drop, advocaat). Je doet alsof je boodschappen gaat doen, maar gaat terug naar Gerard. Die vindt dat het enige wat de Duitsers goed doen de tabaksprijzen zijn, en dat Rob Jetten daar nog wat van kan leren
+- met de shag gaat de slagboom open. Ga je daarna nog bij opa Jannes langs, dan weet hij niet meer waarvoor je kwam en krijg je een pepermuntje
+- eigen muziek: een dorpsdeuntje en een orgelwals in het bejaardenhuis
+
+De Beren (in elk dorp):
+
+- een restaurant in Orvelte (naast de molen), in Wezup (aan de noordkant) en in Aalden (aan de hoofdstraat), met eigen muziekje
 - AANSCHUIVEN bij de gastvrouw is voor beren gratis: de kok zet de borden op de balie, je eet alles op en je gezondheid en PP zijn weer helemaal vol, net als in een Pokémon Center
 - AFHALEN voor onderweg: BROODPLANKJE (€5, herstelt 15), KIPSATE (€10, herstelt 30) en SPARERIBS (€18, herstelt 60), ook te gebruiken in gevechten
 - bij De Beren wordt niet gevochten, ook niet door de Duitsers die er zitten te eten
 
-Nog te doen: Aalden (het laatste stadje, met een eigen De Beren), meer vijanden per gebied, quests en het einde bij het vakantiepark.
+Nog te doen: het einde bij het vakantiepark, en meer vijanden en quests per gebied.

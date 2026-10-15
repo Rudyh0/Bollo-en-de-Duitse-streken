@@ -203,3 +203,24 @@ export const berenWezupScripts = {
     if (p) p.kijk('rechts');
   },
 };
+
+export const berenAaldenScripts = {
+  ...gemeenschappelijk,
+
+  async roelie({ ui }) {
+    await ui.zeg([
+      'ROELIE: Ik ben hier voor de kipsaté. En om even weg te zijn uit Huize Avondrood.',
+      'ROELIE: Mijn vader woont daar. Opa Jannes. Hij vraagt iedereen om boodschappen te doen. En dan vergeet hij het weer.',
+    ]);
+  },
+
+  async fritz({ ui, wereld }) {
+    const p = wereld.persoon('fritz');
+    if (p) p.kijk('links');
+    await ui.zeg([
+      'FRITZ: Isch mag hier binnen niet roken. Zelfs wij Duitsers houden ons daaraan. Bij De Beren.',
+      'FRITZ: Daarom staat Manfred buiten bij de slagboom. Arme Manfred. Hij is zijn shag ook nog kwijt.',
+    ]);
+    if (p) p.kijk('rechts');
+  },
+};

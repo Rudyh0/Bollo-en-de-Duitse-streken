@@ -41,6 +41,9 @@ export class BootScene extends Phaser.Scene {
       icoon_karper: 'ui/icoon_karper.png',
       dobber: 'sprites/dobber.png',
       icoon_kipsate: 'ui/icoon_kipsate.png',
+      icoon_shag: 'ui/icoon_shag.png',
+      icoon_envelop: 'ui/icoon_envelop.png',
+      icoon_pepermuntje: 'ui/icoon_pepermuntje.png',
       icoon_broodplankje: 'ui/icoon_broodplankje.png',
       icoon_spareribs: 'ui/icoon_spareribs.png',
       bord_spareribs: 'sprites/bord_spareribs.png',
@@ -101,7 +104,10 @@ export class BootScene extends Phaser.Scene {
       'hooibaal', 'melkbussen', 'parasol', 'parasol_blauw', 'bbq', 'koelbox', 'flamingo', 'visbord', 'strandstoel',
       'strandstoel_groen', 'handdoek', 'handdoek_blauw', 'reddingstoren', 'ijscokar', 'zandkuil', 'zandkasteel', 'schep',
       'bord_natuur',
-      'restaurant_beren', 'beren_balie', 'beren_tafel', 'beren_tafel_groen', 'houten_beer', 'beren_plant'].forEach((naam) => {
+      'restaurant_beren', 'beren_balie', 'beren_tafel', 'beren_tafel_groen', 'houten_beer', 'beren_plant',
+      'huisje_rood', 'huisje_geel', 'huisje_wit', 'tabakszaak', 'bejaardenhuis', 'scootmobiel', 'bord_vakantiepark',
+      'tabaksbalie', 'tabaksschap', 'krantenrek', 'tv_kast', 'fauteuil', 'fauteuil_groen', 'bingotafel', 'staande_klok',
+      'rollator'].forEach((naam) => {
       afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
     });
     ['auto_rood', 'auto_blauw', 'auto_zilver', 'auto_geel', 'caravan', 'jeep', 'truck', 'truck_kisten', 'pantser',
@@ -126,7 +132,8 @@ export class BootScene extends Phaser.Scene {
       'djelano', 'mustafah', 'sjoerd', 'tjitske', 'wiebe', 'molenaar', 'budtender', 'grenswacht', 'opa', 'toerist',
       'dorpsvrouw', 'bernd', 'kassiere', 'helmut', 'jens',
       'anne', 'hendrik', 'bakker', 'slager', 'visser', 'vissersvrouw', 'leutnant', 'klompenmaker',
-      'heinz', 'rudiger', 'karl', 'kurt', 'ijsman', 'gastvrouw', 'kok'].forEach((naam) => {
+      'heinz', 'rudiger', 'karl', 'kurt', 'ijsman', 'gastvrouw', 'kok',
+      'jannes', 'zuster', 'gerard', 'manfred'].forEach((naam) => {
       this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
     });
 

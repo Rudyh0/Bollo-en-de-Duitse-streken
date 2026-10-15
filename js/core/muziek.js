@@ -438,6 +438,52 @@ export const LIEDJES = {
     ],
   },
 
+  // Aalden: knus dorpsdeuntje
+  aalden: {
+    bpm: 116,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.17, vibrato: true,
+        noten: `
+          G4:2 B4:2 D5:4 B4:2 D5:2 G5:4  E5:4 D5:2 B4:2 C5:8  A4:2 C5:2 E5:4 D5:2 C5:2 B4:4  A4:4 G4:2 A4:2 B4:8
+          G4:2 B4:2 D5:4 E5:2 D5:2 B4:4  C5:4 E5:2 C5:2 A4:8  B4:2 D5:2 G5:4 F#5:2 E5:2 D5:4  A4:4 F#4:2 A4:2 G4:8`,
+      },
+      {
+        golf: 'puls50', volume: 0.07,
+        noten: `
+          B3:8 D4:8  C4:8 E4:8  C4:8 E4:8  D4:8 F#4:8
+          B3:8 D4:8  C4:8 E4:8  B3:8 D4:8  C4:8 B3:8`,
+      },
+      {
+        golf: 'driehoek', volume: 0.32, legato: 0.75,
+        noten: `
+          G2:4 D3:4 G2:4 D3:4  C3:4 G2:4 C3:4 G2:4  A2:4 E3:4 A2:4 E3:4  D3:4 A2:4 D3:4 F#2:4
+          G2:4 D3:4 G2:4 D3:4  A2:4 E3:4 C3:4 E3:4  G2:4 B2:4 D3:4 B2:4  D3:4 D2:4 G2:8`,
+      },
+      { golf: 'ruis', volume: 0.12, noten: maat('K:4 H:4 S:4 H:4', 8) },
+    ],
+  },
+
+  // Huize Avondrood: een wals op het orgeltje
+  avondrood: {
+    bpm: 100,
+    kanalen: [
+      {
+        golf: 'puls12', volume: 0.16, vibrato: true,
+        noten: 'C5:6 A4:2 F4:4  G4:8 A4:4  Bb4:6 A4:2 G4:4  C5:12  D5:6 C5:2 Bb4:4  A4:8 F4:4  G4:4 A4:4 E4:4  F4:12',
+      },
+      {
+        golf: 'puls50', volume: 0.06,
+        noten: '-:4 A3:4 C4:4  -:4 G3:4 Bb3:4  -:4 Bb3:4 D4:4  -:4 A3:4 C4:4  -:4 Bb3:4 D4:4  -:4 A3:4 C4:4  -:4 G3:4 Bb3:4  -:4 A3:4 -:4',
+      },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.6,
+        noten: 'F2:4 -:8  C2:4 -:8  Bb1:4 -:8  F2:4 -:8  Bb1:4 -:8  F2:4 -:8  C2:4 -:8  F2:4 C2:4 F2:4',
+      },
+      { golf: 'ruis', volume: 0.04, noten: maat('K:4 H:4 H:4', 8) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   onderduiker: {
     bpm: 120,

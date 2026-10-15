@@ -521,6 +521,18 @@ PERSONEN = {
         h='#3a2a20', H='#24180e', g='#f8f8f4', G='#d8d8d0', l='#ffffff',
         t='#f4f4f0', T='#d0d0c8', p='#2a2a30', P='#1a1a1e', f='#1a1a1a', b='#b8322a',
         s='#c08860', S='#9c6a48')),
+    # Aalden
+    'jannes': ('kaal', 'normaal', kleuren(
+        h='#f0f0f0', H='#c8c8c8', t='#c8b088', T='#a08860', p='#6a5a4a', P='#4c4034', f='#3a2a20', b='#c8b088',
+        s='#f0c4a0', S='#d09c7a')),
+    'zuster': ('lang', 'normaal', kleuren(
+        h='#e0c060', H='#b89838', t='#f4f8fc', T='#c8d8e8', p='#f4f8fc', P='#c8d8e8', f='#f0f0f0', b='#5a8ac8')),
+    'gerard': ('kort', 'normaal', kleuren(
+        h='#a8a8a8', H='#808080', t='#8a5a34', T='#6a4224', p='#3a3a42', P='#26262c', f='#2a1a10', b='#8a5a34',
+        s='#f0c4a0', S='#d09c7a')),
+    'manfred': ('pet', 'normaal', kleuren(
+        h='#7a5a3a', H='#5a4028', g='#5a6250', G='#1e1e22', l='#7a826c',
+        t='#68705c', T='#4a5242', p='#4a5040', P='#34382e', f='#1e1e22', b='#2a2a2c')),
 }
 
 

@@ -70,6 +70,11 @@ export const berenOrvelte = berenRestaurant('beren_orvelte', 'Orvelte', 'dorp', 
   { id: 'gunther', sprite: 'mens_soldaat_muts', x: 8, y: 7, richting: 'rechts', script: 'gunther' },
 ]);
 
+export const berenAalden = berenRestaurant('beren_aalden', 'Aalden', 'aalden', { x: 18, y: 14 }, [
+  { id: 'roelie', sprite: 'mens_dorpsvrouw', x: 3, y: 5, richting: 'links', script: 'roelie' },
+  { id: 'fritz', sprite: 'mens_soldaat_muts', x: 8, y: 7, richting: 'rechts', script: 'fritz' },
+]);
+
 export const berenWezup = berenRestaurant('beren_wezup', 'Wezup', 'wezup', { x: 26, y: 9 }, [
   { id: 'wiepke', sprite: 'mens_visser', x: 3, y: 7, richting: 'links', script: 'wiepke' },
   { id: 'otto', sprite: 'mens_soldaat_muts', x: 8, y: 5, richting: 'rechts', script: 'otto' },

@@ -27,6 +27,7 @@ import art_n34  # noqa: E402
 import art_wezup  # noqa: E402
 import art_natuur  # noqa: E402
 import art_beren  # noqa: E402
+import art_aalden  # noqa: E402
 
 
 def pad(*delen):
@@ -77,7 +78,7 @@ def main():
     for naam, img in art_bos.iconen().items():
         img.save(pad('ui' if naam.startswith('icoon') else 'sprites', naam + '.png'))
     # Orvelte
-    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra() + art_wezup.binnen_extra() + art_beren.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
+    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra() + art_wezup.binnen_extra() + art_beren.binnen_extra() + art_aalden.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
     for naam, img in art_dorp.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     for naam, frames in art_dorp.animaties().items():
@@ -116,6 +117,11 @@ def main():
     for naam, img in art_beren.objecten().items():
         img.save(pad('sprites', ('obj_' if not naam.startswith('bord_') else '') + naam + '.png'))
     for naam, img in art_beren.iconen().items():
+        img.save(pad('ui', naam + '.png'))
+    # Aalden
+    for naam, img in art_aalden.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    for naam, img in art_aalden.iconen().items():
         img.save(pad('ui', naam + '.png'))
     # gevechten
     for naam, img in art_gevecht.alles().items():

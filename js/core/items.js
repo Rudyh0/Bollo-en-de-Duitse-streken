@@ -9,6 +9,32 @@ export const ITEMS = {
     herstel: 8,
     beschrijving: 'Een gestempelde bon voor een warme maaltijd. Herstelt 8 punten gezondheid.',
   },
+  // ---- Aalden
+  shag: {
+    naam: 'ZWARE SHAG',
+    meervoud: 'PAKJES ZWARE SHAG',
+    icoon: 'icoon_shag',
+    soort: 'sleutel',
+    beschrijving: 'Het verloren pakje Duitse zware shag van Stabsgefreiter Manfred. Merk: SCHWER.',
+    bekijk: 'Je ruikt er even aan. Natte hond, dieselolie en heimwee. Manfred zal er blij mee zijn.',
+  },
+  envelop: {
+    naam: 'ENVELOP',
+    meervoud: 'ENVELOPPEN',
+    icoon: 'icoon_envelop',
+    soort: 'sleutel',
+    beschrijving: 'Boodschappengeld van opa Jannes: €150. Voor koffie, beschuit, drop en advocaat.',
+    bekijk: 'Op de envelop staat in bibberige letters: koffie, beschuit, Engelse drop, advocaat. Onderaan: "NIET AAN TABAK UITGEVEN!" Oei.',
+  },
+  pepermuntje: {
+    naam: 'PEPERMUNTJE',
+    meervoud: 'PEPERMUNTJES',
+    lidwoord: 'het',
+    icoon: 'icoon_pepermuntje',
+    soort: 'gebruik',
+    herstel: 5,
+    beschrijving: 'Een pepermuntje van opa Jannes. Herstelt 5 punten gezondheid. En een klein beetje je geweten.',
+  },
   // ---- te koop bij De Beren
   broodplankje: {
     naam: 'BROODPLANKJE',

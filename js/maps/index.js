@@ -21,8 +21,10 @@ import {
 } from './wezup-scripts.js';
 import { landweg, lagune, strand } from './natuur.js';
 import { landwegScripts, laguneScripts, strandScripts } from './natuur-scripts.js';
-import { berenOrvelte, berenWezup } from './beren.js';
-import { berenOrvelteScripts, berenWezupScripts } from './beren-scripts.js';
+import { berenOrvelte, berenWezup, berenAalden } from './beren.js';
+import { berenOrvelteScripts, berenWezupScripts, berenAaldenScripts } from './beren-scripts.js';
+import { aalden, tabakszaak, avondrood } from './aalden.js';
+import { aaldenScripts, tabakszaakScripts, avondroodScripts } from './aalden-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -49,6 +51,10 @@ export const KAARTEN = {
   strand,
   beren_orvelte: berenOrvelte,
   beren_wezup: berenWezup,
+  aalden,
+  tabakszaak,
+  avondrood,
+  beren_aalden: berenAalden,
 };
 
 export const SCRIPTS = {
@@ -76,4 +82,8 @@ export const SCRIPTS = {
   strand: strandScripts,
   beren_orvelte: berenOrvelteScripts,
   beren_wezup: berenWezupScripts,
+  aalden: aaldenScripts,
+  tabakszaak: tabakszaakScripts,
+  avondrood: avondroodScripts,
+  beren_aalden: berenAaldenScripts,
 };
