@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0c0c14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>De Duitse streken</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="spel"></div>
+    <div id="besturing" aria-hidden="true">
+      <div class="dpad" id="dpad">
+        <div class="dpad-arm dpad-v"></div>
+        <div class="dpad-arm dpad-h"></div>
+        <div class="dpad-pijl p-omhoog"></div>
+        <div class="dpad-pijl p-omlaag"></div>
+        <div class="dpad-pijl p-links"></div>
+        <div class="dpad-pijl p-rechts"></div>
+      </div>
+      <div class="midden-knoppen">
+        <button type="button" class="pil" data-knop="start">START</button>
+      </div>
+      <div class="ab-knoppen">
+        <button type="button" class="rond knop-b" data-knop="b">B</button>
+        <button type="button" class="rond knop-a" data-knop="a">A</button>
+      </div>
+    </div>
+  </div>
+  <noscript>Zet JavaScript aan om dit spel te spelen.</noscript>
+  <script src="lib/phaser.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

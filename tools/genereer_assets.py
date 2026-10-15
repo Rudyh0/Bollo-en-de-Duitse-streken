@@ -1,0 +1,64 @@
+"""Genereert alle pixel-art in ../assets.
+
+Gebruik:  python3 tools/genereer_assets.py
+Nodig:    Python 3 + Pillow  (pip install pillow)
+"""
+import os
+import sys
+
+HIER = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HIER)
+ASSETS = os.path.join(HIER, '..', 'assets')
+
+from pixel import vel  # noqa: E402
+import art_beer  # noqa: E402
+import art_npcs  # noqa: E402
+import art_barak  # noqa: E402
+import art_portretten  # noqa: E402
+import art_ui  # noqa: E402
+import art_font  # noqa: E402
+import art_achtergronden  # noqa: E402
+
+
+def pad(*delen):
+    p = os.path.join(ASSETS, *delen)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    return p
+
+
+def main():
+    # personages (16x20, volgorde: omlaag, omhoog, links, rechts)
+    vel(art_beer.frames(), 3).save(pad('sprites', 'beer.png'))
+    vel(art_npcs.henk(), 4).save(pad('sprites', 'henk.png'))
+    vel(art_npcs.fenna(), 4).save(pad('sprites', 'fenna.png'))
+    # grote sprites
+    vel([art_portretten.directeur(False), art_portretten.directeur(True)], 2).save(pad('sprites', 'directeur.png'))
+    vel([art_portretten.beer_groot(False), art_portretten.beer_groot(True)], 2).save(pad('sprites', 'beer_groot.png'))
+    # tegels en objecten
+    vel(art_barak.tegelset(), 8).save(pad('tiles', 'binnen.png'))
+    for naam, img in art_barak.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    # interface
+    for naam, img in art_ui.kaders().items():
+        img.save(pad('ui', naam + '.png'))
+    art_ui.cursor().save(pad('ui', 'cursor.png'))
+    art_ui.pijl().save(pad('ui', 'pijl.png'))
+    art_ui.patroon().save(pad('ui', 'patroon.png'))
+    for naam, img in art_ui.iconen().items():
+        img.save(pad('ui', naam + '.png'))
+    # lettertypes
+    fonts = pad('fonts', 'x')[:-2]
+    art_font.maak_font('donker', '#404048', '#d0d0c8', fonts, fonts, 'font_donker')
+    art_font.maak_font('wit', '#f8f8f8', '#505068', fonts, fonts, 'font_wit')
+    art_font.maak_font('grijs', '#a8a8b0', '#e4e4e0', fonts, fonts, 'font_grijs')
+    art_font.maak_font('rood', '#d83830', '#f0c0b0', fonts, fonts, 'font_rood')
+    art_font.maak_font('blauw', '#3060c8', '#c0d0f0', fonts, fonts, 'font_blauw')
+    art_font.maak_titelfont(fonts)
+    # achtergronden
+    art_achtergronden.titel_achtergrond().save(pad('bg', 'titel.png'))
+    art_achtergronden.intro_achtergrond().save(pad('bg', 'intro.png'))
+    print('Klaar: assets gegenereerd in', os.path.normpath(ASSETS))
+
+
+if __name__ == '__main__':
+    main()
