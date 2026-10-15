@@ -460,6 +460,17 @@ PERSONEN = {
         s='#f4b090', S='#d88a6a')),
     'dorpsvrouw': ('lang', 'normaal', kleuren(
         h='#7a4a2a', H='#5a3418', t='#4a7ac8', T='#3a5a9a', p='#4a7ac8', P='#3a5a9a', f='#3a2a20', b='#f0f0f0')),
+    # de N34
+    'bernd': ('pet', 'normaal', kleuren(
+        h='#8a5a3a', H='#6a4028', g='#6a6e52', G='#4c503a', l='#868a6c',
+        t='#6a6e52', T='#4c503a', p='#5a5e46', P='#424632', f='#1e1e22', b='#2a2a2c')),
+    'kassiere': ('lang', 'normaal', kleuren(
+        h='#c86a2a', H='#9a4a1a', t='#c83a3a', T='#9a2a2a', p='#2a2a30', P='#1a1a1e', f='#2a2a2a', b='#f0c830')),
+    'helmut': ('pet', 'normaal', kleuren(
+        h='#c8b088', H='#a08860', g='#3e4a58', G='#2a3440', l='#5a6a7a',
+        t='#5a6a7a', T='#3e4a58', p='#3e4a58', P='#2a3440', f='#1e1e22', b='#2a2a2c')),
+    'jens': ('kort', 'normaal', kleuren(
+        h='#e8d070', H='#c0a848', t='#5a6a7a', T='#3e4a58', p='#3e4a58', P='#2a3440', f='#1e1e22', b='#2a2a2c')),
     'dichter': ('lang', 'normaal', kleuren(
         h='#2a2a30', H='#18181c', t='#4a3a5a', T='#342842', p='#2a2a34', P='#1c1c24', f='#1a1a1a', b='#4a3a5a')),
 }

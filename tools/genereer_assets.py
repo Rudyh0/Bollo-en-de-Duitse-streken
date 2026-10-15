@@ -23,6 +23,7 @@ import art_buiten  # noqa: E402
 import art_gevecht  # noqa: E402
 import art_bos  # noqa: E402
 import art_dorp  # noqa: E402
+import art_n34  # noqa: E402
 
 
 def pad(*delen):
@@ -63,7 +64,7 @@ def main():
     for naam, frames in art_mensen.alle().items():
         vel(frames, 3).save(pad('sprites', f'mens_{naam}.png'))
     # buitenterrein
-    vel(art_buiten.tegelset() + art_bos.tegelset_extra() + art_dorp.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
+    vel(art_buiten.tegelset() + art_bos.tegelset_extra() + art_dorp.tegelset_extra() + art_n34.tegelset_extra(), 6).save(pad('tiles', 'buiten.png'))
     for naam, img in art_buiten.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     # bos
@@ -73,7 +74,7 @@ def main():
     for naam, img in art_bos.iconen().items():
         img.save(pad('ui' if naam.startswith('icoon') else 'sprites', naam + '.png'))
     # Orvelte
-    vel(art_dorp.binnen_tegelset(), 8).save(pad('tiles', 'dorp_binnen.png'))
+    vel(art_dorp.binnen_tegelset() + art_n34.binnen_extra(), 8).save(pad('tiles', 'dorp_binnen.png'))
     for naam, img in art_dorp.objecten().items():
         img.save(pad('sprites', 'obj_' + naam + '.png'))
     for naam, frames in art_dorp.animaties().items():
@@ -84,6 +85,14 @@ def main():
     art_dorp.jongere('djelano').save(pad('sprites', 'gevecht_djelano.png'))
     art_dorp.jongere('mustafah').save(pad('sprites', 'gevecht_mustafah.png'))
     art_dorp.gevecht_dorp().save(pad('bg', 'gevecht_dorp.png'))
+    # de N34
+    for naam, img in {**art_n34.objecten(), **art_n34.voertuigen()}.items():
+        bestand = naam if naam.startswith('voertuig') else 'obj_' + naam
+        img.save(pad('sprites', bestand + '.png'))
+    vel(art_n34.rex(), 4).save(pad('sprites', 'rex.png'))
+    art_n34.icoon_dagboek().save(pad('ui', 'icoon_dagboek.png'))
+    art_n34.gevecht_weg().save(pad('bg', 'gevecht_weg.png'))
+    art_n34.gevecht_winkel().save(pad('bg', 'gevecht_winkel.png'))
     # gevechten
     for naam, img in art_gevecht.alles().items():
         img.save(pad('sprites', naam + '.png'))

@@ -8,7 +8,7 @@ import { Lijst } from '../ui/lijst.js';
 import { kader, tekst, meet, centreerX } from '../ui/tekst.js';
 import { audio } from '../core/audio.js';
 import { geefItem } from '../core/staat.js';
-import { itemNaam } from '../core/items.js';
+import { itemNaam, ITEMS } from '../core/items.js';
 import { beer } from '../core/namen.js';
 import { openPauzemenu } from '../ui/pauzemenu.js';
 import { openInstellingen } from '../ui/instellingenscherm.js';
@@ -123,7 +123,8 @@ export class UIScene extends Phaser.Scene {
     await this.dialoog.toon(`${beer()} ${werkwoord} ${wat}!`, { wachtAanEinde: false });
     await jingle;
     await this.dialoog.wachtOpKnop();
-    await this.zeg(`${beer()} stopte ${n === 1 ? 'de' : 'de'} ${naam} in de RUGZAK.`);
+    const lidwoord = n === 1 ? (ITEMS[id]?.lidwoord || 'de') : 'de';
+    await this.zeg(`${beer()} stopte ${lidwoord} ${naam} in de RUGZAK.`);
   }
 
   /** Tekst met een melodietje eronder (nieuwe aanval geleerd, enzovoort). */

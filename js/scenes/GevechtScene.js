@@ -350,7 +350,7 @@ export class GevechtScene extends Phaser.Scene {
     await this.ui.wachtMs(250);
     const raak = kans(a.nauwkeurigheid * nauwkeurigheidFactor);
     if (a.animatie === 'schot') await this.schotAnimatie(raak);
-    else if (a.animatie === 'vape') await this.vapeAnimatie(raak);
+    else if (a.animatie === 'vape') await this.vapeAnimatie(raak, a.tint);
     else await this.mesAnimatie(raak);
     if (!raak) {
       await this.zeg(a.misTekst.replace('{BEER}', beer()));
@@ -398,13 +398,14 @@ export class GevechtScene extends Phaser.Scene {
     }
   }
 
-  async vapeAnimatie(raak) {
+  async vapeAnimatie(raak, tint) {
     audio.sfx('sis');
     const startX = this.vijand.x - 16;
     const startY = this.vijand.y - 36;
     const wolken = [];
     for (let i = 0; i < 4; i++) {
       const w = this.add.image(startX, startY, 'effect_vape').setDepth(12).setScale(0.3).setAlpha(0.9);
+      if (tint) w.setTint(tint);
       wolken.push(w);
       this.tweens.add({
         targets: w,

@@ -485,6 +485,22 @@ class Audio {
       case 'ijs':
         [0, 0.05, 0.11, 0.18].forEach((d, i) => this.toon(uit, 0.125, 2400 + i * 400, t + d, 0.05, 0.12, { verval: 1 }));
         break;
+      case 'blaf':
+        [0, 0.22].forEach((d) => {
+          this.toon(uit, 0.25, 320, t + d, 0.09, 0.32, { naarFreq: 170, verval: 1 });
+          this.ruis(uit, 'S', t + d, 0.35);
+        });
+        break;
+      case 'toeter':
+        this.toon(uit, 0.5, 392, t, 0.35, 0.16, { verval: 1 });
+        this.toon(uit, 0.5, 494, t, 0.35, 0.14, { verval: 1 });
+        this.toon(uit, 0.5, 392, t + 0.45, 0.2, 0.16, { verval: 1 });
+        this.toon(uit, 0.5, 494, t + 0.45, 0.2, 0.14, { verval: 1 });
+        break;
+      case 'bonk':
+        this.toon(uit, 'sinus', 140, t, 0.2, 0.6, { naarFreq: 50 });
+        this.ruis(uit, 'L', t, 0.6);
+        break;
       case 'zoem':
         this.toon(uit, 'sinus', 220, t, 0.6, 0.25, { naarFreq: 880 });
         this.toon(uit, 'sinus', 330, t, 0.6, 0.18, { naarFreq: 1320 });

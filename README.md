@@ -81,7 +81,7 @@ lib/phaser.min.js         Phaser 3.90
 js/main.js                start van het spel
 js/spel-config.js         vaste namen (leeg = speler kiest)
 js/core/                  invoer, geluid (chiptune-synth), muziek, opslaan, instellingen, namen, voorwerpen
-js/ui/                    tekstvak, keuzelijsten, naamscherm, pauzemenu, rugzak, winkel, telefoon, instellingen
+js/ui/                    tekstvak, keuzelijsten, naamscherm, pauzemenu, rugzak, winkel, telefoon, dagboek, instellingen
 js/scenes/                Boot, Start, Setup (namen), Titel, Intro (directeur), Wereld, UI
 js/maps/                  kaarten (tegels, objecten, personen) en hun scripts
 server/opslagdienst.py    opslag voor spelers en saves (Python + SQLite)
@@ -125,4 +125,11 @@ Klaar (hoofdstuk 3, Orvelte):
 - de quest: wie het dorp wil verlaten, wordt bij de slagboom tegengehouden door Obergefreiter Wolfgang. Hij geeft drie handboeien: vind de drie Friese onderduikers (onder een hunebed, in de molen en onder de vloer van een plaggenhut). Ze lopen geboeid achter je aan, ook naar binnen en na opslaan. Lever ze af bij Wolfgang, dan gaat de slagboom open
 - dorpelingen geven hints (en spreken een beetje Drents, de onderduikers Fries)
 
-Nog te doen: de route langs Wezup en Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.
+Klaar (hoofdstuk 4, de N34 - Hunebed Highway):
+
+- drie stukken N34 met een rood fietspad achter de vangrail en doorlopend verkeer in twee richtingen: auto's, een Duitser met caravan, jeeps, legertrucks en pantserwagens
+- deel 1: een legervrachtwagen verliest een kistje (in beslag genomen bij kruidenier Fries uit Leeuwarden) met een voedselbon en het dagboek van Anne Fries. Het dagboek lees je in de rugzak als een schriftje om door te bladeren; het verwijst naar een geheime kamer achter een boekenkast in Wezup
+- deel 2: tankstation Tank & Tosti. Ga je naar binnen, dan vecht je meteen met Unteroffizier Bernd; loop je door, dan stormt hij naar buiten en houdt hij je tegen. Daarna krijg je van de kassière een broodje kroket
+- deel 3: de afslag naar Wezup met een grenscontrole (Grenzer Helmut, Jens en drugshond Rex). Drugs op zak: in beslag genomen en gevecht. Niks op zak: speekseltest. Ooit iets gebruikt (van Kikker of uit de coffeeshop): positief en gevecht. Nooit iets gebruikt: negatief, maar dan ben je een mietje, en mietjes horen hier niet thuis: gevecht
+
+Nog te doen: Wezup (de geheime kamer), Aalden, meer vijanden per gebied, quests en het einde bij het vakantiepark.

@@ -56,9 +56,50 @@ export const AANVALLEN = {
     raakTekst: '{BEER} moet hoesten. Het ruikt naar aardbeien-ijs.',
     misTekst: 'De wolk waait de verkeerde kant op. Recht in zijn eigen gezicht.',
   },
+  tankpistool: {
+    naam: 'TANKPISTOOL',
+    kracht: 7,
+    nauwkeurigheid: 80,
+    animatie: 'vape',
+    tint: 0xc8a040,
+    raakTekst: '{BEER} zit onder de diesel. Dat gaat er nooit meer uit.',
+    misTekst: 'De straal diesel gaat over {BEER} heen. Recht op een geparkeerde Golf.',
+  },
+  wapenstok: {
+    naam: 'WAPENSTOK',
+    kracht: 7,
+    nauwkeurigheid: 90,
+    animatie: 'mes',
+    misTekst: 'De wapenstok zoeft langs het oor van {BEER}.',
+  },
 };
 
 export const VIJANDEN = {
+  // de N34
+  bernd: {
+    naam: 'UNTEROFFIZIER BERND',
+    sprite: 'gevecht_unteroffizier_bernd',
+    niveau: 11,
+    maxGz: 34,
+    aanval: 9,
+    verdediging: 8,
+    snelheid: 8,
+    xp: 110,
+    geld: 18,
+    aanvallen: [['p38', 40], ['tankpistool', 35], ['mes', 25]],
+  },
+  helmut: {
+    naam: 'GRENZER HELMUT',
+    sprite: 'gevecht_grenzer_helmut',
+    niveau: 12,
+    maxGz: 38,
+    aanval: 10,
+    verdediging: 9,
+    snelheid: 9,
+    xp: 130,
+    geld: 25,
+    aanvallen: [['p38', 40], ['wapenstok', 40], ['mes', 20]],
+  },
   // Orvelte: de jongens met de fatbikes
   djelano: {
     naam: 'DJELANO',

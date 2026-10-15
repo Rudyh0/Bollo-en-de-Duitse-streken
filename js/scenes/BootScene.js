@@ -34,6 +34,7 @@ export class BootScene extends Phaser.Scene {
       icoon_wiet: 'ui/icoon_wiet.png',
       icoon_hasj: 'ui/icoon_hasj.png',
       icoon_handboeien: 'ui/icoon_handboeien.png',
+      icoon_dagboek: 'ui/icoon_dagboek.png',
       obj_stapelbed: 'sprites/obj_stapelbed.png',
       obj_stapelbed_rood: 'sprites/obj_stapelbed_rood.png',
       obj_kist: 'sprites/obj_kist.png',
@@ -48,6 +49,10 @@ export class BootScene extends Phaser.Scene {
       bg_gevecht: 'bg/gevecht.png',
       bg_gevecht_bos: 'bg/gevecht_bos.png',
       bg_gevecht_dorp: 'bg/gevecht_dorp.png',
+      bg_gevecht_weg: 'bg/gevecht_weg.png',
+      bg_gevecht_winkel: 'bg/gevecht_winkel.png',
+      gevecht_unteroffizier_bernd: 'sprites/gevecht_unteroffizier_bernd.png',
+      gevecht_grenzer_helmut: 'sprites/gevecht_grenzer_helmut.png',
       gevecht_djelano: 'sprites/gevecht_djelano.png',
       gevecht_mustafah: 'sprites/gevecht_mustafah.png',
       effect_vape: 'sprites/effect_vape.png',
@@ -71,8 +76,13 @@ export class BootScene extends Phaser.Scene {
       'schatkist', 'schatkist_open', 'bron', 'boomstronk',
       'molen', 'hunebed', 'plaggenhut', 'coffeeshop', 'boerderij', 'slagboom', 'slagboom_open', 'fatbike', 'eik',
       'meelzakken', 'bedstee', 'haard', 'tafeltje', 'luik', 'luik_open', 'spinnewiel', 'toonbank', 'bank', 'plant',
-      'boxen', 'asbak'].forEach((naam) => {
+      'boxen', 'asbak',
+      'bord_hunebedhighway', 'bord_n34', 'bord_afslag', 'krat', 'krat_open', 'dranghek', 'pion', 'tankstation',
+      'schap', 'koelkast', 'koffieautomaat', 'kassabalie'].forEach((naam) => {
       afbeeldingen[`obj_${naam}`] = `sprites/obj_${naam}.png`;
+    });
+    ['auto_rood', 'auto_blauw', 'auto_zilver', 'auto_geel', 'caravan', 'jeep', 'truck', 'truck_kisten', 'pantser'].forEach((naam) => {
+      afbeeldingen[`voertuig_${naam}`] = `sprites/voertuig_${naam}.png`;
     });
     Object.entries(afbeeldingen).forEach(([k, pad]) => this.load.image(k, pad + v));
 
@@ -83,12 +93,13 @@ export class BootScene extends Phaser.Scene {
     this.load.spritesheet('beer_groot', `sprites/beer_groot.png${v}`, { frameWidth: 48, frameHeight: 56 });
     this.load.spritesheet('anim_wieken', `sprites/anim_wieken.png${v}`, { frameWidth: 96, frameHeight: 96 });
     this.load.spritesheet('anim_vlag', `sprites/anim_vlag.png${v}`, { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('rex', `sprites/rex.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('kikker', `sprites/kikker.png${v}`, { frameWidth: 16, frameHeight: 20 });
     this.load.spritesheet('gevecht_volkszanger', `sprites/gevecht_volkszanger.png${v}`, { frameWidth: 48, frameHeight: 56 });
     ['wachter', 'wachter_pet', 'gevangene_a', 'gevangene_b', 'gevangene_c', 'gevangene_d',
       'oma', 'sporter', 'boer', 'kokkin', 'dichter', 'soldaat_bos', 'soldaat_muts', 'feldwebel',
       'djelano', 'mustafah', 'sjoerd', 'tjitske', 'wiebe', 'molenaar', 'budtender', 'grenswacht', 'opa', 'toerist',
-      'dorpsvrouw'].forEach((naam) => {
+      'dorpsvrouw', 'bernd', 'kassiere', 'helmut', 'jens'].forEach((naam) => {
       this.load.spritesheet(`mens_${naam}`, `sprites/mens_${naam}.png${v}`, { frameWidth: 16, frameHeight: 20 });
     });
 

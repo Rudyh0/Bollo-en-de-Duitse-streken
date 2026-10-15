@@ -358,12 +358,15 @@ export default {
     await ui.zeg('Een rood-witte slagboom. Er hangt een bordje aan: "DURCHGANG NUR MIT GENEHMIGUNG".');
   },
 
-  async uitgang({ ui }) {
-    await ui.zeg([
-      'Je laat Orvelte achter je. De klinkers gaan over in een smal fietspad.',
-      'Volgens het bordje is het nog een flink stuk naar {PARK}.',
-      'EINDE VAN HOOFDSTUK 3. Wordt vervolgd!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+  async uitgang({ ui, wereld, staat }) {
+    if (!staat.vlaggen.dorpVerlaten) {
+      staat.vlaggen.dorpVerlaten = true;
+      await ui.zeg([
+        'Je laat Orvelte achter je. De klinkers gaan over in een fietspad, langs een drukke weg.',
+        'Volgens het bordje is het nog een flink stuk naar {PARK}.',
+      ]);
+      await ui.hoofdstuk('HOOFDSTUK 4', 'HUNEBED HIGHWAY');
+    }
+    wereld.gaNaar('n34a', 1, 6, 'rechts');
   },
 };

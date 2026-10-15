@@ -91,6 +91,18 @@ const OBJECT_TYPES = {
   plant: { textuur: () => 'obj_plant', b: 1, h: 1 },
   boxen: { textuur: () => 'obj_boxen', b: 1, h: 1 },
   asbak: { textuur: () => 'obj_asbak', b: 1, h: 1 },
+  // de N34
+  bord_hunebedhighway: { textuur: () => 'obj_bord_hunebedhighway', b: 3, h: 1 },
+  bord_n34: { textuur: () => 'obj_bord_n34', b: 1, h: 1, dx: -4 },
+  bord_afslag: { textuur: () => 'obj_bord_afslag', b: 4, h: 1 },
+  krat: { textuur: (o) => (staat.vlaggen[o.vlag] ? 'obj_krat_open' : 'obj_krat'), b: 1, h: 1 },
+  dranghek: { textuur: () => 'obj_dranghek', b: 2, h: 1 },
+  pion: { textuur: () => 'obj_pion', b: 1, h: 1 },
+  tankstation: { textuur: () => 'obj_tankstation', b: 9, h: 2 },
+  schap: { textuur: () => 'obj_schap', b: 2, h: 1 },
+  koelkast: { textuur: () => 'obj_koelkast', b: 1, h: 1 },
+  koffieautomaat: { textuur: () => 'obj_koffieautomaat', b: 1, h: 1 },
+  kassabalie: { textuur: () => 'obj_kassabalie', b: 3, h: 1 },
 };
 
 // Meldingen als een middel is uitgewerkt.
@@ -154,7 +166,7 @@ export class WereldScene extends Phaser.Scene {
     const mapH = this.hoogte * TEGEL;
     // Kleinere kaarten in het midden van het scherm.
     cam.setBounds(Math.min(0, (mapB - BREEDTE) / 2), Math.min(0, (mapH - HOOGTE) / 2), Math.max(mapB, BREEDTE), Math.max(mapH, HOOGTE));
-    cam.startFollow(this.speler.sprite, true, 1, 1, 0, 8);
+    cam.startFollow(this.speler.sprite, true, 1, 1, 0, this.kaart.camVolgY ?? 8);
     cam.setBackgroundColor('#000000');
 
     audio.speelMuziek(this.kaart.muziek);
@@ -163,6 +175,7 @@ export class WereldScene extends Phaser.Scene {
       this.stopTrip();
       this.stopStoned();
     });
+    this.startVerkeer();
     if (this.scripts.opbouw) this.scripts.opbouw(this.context());
     this.binnenkomst();
   }
@@ -216,6 +229,14 @@ export class WereldScene extends Phaser.Scene {
       this.bovenlaag = map2.createLayer(0, set2, 0, 0).setDepth(-10);
       markeer(boven);
     }
+    // Voorlaag: tegels die vóór alles liggen (zoals de vangrail aan de overkant van de weg).
+    if (this.kaart.voor) {
+      const voor = this.kaart.voor.map(lees);
+      const map3 = this.make.tilemap({ data: voor, tileWidth: TEGEL, tileHeight: TEGEL });
+      const set3 = map3.addTilesetImage(tegelset, tegelset, TEGEL, TEGEL, 0, 0);
+      map3.createLayer(0, set3, 0, 0).setDepth(5000);
+      markeer(voor);
+    }
     this.interacties = new Map();
     (this.kaart.interacties || []).forEach((i) => this.interacties.set(sleutel(i.x, i.y), i.script));
     // Tegels die veranderen door een vlag (bijv. een deur die opengaat).
@@ -232,6 +253,7 @@ export class WereldScene extends Phaser.Scene {
     this.objecten = {};
     (this.kaart.objecten || []).forEach((o) => {
       if (o.verbergVlag && staat.vlaggen[o.verbergVlag]) return;
+      if (o.toonVlag && !staat.vlaggen[o.toonVlag]) return;
       this.maakObject(o);
     });
   }
@@ -580,6 +602,7 @@ export class WereldScene extends Phaser.Scene {
     staat.speeltijdMs += delta;
     this.updatePersonen(delta);
     this.updateVolgers();
+    this.updateVerkeer(delta);
     this.tekenKettingen();
     if (this.overgang) return;
     this.updateEffecten(delta);
@@ -1081,6 +1104,84 @@ export class WereldScene extends Phaser.Scene {
     this.volgers = [];
     staat.volgers = [];
     return personen;
+  }
+
+  /** Een nieuwe persoon in de wereld zetten (bijvoorbeeld iemand die naar buiten stormt). */
+  voegPersoonToe(n) {
+    const p = this.nieuwPersoon(n);
+    this.personen[n.id] = p;
+    this.personenOpPlek.set(sleutel(p.x, p.y), p);
+    return p;
+  }
+
+  // ------------------------------------------------------------ verkeer (auto's en legervoertuigen op de weg)
+
+  startVerkeer() {
+    this.voertuigen = [];
+    const v = this.kaart.verkeer;
+    if (!v) return;
+    const mapB = this.breedte * TEGEL;
+    v.banen.forEach((baan) => {
+      // alvast een paar auto's op de weg
+      for (let i = 0; i < 3; i++) this.nieuwVoertuig(baan, Math.random() * mapB);
+      const plan = () => {
+        this.time.delayedCall(Phaser.Math.Between(baan.min ?? 1100, baan.max ?? 3200), () => {
+          this.nieuwVoertuig(baan);
+          plan();
+        });
+      };
+      plan();
+    });
+  }
+
+  nieuwVoertuig(baan, startX, soortOverride) {
+    const soorten = this.kaart.verkeer.soorten;
+    let soort = soortOverride;
+    if (!soort) {
+      const totaal = soorten.reduce((t, s) => t + s.kans, 0);
+      let r = Math.random() * totaal;
+      soort = soorten.find((s) => (r -= s.kans) < 0) || soorten[0];
+    }
+    const img = this.add.image(0, baan.y, soort.textuur).setOrigin(0.5, 1).setFlipX(baan.richting < 0);
+    const mapB = this.breedte * TEGEL;
+    img.x = startX ?? (baan.richting > 0 ? -img.width : mapB + img.width);
+    img.setDepth(baan.y);
+    // niet bovenop een ander voertuig beginnen
+    const teDichtbij = this.voertuigen.some((w) => w.baan === baan && Math.abs(w.img.x - img.x) < (w.img.width + img.width) / 2 + 12);
+    if (teDichtbij && !soortOverride) {
+      img.destroy();
+      return null;
+    }
+    const voertuig = {
+      img, baan, richting: baan.richting, snelheid: soort.snelheid * (0.85 + Math.random() * 0.3), vast: !!soortOverride,
+    };
+    this.voertuigen.push(voertuig);
+    return voertuig;
+  }
+
+  updateVerkeer(delta) {
+    if (!this.voertuigen || !this.voertuigen.length) return;
+    const mapB = this.breedte * TEGEL;
+    this.voertuigen.forEach((v) => {
+      // niet op je voorganger inrijden
+      let snelheid = v.snelheid;
+      this.voertuigen.forEach((w) => {
+        if (w === v || w.baan !== v.baan) return;
+        const afstand = (w.img.x - v.img.x) * v.richting;
+        const ruimte = (w.img.width + v.img.width) / 2 + 10;
+        if (afstand > 0 && afstand < ruimte + 20) snelheid = Math.min(snelheid, w.snelheid * 0.9);
+      });
+      v.img.x += v.richting * snelheid * delta / 1000;
+      if (v.opX && !v.opXGedaan && (v.img.x - v.opX.x) * v.richting >= 0) {
+        v.opXGedaan = true;
+        v.opX.doe(v);
+      }
+    });
+    this.voertuigen = this.voertuigen.filter((v) => {
+      const weg = v.richting > 0 ? v.img.x > mapB + v.img.width : v.img.x < -v.img.width;
+      if (weg) v.img.destroy();
+      return !weg;
+    });
   }
 
   /** Zet een persoon direct op een andere plek. */

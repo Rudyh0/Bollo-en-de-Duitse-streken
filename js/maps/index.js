@@ -13,6 +13,8 @@ import dorp from './dorp.js';
 import dorpScripts from './dorp-scripts.js';
 import { coffeeshop, hut1, hut2, hut3 } from './binnen-dorp.js';
 import { coffeeshopScripts, hut1Scripts, hut2Scripts, hut3Scripts } from './binnen-dorp-scripts.js';
+import { n34a, n34b, n34c, tankstation } from './n34.js';
+import { n34aScripts, n34bScripts, n34cScripts, tankstationScripts } from './n34-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -25,6 +27,10 @@ export const KAARTEN = {
   hut1,
   hut2,
   hut3,
+  n34a,
+  n34b,
+  n34c,
+  tankstation,
 };
 
 export const SCRIPTS = {
@@ -38,4 +44,8 @@ export const SCRIPTS = {
   hut1: hut1Scripts,
   hut2: hut2Scripts,
   hut3: hut3Scripts,
+  n34a: n34aScripts,
+  n34b: n34bScripts,
+  n34c: n34cScripts,
+  tankstation: tankstationScripts,
 };

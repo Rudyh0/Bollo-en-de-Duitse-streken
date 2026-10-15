@@ -267,6 +267,48 @@ export const LIEDJES = {
     ],
   },
 
+  // langs de N34 (Hunebed Highway)
+  snelweg: {
+    bpm: 128,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.12, vibrato: true,
+        noten: `
+          D5:4 F#5:4 A5:4 F#5:4  G5:4 E5:4 C#5:4 A4:4  B4:4 D5:4 F#5:4 D5:4  E5:6 F#5:2 E5:4 C#5:4
+          D5:4 F#5:4 A5:6 B5:2  A5:4 G5:4 F#5:4 E5:4  D5:2 E5:2 F#5:4 G5:4 E5:4  D5:12 -:4`,
+      },
+      { golf: 'puls12', volume: 0.05, legato: 1, noten: 'F#4:16 E4:16 D4:16 C#4:16 F#4:16 D4:16 E4:8 C#4:8 D4:16' },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.6,
+        noten: `
+          ${maat('D2:2 D3:2', 4)} ${maat('A1:2 A2:2', 4)} ${maat('B1:2 B2:2', 4)} ${maat('A1:2 A2:2', 4)}
+          ${maat('D2:2 D3:2', 4)} ${maat('G1:2 G2:2', 4)} ${maat('E2:2 E3:2', 2)} ${maat('A1:2 A2:2', 2)} ${maat('D2:2 D3:2', 4)}`,
+      },
+      { golf: 'ruis', volume: 0.13, noten: maat('K:2 H:2 S:2 H:2 K:2 K:2 S:2 H:2', 8) },
+    ],
+  },
+
+  // muzak in de winkel van het tankstation
+  winkel: {
+    bpm: 100,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.09, vibrato: true,
+        noten: `
+          E5:6 D5:2 C5:8  -:4 A4:2 B4:2 C5:4 E5:4  D5:6 C5:2 B4:8  -:4 G4:2 A4:2 B4:4 D5:4
+          C5:6 B4:2 A4:8  -:4 F4:2 G4:2 A4:4 C5:4  B4:4 G#4:4 B4:4 D5:4  C5:12 -:4`,
+      },
+      { golf: 'puls12', volume: 0.04, legato: 1, noten: 'G4:16 E4:16 D4:16 B3:16 A3:16 F4:16 G#4:16 E4:16' },
+      {
+        golf: 'driehoek', volume: 0.28, legato: 0.7,
+        noten: `
+          C3:6 G2:2 -:2 G2:2 C3:4  A2:6 E2:2 -:2 E2:2 A2:4  G2:6 D2:2 -:2 D2:2 G2:4  E2:6 B1:2 -:2 B1:2 E2:4
+          F2:6 C2:2 -:2 C2:2 F2:4  D2:6 A1:2 -:2 A1:2 D2:4  E2:6 B1:2 -:2 B1:2 E2:4  A2:6 E2:2 -:2 E2:2 A2:4`,
+      },
+      { golf: 'ruis', volume: 0.06, noten: maat('H:2 H:2 S:2 H:2 H:2 K:2 S:2 H:2', 8) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   onderduiker: {
     bpm: 120,

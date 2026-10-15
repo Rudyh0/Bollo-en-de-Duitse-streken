@@ -63,6 +63,14 @@ export const ITEMS = {
     soort: 'sleutel',
     beschrijving: 'Handboeien van Obergefreiter Wolfgang. Voor de onderduikers die je moet vinden. Je voelt je er niet goed bij.',
   },
+  dagboek: {
+    naam: 'DAGBOEK',
+    meervoud: 'DAGBOEKEN',
+    lidwoord: 'het',
+    icoon: 'icoon_dagboek',
+    soort: 'sleutel',
+    beschrijving: 'Het dagboek van Anne Fries uit Leeuwarden. Het viel uit een Duitse vrachtwagen.',
+  },
   soeplepel: {
     naam: 'SOEPLEPEL',
     meervoud: 'SOEPLEPELS',

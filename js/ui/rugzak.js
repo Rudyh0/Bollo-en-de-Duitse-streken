@@ -6,6 +6,15 @@ import { staat, aantal, neemItem, herstel } from '../core/staat.js';
 import { audio } from '../core/audio.js';
 import { BREEDTE, HOOGTE } from '../core/constanten.js';
 import { beer, vul } from '../core/namen.js';
+import { leesDagboek } from './dagboek.js';
+
+/** Middelen die bij een speekseltest zichtbaar blijven. */
+const MIDDELEN = ['ritalin', 'xtc', '3mmc', 'wiet', 'hasj'];
+
+function onthoudGebruik(id) {
+  if (!MIDDELEN.includes(id)) return;
+  staat.vlaggen.gebruikt = { ...(staat.vlaggen.gebruikt || {}), [id]: true };
+}
 
 const MAALTIJDEN = ['een kom erwtensoep', 'een gevulde koek', 'een broodje kroket', 'een bord hutspot', 'een krentenbol met kaas'];
 
@@ -72,7 +81,8 @@ function zetEffect(item) {
 
 async function gebruik(ui, id, scherm, inGevecht = false) {
   const item = ITEMS[id];
-  const opties = item.soort === 'sleutel' ? ['BEKIJKEN', 'TERUG'] : ['GEBRUIKEN', 'TERUG'];
+  let opties = item.soort === 'sleutel' ? ['BEKIJKEN', 'TERUG'] : ['GEBRUIKEN', 'TERUG'];
+  if (id === 'dagboek') opties = ['LEZEN', 'TERUG'];
   const keuze = await ui.kies(opties, { rechts: 238, onder: 106, annuleer: 1, diepte: 720 });
   if (keuze !== 0) return;
 
@@ -84,6 +94,7 @@ async function gebruik(ui, id, scherm, inGevecht = false) {
       return;
     }
     neemItem(id);
+    onthoudGebruik(id);
     if (vol) {
       zetEffect(item);
       audio.sfx('menu');
@@ -119,10 +130,23 @@ async function gebruik(ui, id, scherm, inGevecht = false) {
       return false;
     }
     neemItem(id);
+    onthoudGebruik(id);
     zetEffect(item);
     audio.sfx('menu');
     await ui.zeg(EFFECT_TEKSTEN[id] || [`{BEER} gebruikt ${item.naam}.`]);
     return true;
+  }
+
+  if (id === 'dagboek') {
+    const uit = await leesDagboek(ui);
+    if (uit && !staat.vlaggen.dagboekGelezen) {
+      staat.vlaggen.dagboekGelezen = true;
+      await ui.zeg([
+        'Een geheime kamer achter een boekenkast, bij een kruidenier in Wezup...',
+        '{BEER} stopt het dagboek voorzichtig terug in de rugzak.',
+      ]);
+    }
+    return false;
   }
 
   if (id === 'handboeien') {

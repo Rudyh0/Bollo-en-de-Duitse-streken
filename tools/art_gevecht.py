@@ -19,6 +19,10 @@ VARIANTEN = {
     'horst': {'hoofd': 'helm', 'takjes': True, 'uni': ('#6a7448', '#4c5434', '#86906a')},
     'jurgen': {'hoofd': 'veldmuts', 'bril': True, 'uni': ('#727c5c', '#525a42', '#8e987a')},
     'uwe': {'hoofd': 'pet', 'snor': True, 'epauletten': True, 'uni': ('#5c6250', '#40463a', '#787e6a')},
+    # de N34
+    'bernd': {'hoofd': 'veldmuts', 'snor': True, 'uni': ('#6a6e52', '#4c503a', '#868a6c')},
+    'helmut': {'hoofd': 'pet', 'bril': True, 'epauletten': True, 'uni': ('#5a6a7a', '#3e4a58', '#7a8a9a'),
+               'helm': ('#3e4a58', '#2a3440', '#5a6a7a')},
 }
 
 
@@ -29,7 +33,7 @@ def wachter(variant='klaus'):
     broek, broekS = '#5c6250', '#444a3a'
     huid, huidS, wang = '#f0c49a', '#cc9a72', '#e49478'
     laars, laarsL = '#1e1e22', '#3e3e46'
-    helm, helmS, helmL = '#68705c', '#4a5242', '#8c947e'
+    helm, helmS, helmL = cfg.get('helm', ('#68705c', '#4a5242', '#8c947e'))
     metaal, metaalD = '#5a5a64', '#2c2c34'
 
     # benen en laarzen
@@ -422,6 +426,8 @@ def alles():
         'gevecht_soldaat_horst': wachter('horst'),
         'gevecht_soldaat_jurgen': wachter('jurgen'),
         'gevecht_feldwebel_uwe': wachter('uwe'),
+        'gevecht_unteroffizier_bernd': wachter('bernd'),
+        'gevecht_grenzer_helmut': wachter('helmut'),
         'gevecht_beer_rug': beer_rug(),
         'effect_noot': noot(),
         'effect_uitroep': uitroep(),
