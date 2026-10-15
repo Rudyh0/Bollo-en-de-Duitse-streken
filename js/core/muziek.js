@@ -512,6 +512,60 @@ export const LIEDJES = {
     ],
   },
 
+  // De eindbaas: de directeur
+  eindbaas: {
+    bpm: 150,
+    kanalen: [
+      {
+        golf: 'puls50', volume: 0.16, vibrato: true,
+        noten: `
+          A4:2 A4:2 C5:2 A4:2 E5:4 D5:4  C5:2 B4:2 A4:2 G#4:2 A4:8  F5:4 E5:2 D5:2 C5:4 B4:4  E5:6 D5:2 C5:4 B4:4
+          A4:2 C5:2 E5:2 A5:2 G5:4 F5:4  E5:2 F5:2 E5:2 D5:2 C5:8  D5:2 E5:2 F5:4 G#5:4 A5:4  E5:4 G#4:4 A4:8`,
+      },
+      {
+        golf: 'puls25', volume: 0.07,
+        noten: `
+          C4:8 E4:8  E4:8 E4:8  A4:8 F4:8  G#4:8 E4:8
+          C4:8 E4:8  C4:8 G4:8  D4:8 B4:8  B3:8 C4:8`,
+      },
+      {
+        golf: 'driehoek', volume: 0.34, legato: 0.6,
+        noten: `
+          A2:2 A2:2 A2:2 A2:2 A2:2 A2:2 A2:2 A2:2  E2:2 E2:2 E2:2 E2:2 A2:2 A2:2 A2:2 A2:2
+          D2:2 D2:2 D2:2 D2:2 D2:2 D2:2 D2:2 D2:2  E2:2 E2:2 E2:2 E2:2 E2:2 E2:2 E2:2 E2:2
+          A2:2 A2:2 A2:2 A2:2 A2:2 A2:2 A2:2 A2:2  C3:2 C3:2 C3:2 C3:2 G2:2 G2:2 G2:2 G2:2
+          D2:2 D2:2 D2:2 D2:2 E2:2 E2:2 E2:2 E2:2  E2:2 E2:2 E2:2 E2:2 A2:2 A2:2 A2:2 A2:2`,
+      },
+      { golf: 'ruis', volume: 0.18, noten: maat('K:2 H:2 S:2 H:2 K:2 K:2 S:2 S:2', 8) },
+    ],
+  },
+
+  // Huisje 7: rustig, met de beamer aan
+  huisje: {
+    bpm: 84,
+    kanalen: [
+      {
+        golf: 'puls25', volume: 0.13, vibrato: true,
+        noten: `
+          A4:4 C5:4 E5:6 -:2  D5:4 B4:4 G4:8  F4:4 A4:4 C5:6 -:2  B4:4 G4:4 E4:8
+          A4:4 C5:4 E5:4 G5:4  F5:4 E5:4 D5:8  C5:4 B4:4 A4:4 G4:4  E4:12 -:4`,
+      },
+      {
+        golf: 'puls50', volume: 0.05,
+        noten: `
+          E4:8 C4:8  D4:8 B3:8  C4:8 A3:8  B3:8 G3:8
+          E4:8 C4:8  D4:8 B3:8  C4:8 A3:8  B3:8 G3:8`,
+      },
+      {
+        golf: 'driehoek', volume: 0.3, legato: 0.8,
+        noten: `
+          F2:8 C3:8  E2:8 B2:8  D2:8 A2:8  C2:8 G2:8
+          F2:8 C3:8  E2:8 B2:8  D2:8 A2:8  C2:8 G2:8`,
+      },
+      { golf: 'ruis', volume: 0.08, noten: maat('K:4 H:2 K:2 S:4 H:4', 8) },
+    ],
+  },
+
   // ---- korte jingles (worden één keer gespeeld)
   onderduiker: {
     bpm: 120,

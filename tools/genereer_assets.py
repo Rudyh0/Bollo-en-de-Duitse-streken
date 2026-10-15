@@ -29,6 +29,7 @@ import art_natuur  # noqa: E402
 import art_beren  # noqa: E402
 import art_aalden  # noqa: E402
 import art_park  # noqa: E402
+import art_finale  # noqa: E402
 
 
 def pad(*delen):
@@ -132,6 +133,17 @@ def main():
     for naam, frames in art_park.animaties().items():
         vel(frames, len(frames)).save(pad('sprites', 'anim_' + naam + '.png'))
     for naam, img in art_park.iconen().items():
+        img.save(pad('ui', naam + '.png'))
+    # de finale
+    for naam, img in art_finale.objecten().items():
+        img.save(pad('sprites', 'obj_' + naam + '.png'))
+    for naam, frames in art_finale.vrienden().items():
+        vel(frames, 3).save(pad('sprites', f'mens_zit_{naam}.png'))
+    af = art_finale.aftiteling()
+    af['aftiteling_sauna'].save(pad('sprites', 'aftiteling_sauna.png'))
+    vel(af['aftiteling_beer'], 2).save(pad('sprites', 'aftiteling_beer.png'))
+    art_finale.gevecht_directeur().save(pad('sprites', 'gevecht_directeur.png'))
+    for naam, img in art_finale.iconen().items():
         img.save(pad('ui', naam + '.png'))
     # gevechten
     for naam, img in art_gevecht.alles().items():

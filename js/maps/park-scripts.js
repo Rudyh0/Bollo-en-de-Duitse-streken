@@ -357,20 +357,25 @@ export const parkingangScripts = {
       : 'Een rood-witte slagboom. Er hangt een bordje aan: "ALLEEN MET KAART".');
   },
 
-  async receptie({ ui, staat }) {
-    if (staat.vlaggen.receptieBereikt) {
-      await ui.zeg('De receptie van {PARK}. De finale komt eraan!');
+  async receptie({ ui, wereld, staat }) {
+    if (!staat.vlaggen.receptieBereikt) {
+      staat.vlaggen.receptieBereikt = true;
+      await ui.zeg([
+        'Je parkeert de auto schuin op het plein, half in een bloembak, vlak voor de deur. Precies zoals Levi het zou doen.',
+        '{BEER} stapt uit en kijkt omhoog. De receptie van {PARK}.',
+        'Het kamp, het bos, de dorpjes, de N34, de onderduikers, de vissen, de shag... en nu sta je hier. Je bent er.',
+        'De schuifdeuren gaan open. Ergens binnen klinkt een belletje.',
+      ]);
+    }
+    wereld.gaNaar('receptie_binnen', 5, 7, 'omhoog');
+  },
+
+  async naarHuisjes({ ui, wereld, staat }, { warp }) {
+    if (!staat.vlaggen.directeurVerslagen) {
+      await ui.zeg('Een bordje: "VAKANTIEHUISJES - EERST INCHECKEN BIJ DE RECEPTIE". Zonder sleutel geen huisje.');
       return;
     }
-    staat.vlaggen.receptieBereikt = true;
-    await ui.zeg([
-      'Je parkeert de auto schuin op het plein, half in een bloembak, vlak voor de deur. Precies zoals Levi het zou doen.',
-      '{BEER} stapt uit en kijkt omhoog. De receptie van {PARK}.',
-      'Het kamp, het bos, de dorpjes, de N34, de onderduikers, de vissen, de shag... en nu sta je hier. Je bent er.',
-      'De schuifdeuren gaan open. Ergens binnen klinkt een belletje.',
-      'WORDT VERVOLGD: DE FINALE!',
-      '(Tip: sla je spel op via START, dan kun je straks verder.)',
-    ]);
+    wereld.gaNaar('vakantiestraat', 1, warp.y, 'rechts');
   },
 
   async receptieGevel({ ui }) {

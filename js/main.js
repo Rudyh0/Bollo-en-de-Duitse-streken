@@ -14,6 +14,7 @@ import { IntroScene } from './scenes/IntroScene.js';
 import { WereldScene } from './scenes/WereldScene.js';
 import { GevechtScene } from './scenes/GevechtScene.js';
 import { UIScene } from './scenes/UIScene.js';
+import { AftitelingScene } from './scenes/AftitelingScene.js';
 
 blokkeerZoom();
 werkTitelBij();
@@ -61,7 +62,7 @@ game = new Phaser.Game({
   },
   disableContextMenu: true,
   banner: false,
-  scene: [BootScene, StartScene, InlogScene, SetupScene, TitelScene, IntroScene, WereldScene, GevechtScene, UIScene],
+  scene: [BootScene, StartScene, InlogScene, SetupScene, TitelScene, IntroScene, WereldScene, GevechtScene, AftitelingScene, UIScene],
 });
 
 game.events.on('prestep', () => invoer.beginFrame());

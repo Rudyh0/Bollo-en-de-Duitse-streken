@@ -7,6 +7,7 @@ import { VERSIE } from './constanten.js';
 // Muziek uit een geluidsbestand in plaats van de chiptune-synthesizer.
 const BESTANDEN = {
   intake: { url: 'assets/audio/intake.mp3', volume: 0.55, herhaal: true },
+  outro: { url: 'assets/audio/outro.mp3', volume: 0.75, herhaal: false },
 };
 
 const NOTEN = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
@@ -259,6 +260,34 @@ class Audio {
       bron.start(t);
       huidig.bron = bron;
     });
+  }
+
+  /**
+   * Speelt een geluidsbestand precies één keer af (de aftiteling).
+   * Geeft { duur, start } in AudioContext-seconden zodra het nummer klinkt, of null als dat niet lukt.
+   */
+  async speelEenmaal(id) {
+    if (!this.klaar || !this.ctx) return null;
+    this.stopMuziek(0.05);
+    const info = BESTANDEN[id];
+    const buffer = await this.decodeer(id);
+    if (!buffer) return null;
+    const ctx = this.ctx;
+    const bus = ctx.createGain();
+    bus.gain.value = info.volume ?? 0.6;
+    bus.connect(this.muziekGain);
+    const bron = ctx.createBufferSource();
+    bron.buffer = buffer;
+    bron.connect(bus);
+    const start = ctx.currentTime + 0.05;
+    bron.start(start);
+    this.huidig = { id, bus, bron };
+    return { duur: buffer.duration, start };
+  }
+
+  /** De klok van de geluidskaart (of van de browser, als er geen geluid is). */
+  nu() {
+    return this.ctx ? this.ctx.currentTime : performance.now() / 1000;
   }
 
   speelMuziek(id, { herstart = false } = {}) {

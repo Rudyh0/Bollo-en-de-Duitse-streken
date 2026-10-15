@@ -27,6 +27,10 @@ import { aalden, tabakszaak, avondrood } from './aalden.js';
 import { aaldenScripts, tabakszaakScripts, avondroodScripts } from './aalden-scripts.js';
 import { parkeerplaats, parkingang } from './park.js';
 import { parkeerplaatsScripts, parkingangScripts } from './park-scripts.js';
+import { receptieBinnen, vakantiestraat, huisjeBeneden, huisjeBoven } from './finale.js';
+import {
+  receptieBinnenScripts, vakantiestraatScripts, huisjeBenedenScripts, huisjeBovenScripts,
+} from './finale-scripts.js';
 
 export const KAARTEN = {
   barak,
@@ -59,6 +63,10 @@ export const KAARTEN = {
   beren_aalden: berenAalden,
   parkeerplaats,
   parkingang,
+  receptie_binnen: receptieBinnen,
+  vakantiestraat,
+  huisje_beneden: huisjeBeneden,
+  huisje_boven: huisjeBoven,
 };
 
 export const SCRIPTS = {
@@ -92,4 +100,8 @@ export const SCRIPTS = {
   beren_aalden: berenAaldenScripts,
   parkeerplaats: parkeerplaatsScripts,
   parkingang: parkingangScripts,
+  receptie_binnen: receptieBinnenScripts,
+  vakantiestraat: vakantiestraatScripts,
+  huisje_beneden: huisjeBenedenScripts,
+  huisje_boven: huisjeBovenScripts,
 };

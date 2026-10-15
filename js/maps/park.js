@@ -141,7 +141,14 @@ I.grond[13][15] = '^';
 I.vul(I.grond, 6, 5, 23, 9, (x, y) => ((x + y) % 4 ? 'k' : 'K'));
 // bomen rondom
 for (let x = 0; x < 30; x += 2) I.boom(x, 0);
-for (let y = 2; y < 24; y += 2) { I.boom(0, y); I.boom(28, y); }
+for (let y = 2; y < 24; y += 2) {
+  I.boom(0, y);
+  if (y !== 8 && y !== 10) I.boom(28, y);
+}
+// de weg naar rechts: naar de straat met de vakantiehuisjes
+I.vul(I.grond, 22, 9, 29, 10, 'a');
+I.vul(I.boven, 28, 8, 29, 8, '*');
+I.vul(I.boven, 28, 11, 29, 11, '*');
 for (let x = 0; x < 30; x += 2) {
   if (x !== 14) I.boom(x, 24);
 }
@@ -189,6 +196,8 @@ export const parkingang = {
     { x: 14, y: 25, naar: 'parkeerplaats', nx: 17, ny: 1, richting: 'omlaag' },
     { x: 15, y: 25, naar: 'parkeerplaats', nx: 18, ny: 1, richting: 'omlaag' },
     { x: 14, y: 4, script: 'receptie' },
+    { x: 29, y: 9, script: 'naarHuisjes' },
+    { x: 29, y: 10, script: 'naarHuisjes' },
   ],
   interacties: [],
   start: { x: 14, y: 24, richting: 'omhoog' },

@@ -142,6 +142,30 @@ const OBJECT_TYPES = {
   zandkasteel: { textuur: () => 'obj_zandkasteel', b: 1, h: 1, dx: -4 },
   schep: { textuur: () => 'obj_schep', b: 1, h: 1 },
   bord_natuur: { textuur: () => 'obj_bord_natuur', b: 3, h: 1 },
+  // de finale
+  receptiebalie: { textuur: () => 'obj_receptiebalie', b: 5, h: 1 },
+  folderrek: { textuur: () => 'obj_folderrek', b: 1, h: 1 },
+  bouwtekening: { textuur: () => 'obj_bouwtekening', b: 2, h: 1, dx: -1 },
+  geldkoffer: { textuur: () => 'obj_geldkoffer', b: 1, h: 1, dx: -4 },
+  villa: { textuur: () => 'obj_villa', b: 4, h: 2 },
+  audi_crash: { textuur: () => 'obj_audi_crash', b: 2, h: 1, dx: -6, dy: 6 },
+  hoekbank: {
+    textuur: () => 'obj_hoekbank', b: 0, h: 0,
+    positie: (o) => [o.x * TEGEL, o.y * TEGEL - 4], oorsprong: [0, 0], diepte: (o) => (o.y + 1) * TEGEL,
+    extraVast: () => [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [7, 1], [6, 2], [7, 2], [6, 3], [7, 3]],
+  },
+  salontafel: { textuur: () => 'obj_salontafel', b: 4, h: 1 },
+  projectiescherm: { textuur: () => 'obj_projectiescherm', b: 3, h: 1 },
+  trap: {
+    textuur: () => 'obj_trap', b: 0, h: 0,
+    positie: (o) => [o.x * TEGEL, o.y * TEGEL], oorsprong: [0, 0], diepte: () => -5,
+    extraVast: (o) => Array.from({ length: o.lengte || 4 }, (_, i) => [0, i]),
+  },
+  hobbelpaard: { textuur: () => 'obj_hobbelpaard', b: 1, h: 1, dx: -5 },
+  sauna: { textuur: () => 'obj_sauna', b: 3, h: 2 },
+  douche: { textuur: () => 'obj_douche', b: 2, h: 1 },
+  wastafel: { textuur: () => 'obj_wastafel', b: 1, h: 1, dx: -1 },
+  wc: { textuur: () => 'obj_wc', b: 1, h: 1 },
   // het vakantiepark
   auto: {
     textuur: (o) => `auto_${o.kleur}`, frame: (o) => AUTO_FRAME[o.richting || 'omlaag'], b: 1, h: 1,

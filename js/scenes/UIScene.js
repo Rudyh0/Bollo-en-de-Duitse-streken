@@ -117,7 +117,8 @@ export class UIScene extends Phaser.Scene {
   async krijgItem(id, n = 1, werkwoord = 'vond') {
     geefItem(id, n);
     const naam = itemNaam(id, n);
-    const wat = n === 1 ? `een ${naam}` : `${n} ${naam}`;
+    // sommige voorwerpen zijn al meervoud (de SLEUTELS): dan "de" in plaats van "een"
+    const wat = n === 1 ? `${ITEMS[id]?.vondLidwoord || 'een'} ${naam}` : `${n} ${naam}`;
     const jingle = audio.jingle('item');
     this.sluitGevraagd = false;
     await this.dialoog.toon(`${beer()} ${werkwoord} ${wat}!`, { wachtAanEinde: false });

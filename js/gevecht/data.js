@@ -107,7 +107,58 @@ export const AANVALLEN = {
   },
 };
 
+// de directeur (de eindbaas)
+Object.assign(AANVALLEN, {
+  reglement: {
+    naam: 'PARKREGLEMENT',
+    kracht: 9,
+    nauwkeurigheid: 90,
+    animatie: 'mes',
+    raakTekst: 'Het parkreglement raakt {BEER} vol op de snuit. 48 pagina\'s. Gebonden.',
+    misTekst: 'Het parkreglement vliegt rakelings langs {BEER}. Pagina 12 dwarrelt eruit: "Beren verboden".',
+  },
+  smeergeld: {
+    naam: 'SMEERGELD',
+    kracht: 11,
+    nauwkeurigheid: 85,
+    animatie: 'vape',
+    tint: 0x7ac87a,
+    raakTekst: '{BEER} wordt bedolven onder Duits smeergeld. Het ruikt naar braadworst.',
+    misTekst: 'De bankbiljetten dwarrelen naast {BEER} op de grond. Hij raakt ze niet aan.',
+  },
+  parkeerboete: {
+    naam: 'PARKEERBOETE',
+    kracht: 7,
+    nauwkeurigheid: 100,
+    animatie: 'schot',
+    raakTekst: '{BEER} krijgt een boete van 500 euro. Wegens schuin parkeren in een bloembak.',
+    misTekst: 'De boete waait weg. Recht in de vijver.',
+  },
+  krentenbol: {
+    naam: 'OUDE KRENTENBOL',
+    kracht: 8,
+    nauwkeurigheid: 90,
+    animatie: 'mes',
+    raakTekst: 'Een keiharde krentenbol van het ontbijtbuffet van vorige week. Au!',
+    misTekst: 'De krentenbol stuitert over de tegels. Hij is nog harder dan hij eruitzag.',
+  },
+});
+
 export const VIJANDEN = {
+  directeur: {
+    naam: 'DIRECTEUR ROOKHUYS',
+    sprite: 'gevecht_directeur',
+    intro: 'DIRECTEUR ROOKHUYS trekt zijn stropdas recht en zet zijn bolhoed op!',
+    muziek: 'eindbaas',
+    niveau: 16,
+    maxGz: 70,
+    aanval: 12,
+    verdediging: 11,
+    snelheid: 9,
+    xp: 400,
+    geld: 500,
+    aanvallen: [['reglement', 30], ['smeergeld', 30], ['parkeerboete', 20], ['krentenbol', 20]],
+  },
   // het strandje
   kurt: {
     naam: 'STRANDDUITSER KURT',

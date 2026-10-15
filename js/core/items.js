@@ -9,6 +9,16 @@ export const ITEMS = {
     herstel: 8,
     beschrijving: 'Een gestempelde bon voor een warme maaltijd. Herstelt 8 punten gezondheid.',
   },
+  // ---- de finale
+  sleutels: {
+    naam: 'SLEUTELS',
+    meervoud: 'SLEUTELS',
+    vondLidwoord: 'de',
+    icoon: 'icoon_sleutels',
+    soort: 'sleutel',
+    beschrijving: 'De sleutels van huisje 7. Ze vielen uit de binnenzak van de directeur.',
+    bekijk: 'Aan de sleutelbos hangt een groen labeltje met een 7. En een klein, rood hartje.',
+  },
   // ---- het vakantiepark
   slagboomkaart: {
     naam: 'SLAGBOOMKAART',

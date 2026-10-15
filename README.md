@@ -90,7 +90,7 @@ tools/                    Python-scripts die alle pixel-art maken
 install.sh                installer voor een Ubuntu-server
 ```
 
-Alle pixel-art, het lettertype en de chiptune-muziek zijn eigen werk; `assets/audio/intake.mp3` (de muziek tijdens de intake) is aangeleverd. De plaatjes worden gemaakt met:
+Alle pixel-art, het lettertype en de chiptune-muziek zijn eigen werk; `assets/audio/intake.mp3` (de muziek tijdens de intake) en `assets/audio/outro.mp3` (de aftiteling) zijn aangeleverd. De plaatjes worden gemaakt met:
 
 ```bash
 pip install pillow
@@ -163,6 +163,13 @@ Klaar (hoofdstuk 8, het vakantiepark, deel 1 en 2):
 - de ingang: een welkomstboog met de naam van jouw park, een slagboom met een kaartlezer en slagboomwachter Jochem. Levi heeft de slagboomkaart uit zijn raampje de struiken in gegooid: zoek de glinstering, haal de kaart langs de lezer en rijd naar de receptie
 - eigen muziek bij de ingang; op de parkeerplaats klinkt de schlager van de Duitsers
 
+Klaar (de finale):
+
+- in de receptie staat directeur Harm Rookhuys. Hij bekent dat alles een test was: hij is omgekocht door de Duitsers en van het park moet het tweede kamp van de regio worden. Hij is de eindbaas (parkreglement, smeergeld, parkeerboete en een oude krentenbol), met eigen muziek
+- na het gevecht vallen de sleutels van huisje 7 uit zijn zak. Rechts van het plein ligt de straat met vakantiehuisjes (en Levi, met zijn Audi in de vijver)
+- in huisje 7 zitten Jesse, Devona, Dewi, Femke, Frank, Mathijs en Rudy op de hoekbank voor de beamer, met de salontafel vol. Ze sturen je naar de sauna, boven in de badkamer
+- de aftiteling: de beer in de sauna terwijl de namen voorbijkomen, precies even lang als de Outro (`assets/audio/outro.mp3`, aangeleverd). Daarna rook, een zwart scherm, het einde, en terug naar het menu
+
 De Beren (in elk dorp):
 
 - een restaurant in Orvelte (naast de molen), in Wezup (aan de noordkant) en in Aalden (aan de hoofdstraat), met eigen muziekje
@@ -170,4 +177,4 @@ De Beren (in elk dorp):
 - AFHALEN voor onderweg: BROODPLANKJE (€5, herstelt 15), KIPSATE (€10, herstelt 30) en SPARERIBS (€18, herstelt 60), ook te gebruiken in gevechten
 - bij De Beren wordt niet gevochten, ook niet door de Duitsers die er zitten te eten
 
-Nog te doen: de finale bij de receptie, en daarna een speelronde om bugs te vinden en op te lossen.
+Nog te doen: een speelronde om bugs te vinden en op te lossen.

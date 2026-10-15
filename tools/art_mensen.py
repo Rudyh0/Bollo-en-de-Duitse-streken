@@ -240,6 +240,44 @@ HOOFD = {
             "....kkkkkkk.....",
         ],
     },
+    'hoed': {
+        'omlaag': [
+            "................",
+            ".....kkkkkk.....",
+            "....kggglggk....",
+            "....kggggggk....",
+            "...kGGGGGGGGk...",
+            "..kggggggggggk..",
+            "..khsesssseshk..",
+            "..kssHHHHHHssk..",
+            "...ksssqqsssk...",
+            "....kkkkkkkk....",
+        ],
+        'omhoog': [
+            "................",
+            ".....kkkkkk.....",
+            "....kggggggk....",
+            "....kggggggk....",
+            "...kGGGGGGGGk...",
+            "..kggggggggggk..",
+            "..khhhhhhhhhhk..",
+            "..khhhhhhhhhhk..",
+            "...kssssssssk...",
+            "....kkkkkkkk....",
+        ],
+        'links': [
+            "................",
+            "......kkkkkk....",
+            ".....kggglgk....",
+            ".....kggggggk...",
+            "....kGGGGGGGk...",
+            "..kgggggggggggk.",
+            "...ksesshhhhk...",
+            "..kHHssshhhHk...",
+            "...kssssshhk....",
+            "....kkkkkkk.....",
+        ],
+    },
     'hoofddoek': {
         'omlaag': [
             "................",
@@ -306,6 +344,32 @@ ROMP = {
             "....kttTTtttk...",
             "....kttTTtttk...",
             "....kbbsSbbbk...",
+            ".....kTTTTTk....",
+        ],
+    },
+    'pak': {
+        'omlaag': [
+            "...kttwrrwttk...",
+            "..kTttwrrwttTk..",
+            "..kTtttrrtttTk..",
+            "..kTttttttttTk..",
+            "..ksSkttttkSsk..",
+            "...kkTTTTTTkk...",
+        ],
+        'omhoog': [
+            "...kttttttttk...",
+            "..kTtkttttktTk..",
+            "..kTtkttttktTk..",
+            "..kTtkTTTTktTk..",
+            "..ksSkttttkSsk..",
+            "...kkTTTTTTkk...",
+        ],
+        'links': [
+            ".....ktttttk....",
+            "....kttTTtwrk...",
+            "....kttTTtttk...",
+            "....kttTTtttk...",
+            "....kttsSttk....",
             ".....kTTTTTk....",
         ],
     },
@@ -530,6 +594,13 @@ PERSONEN = {
     'gerard': ('kort', 'normaal', kleuren(
         h='#a8a8a8', H='#808080', t='#8a5a34', T='#6a4224', p='#3a3a42', P='#26262c', f='#2a1a10', b='#8a5a34',
         s='#f0c4a0', S='#d09c7a')),
+    'directeur': ('hoed', 'pak', kleuren(
+        h='#9a8a80', H='#7c6c62', g='#1e1e28', G='#6a2c2c', l='#3c3c4e',
+        t='#2c2c38', T='#1c1c24', w='#f4f4f4', r='#c43434', p='#2c2c38', P='#1c1c24', f='#141418', b='#2c2c38',
+        s='#f2bb92', S='#cf8c66')),
+    'levi': ('pet', 'normaal', kleuren(
+        h='#3a2a1e', H='#24180e', g='#1e1e22', G='#141418', l='#3a3a42',
+        t='#f4f4f4', T='#c8c8d0', p='#6a6a72', P='#4a4a52', f='#f4f4f4', b='#2a2a30')),
     'medewerker': ('kort', 'normaal', kleuren(
         h='#5a3a20', H='#3e2614', t='#2e8a5a', T='#1e6a42', p='#3a3a42', P='#26262c', f='#2a2a2a', b='#f0902a')),
     'manfred': ('pet', 'normaal', kleuren(
